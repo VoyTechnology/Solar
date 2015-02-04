@@ -1,0 +1,10 @@
+node_modules/
+locales/
+nw
+nw.exe
+nwjs.app
+credits.html
+nw.pak
+*.so
+*.dll
+*.dat
