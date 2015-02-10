@@ -1,0 +1,10 @@
+{
+  "name": "Solar-Server",
+  "description": "server for a realm on solar",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.11.2",
+    "mongojs": "^0.18.1",
+    "socket.io": "^1.3.3"
+  }
+}
