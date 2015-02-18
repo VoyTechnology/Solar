@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solar Launcher</title>
+    <link rel="stylesheet" type="text/css" href="../res/style/launcher.css">
+    <script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../src/Settings.js"></script>
+    <script>
+      var gui = require('nw.gui');
+      var settings, gameWin;
+
+      $(document).ready( function(){
+        settings = new Settings();
+
+        var fullscreen = !!settings.get('fullscreen');
+
+        //gui.Window.get().showDevTools();
+
+        $('#exit').click( function(){
+          gui.Window.get().close();
+        });
+
+        $('#play').click( function(){
+
+          gameWin = gui.Window.open("game.html", {
+            toolbar: false,
+            frame: false,
+            fullscreen: fullscreen
+          });
+
+          gui.Window.get().close();
+        });
+
+      });
+    </script>
+  </head>
+  <body>
+    <div class="title">
+      <span>Solar Launcher</span>
+      <div id="exit"></div>
+    </div>
+
+    <div id="play">Play</div>
+  </body>
+</html>
