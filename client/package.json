@@ -9,8 +9,5 @@
     "position": "center",
     "width": 1000,
     "height": 500
-  },
-  "dependencies": {
-    "requirejs": "2.1.16"
   }
 }
