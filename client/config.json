@@ -1,0 +1,16 @@
+{
+  "devmode": true,
+  "server": {
+    "protocol": "http",
+    "address": "178.62.116.176",
+    "port": 3000
+  },
+  "game": {
+    "unit_size": 1
+  },
+  "keys": {
+    "27": "ESC",
+    "123": "GONSOLE",
+    "13": "ENTER"
+  }
+}
