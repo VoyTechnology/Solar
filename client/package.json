@@ -1,0 +1,16 @@
+{
+  "name":"Solar",
+  "version":"0.0.1",
+  "main":"view/launcher.html",
+  "window": {
+    "title":"Solar",
+    "toolbar": false,
+    "frame": false,
+    "position": "center",
+    "width": 1000,
+    "height": 500
+  },
+  "dependencies": {
+    "requirejs": "2.1.16"
+  }
+}
