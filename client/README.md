@@ -21,7 +21,7 @@ The game will open full screen. Here you can fly around with WASD keys, up and d
 
 If you wish to close the game press Escape and `Quit Game`.
 
-A game console called Gonsole is also available by pressing F12.
+A game console called Gonsole is also available by pressing F12. To start writing press `Tab` button on your keyboard
 
 ####Gonsole Commands:####
 
@@ -34,4 +34,4 @@ A game console called Gonsole is also available by pressing F12.
 
 
 ### Testing ###
-Due to very graphical nature of the client, there are very little tests. To launch the available tests start the game and use the Gonsole as described above. 
+Due to very graphical nature of the client, there are very little tests. To launch the available tests start the game and use the Gonsole as described above.
