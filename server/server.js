@@ -9,7 +9,7 @@ var mongojs = require('mongojs');
 var db = mongojs("solar", ["players"]);
 
 // Custom class declerations
-var Player = require("./CustomClasses/Player.js");
+var Player = require("./src/Player.js");
 
 // Server
 io.on("connection", function(socket) {
