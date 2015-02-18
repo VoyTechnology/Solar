@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  color: white;
+  background-color: #212121;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title {
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  font-size: 1.5em;
+  background-color: rgba(0,0,0,0.1);
+  padding: 0.1em;
+}
+
+.title span {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+#exit {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  right: 0.2em;
+  top: 0.2em;
+  margin-right: 0.2em;
+  width: 1em;
+  height: 1em;
+  background-color: #F44336;
+}
+
+#play {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  display: block;
+  font-size: 1em;
+  padding: 1em 2em;
+  background-color: #4CAF50;
+  cursor: pointer;
+  border-radius: 1px;
+}
