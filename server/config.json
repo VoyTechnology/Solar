@@ -1,0 +1,23 @@
+{
+    "serverIp" : "178.62.116.176",
+    "mainServerPort" : 3000,
+    "mapSize" : 5000,
+    "minPasswordSize" : 4,
+    "database" : {
+        "name" : "solar",
+        "collections" : {
+            "players" : "players"
+        }
+    },
+    "paths" : {
+        "playerClass" : "C:/Users/Mladen/Google Drive/School/solar_server/src/classes/player.js",
+        "registerRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/register.js",
+        "loginRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/login.js",
+        "disconnectRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/disconnect.js",
+        "moveRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/move.js",
+        "turnRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/turn.js",
+        "pstatusRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/pstatus.js",
+        "socketResponseCS" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/socketResponse.js",
+        "broadcastMessageCS" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/broadcastMessage.js"
+    }
+}
