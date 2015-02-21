@@ -4,7 +4,6 @@ function disconnect(session) {
         if (doc === null){return;}
         session.thisPlayer.loggedIn = false;
         session.thisPlayer.speed = 0;
-        session.thisPlayer.playersInRange = [];
 
         for(var i=0; i<global.loggedInPlayers.length; i++) {
             if(global.loggedInPlayers[i].username == session.thisPlayer.username) {
@@ -13,6 +12,8 @@ function disconnect(session) {
             }
         }
 
+        console.log(session.thisPlayer);
+        delete session.thisPlayer.socket;
         global.db.players.update({_id: doc._id}, session.thisPlayer);
     });
 }

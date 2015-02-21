@@ -17,7 +17,7 @@ function login(data, session, socket) {
             };
         }
         else {
-            session.thisPlayer = new Player(doc);
+            session.thisPlayer = new Player(doc, socket);
             session.thisPlayer.loggedIn = true;
             global.loggedInPlayers.push(session.thisPlayer);
             constructorConditions = {

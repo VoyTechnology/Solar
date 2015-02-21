@@ -42,4 +42,8 @@ io.on("connection", function(socket) {
 	socket.on("move", function(data) {
 		require(global.config.paths.moveRH)(data, session, socket);
 	});
+
+	socket.on("chat", function(data) {
+		require(global.config.paths.chatRH)(data, session, socket);
+	});
 });
