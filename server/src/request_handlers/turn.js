@@ -1,30 +1,30 @@
 function turn(data, session, socket) {
     if (!session.thisPlayer.loggedIn){return;}
-    var responseConstructor = require(global.config.paths.socketResponseCS);
+    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
 
     if(data === null || typeof data.xAngle === "undefined" || typeof data.yAngle === "undefined") {
-        return responseConstructor.noData("turn", socket);
+        return socketResponseEmitter.noData("turn", socket);
     }
 
-    var broadcastConstructor = require(global.config.paths.broadcastMessageCS);
-    var constructorConditions = null;
+    var brodcastMessageEmitter = require(global.config.paths.brodcastMessageEM);
+    var responseConditions = null;
     var canTurnResponse = session.thisPlayer.canTurnHere(data);
 
     if (canTurnResponse.success) {
         session.thisPlayer.direction = data;
-        constructorConditions = {
+        responseConditions = {
             success : true
         };
     }
     else {
-        constructorConditions = {
+        responseConditions = {
             success : false,
             message : canTurnResponse.message
         };
     }
 
-    responseConstructor.turn(constructorConditions, socket);
-    broadcastConstructor.playerChangedState(session.thisPlayer, socket);
+    socketResponseEmitter.turn(responseConditions, socket);
+    brodcastMessageEmitter.playerChangedState(session.thisPlayer, socket);
 }
 
 module.exports = turn;

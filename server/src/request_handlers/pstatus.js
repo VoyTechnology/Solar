@@ -1,8 +1,8 @@
 function pstatus(session, socket) {
     if (!session.thisPlayer.loggedIn){return;}
-    var requestConstrutor = require(global.config.paths.socketResponseCS);
-    var constructorConditions = null;
-    requestConstrutor.pstatus(constructorConditions, session.thisPlayer, socket);
+    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
+    var responseConditions = null;
+    socketResponseEmitter.pstatus(responseConditions, session.thisPlayer, socket);
 }
 
 module.exports = pstatus;

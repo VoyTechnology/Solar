@@ -1,39 +1,31 @@
 function Player() {
-	this.loggedIn = false;
-	this.username = "";
-	this.password = "";
-	this.position = {x:0, y:0, z:0};
-	this.direction = {xAngle:0, yAngle:0, zAngle:0};
-	this.maxSpeed = 50;
-	this.PlayersInRange = [];
 
-	this.PlayerUandP = function(username, password) {
+	this.PlayerUandP = function(username, password, socket) {
 		this.loggedIn = false;
 		this.username = username;
 		this.password = password;
 		this.position = {x:0, y:0, z:0};
 		this.direction = {xAngle:0, yAngle:0};
 		this.maxSpeed = 50;
-		this.PlayersInRange = [];
 	};
 
-	this.PlayerFromDoc = function(doc) {
+	this.PlayerFromDoc = function(doc, socket) {
 		this.loggedIn = false;
 		this.username = doc.username;
 		this.password = doc.password;
 		this.position = doc.position;
 		this.direction = doc.direction;
 		this.maxSpeed = doc.maxSpeed;
-		this.PlayersInRange = doc.PlayersInRange;
 		this._id = doc._id;
+		this.socket = socket;
 	};
 
-	switch (arguments.length) {
-		case 2 :
+	switch (typeof arguments[0]) {
+		case "string" :
 			this.PlayerUandP(arguments[0], arguments[1]);
 			break;
-		case 1 :
-			this.PlayerFromDoc(arguments[0]);
+		case "object" :
+			this.PlayerFromDoc(arguments[0], arguments[1]);
 			break;
 	}
 }

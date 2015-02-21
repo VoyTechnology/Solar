@@ -1,30 +1,30 @@
 function move(data, session, socket) {
     if (!session.thisPlayer.loggedIn){return;}
-    var responseConstructor = require(global.config.paths.socketResponseCS);
+    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
 
     if(data === null || typeof data.x === "undefined" || typeof data.y === "undefined" || typeof data.z === "undefined") {
-        return responseConstructor.noData("move", socket);
+        return socketResponseEmitter.noData("move", socket);
     }
 
-    var broadcastConstructor = require(global.config.paths.broadcastMessageCS);
-    var constructorConditions = null;
+    var brodcastMessageEmitter = require(global.config.paths.brodcastMessageEM);
+    var responseConditions = null;
     var canMoveResponse = session.thisPlayer.canMoveHere(data);
 
     if (canMoveResponse.success) {
         session.thisPlayer.position = data;
-        constructorConditions = {
+        responseConditions = {
             success : true
         };
     }
     else {
-        constructorConditions = {
+        responseConditions = {
             success : false,
             reason : canMoveResponse.message
         };
     }
 
-    responseConstructor.move(constructorConditions, socket);
-    broadcastConstructor.playerChangedState(session.thisPlayer, socket);
+    socketResponseEmitter.move(responseConditions, socket);
+    brodcastMessageEmitter.playerChangedState(session.thisPlayer, socket);
 }
 
 module.exports = move;
