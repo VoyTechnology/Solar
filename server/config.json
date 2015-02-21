@@ -18,7 +18,8 @@
         "turnRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/turn.js",
         "pstatusRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/pstatus.js",
         "chatRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/chat.js",
-        "socketResponseCS" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/socketResponse.js",
-        "broadcastMessageCS" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/broadcastMessage.js"
+        "socketResponseEM" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/socketResponseEmitter.js",
+        "brodcastMessageEM" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/brodcastMessageEmitter.js",
+        "chatMessageEM" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/chatMessageEmitter.js"
     }
 }

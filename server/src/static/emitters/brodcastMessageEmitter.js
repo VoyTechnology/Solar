@@ -1,4 +1,4 @@
-var broadcastMessage = {
+var brodcastMessageEmitter = {
 
     playerChangedState : function(player, socket) {
         var message =  {
@@ -27,4 +27,4 @@ var broadcastMessage = {
     }
 };
 
-module.exports = broadcastMessage;
+module.exports = brodcastMessageEmitter;

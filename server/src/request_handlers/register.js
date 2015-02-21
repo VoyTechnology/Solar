@@ -1,21 +1,21 @@
 function register(data, socket) {
-    var responseEmitter = require(global.config.paths.socketResponseCS);
+    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
 
     if(data === null || typeof data.username === "undefined" || typeof data.password === "undefined") {
-        return responseEmitter.noData("register", socket);
+        return socketResponseEmitter.noData("register", socket);
     }
 
     global.db.players.count({ username: data.username }, function (err, count) {
-        var constructorConditions = null;
+        var responseConditions = null;
 
         if (count) {
-            constructorConditions = {
+            responseConditions = {
                 success : false,
                 reason : "usernameTaken"
             };
         }
         else if (data.password.length < global.config.minPasswordSize) {
-            constructorConditions = {
+            responseConditions = {
                 success : false,
                 reason : "shortPassword"
             };
@@ -25,12 +25,12 @@ function register(data, socket) {
             var newPlayer = new Player(data.username, data.password);
             global.db.players.save(newPlayer, function(err) {});
             newPlayer = null;
-            constructorConditions = {
+            responseConditions = {
                 success : true
             };
         }
 
-        responseEmitter.register(constructorConditions, socket);
+        socketResponseEmitter.register(responseConditions, socket);
     });
 }
 

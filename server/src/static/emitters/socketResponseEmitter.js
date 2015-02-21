@@ -1,4 +1,4 @@
-var socketResponse = {
+var socketResponseEmitter = {
 
     noData : function(call, socket) { // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>NODATA
         var response =  {
@@ -121,7 +121,33 @@ var socketResponse = {
         }
 
         socket.emit(response.message, response.data);
+    },
+
+    chat : function(conditions, socket) {
+        var response = {
+            message : "chat",
+            data : null
+        };
+
+        if(conditions.success) {
+            response.data = {
+                success : true
+            };
+        }
+        else {
+            var message;
+            if(conditions.reason == "Ignored"){message = "Ignored.";}
+            if(conditions.reason == "noPlayer"){message = "Player not found.";}
+            else {message = "Can't do that.";}
+
+            response.data = {
+                success : false,
+                data : message
+            };
+
+            socket.emit(response.message, response.data);
+        }
     }
 };
 
-module.exports = socketResponse;
+module.exports = socketResponseEmitter;
