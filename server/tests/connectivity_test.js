@@ -5,11 +5,13 @@ var socket = io.connect("http://" + config.serverIp + ":" + config.serverPort.to
 var registerData = null;
 var loginData = null;
 var pstatusData = null;
+var timeData = null;
 
 function resetData() {
     registerData = null;
     loginData = null;
     pstatusData = null;
+    timeData = null;
 }
 
 socket.on(config.callbacks.register, function(data) {
@@ -22,6 +24,10 @@ socket.on(config.callbacks.login, function(data) {
 
 socket.on(config.callbacks.pstatus, function(data) {
     pstatusData = data;
+});
+
+socket.on(config.callbacks.time, function(data) {
+    timeData = data;
 });
 
 // Registration tests
@@ -115,7 +121,7 @@ exports.Null_Data_Login_Test = function(test) {
     },config.waitTime);
 };
 
-exports.Wird_Data_Login_Test = function(test) {
+exports.Weird_Data_Login_Test = function(test) {
     test.expect(2);
     var loginEntry = {ghbb: "fdsfsd"};
     socket.emit(config.APIFunctions.login, loginEntry);
@@ -195,6 +201,18 @@ exports.Pstatus_Non_Vunrability_Test = function(test) {
         test.equal(typeof pstatusData.socket, "undefined");
         test.equal(typeof pstatusData._id, "undefined");
         test.equal(typeof pstatusData.position.z, "number");
+        resetData();
+        test.done();
+    }, config.waitTime);
+};
+
+exports.Successful_Time_Get_Test = function(test) {
+    test.expect(2);
+    socket.emit(config.APIFunctions.time);
+
+    setTimeout(function() {
+        test.equal(timeData.success, true);
+        test.equal(typeof timeData.time, "number");
         resetData();
         test.done();
     }, config.waitTime);

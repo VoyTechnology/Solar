@@ -39,7 +39,9 @@
         "move" : "move",
         "turn" : "turn",
         "playerChangedState" : "playerChangedState",
-        "playerLoggedIn" : "playerLoggedIn"
+        "playerLoggedIn" : "playerLoggedIn",
+        "time" : "time",
+        "chat" : "chat"
     },
     "callbacks" : {
         "register" : "register",
@@ -48,6 +50,8 @@
         "move" : "move",
         "turn" : "turn",
         "playerChangedState" : "playerChangedState",
-        "playerLoggedIn" : "playerLoggedIn"
+        "playerLoggedIn" : "playerLoggedIn",
+        "time" : "time",
+        "chat" : "chat"
     }
 }

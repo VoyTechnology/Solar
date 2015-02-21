@@ -46,4 +46,8 @@ io.on("connection", function(socket) {
 	socket.on("chat", function(data) {
 		require(global.config.paths.chatRH)(data, session, socket);
 	});
+
+	socket.on("time", function() {
+		require(global.config.paths.timeRH)(session, socket);
+	});
 });

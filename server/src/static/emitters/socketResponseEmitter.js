@@ -147,6 +147,18 @@ var socketResponseEmitter = {
 
             socket.emit(response.message, response.data);
         }
+    },
+
+    time : function(conditions, socket) {
+        var response = {
+            message : "time",
+            data : {
+                success : true,
+                time : new Date().getTime()
+            }
+        };
+
+        socket.emit(response.message, response.data);
     }
 };
 
