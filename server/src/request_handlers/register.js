@@ -1,5 +1,5 @@
 function register(data, socket) {
-    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
+    var socketResponseEmitter = require(global._home + global.config.paths.socketResponseEM);
 
     if(data === null || typeof data.username === "undefined" || typeof data.password === "undefined") {
         return socketResponseEmitter.noData("register", socket);
@@ -21,7 +21,7 @@ function register(data, socket) {
             };
         }
         else {
-            var Player = require(global.config.paths.playerClass);
+            var Player = require(global._home + global.config.paths.playerClass);
             var newPlayer = new Player(data.username, data.password);
             global.db.players.save(newPlayer, function(err) {});
             newPlayer = null;

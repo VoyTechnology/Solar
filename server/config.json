@@ -10,17 +10,17 @@
         }
     },
     "paths" : {
-        "playerClass" : "C:/Users/Mladen/Google Drive/School/solar_server/src/classes/player.js",
-        "registerRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/register.js",
-        "loginRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/login.js",
-        "disconnectRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/disconnect.js",
-        "moveRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/move.js",
-        "turnRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/turn.js",
-        "pstatusRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/pstatus.js",
-        "chatRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/chat.js",
-        "timeRH" : "C:/Users/Mladen/Google Drive/School/solar_server/src/request_handlers/time.js",
-        "socketResponseEM" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/socketResponseEmitter.js",
-        "brodcastMessageEM" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/brodcastMessageEmitter.js",
-        "chatMessageEM" : "C:/Users/Mladen/Google Drive/School/solar_server/src/static/emitters/chatMessageEmitter.js"
+        "playerClass" : "/src/classes/player.js",
+        "registerRH" : "/src/request_handlers/register.js",
+        "loginRH" : "/src/request_handlers/login.js",
+        "disconnectRH" : "/src/request_handlers/disconnect.js",
+        "moveRH" : "/src/request_handlers/move.js",
+        "turnRH" : "/src/request_handlers/turn.js",
+        "pstatusRH" : "/src/request_handlers/pstatus.js",
+        "chatRH" : "/src/request_handlers/chat.js",
+        "timeRH" : "/src/request_handlers/time.js",
+        "socketResponseEM" : "/src/static/emitters/socketResponseEmitter.js",
+        "brodcastMessageEM" : "/src/static/emitters/brodcastMessageEmitter.js",
+        "chatMessageEM" : "/src/static/emitters/chatMessageEmitter.js"
     }
 }
