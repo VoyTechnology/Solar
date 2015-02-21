@@ -12,7 +12,6 @@ function disconnect(session) {
             }
         }
 
-        console.log(session.thisPlayer);
         delete session.thisPlayer.socket;
         global.db.players.update({_id: doc._id}, session.thisPlayer);
     });
