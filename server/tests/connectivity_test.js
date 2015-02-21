@@ -34,6 +34,10 @@ socket.on(config.callbacks.time, function(data) {
 exports.Successful_Registration_Test = function(test) {
     test.expect(2);
     socket.emit(config.APIFunctions.register, config.testAccounts.a1);
+    socket.emit(config.APIFunctions.register, config.testAccounts.a2);
+    socket.emit(config.APIFunctions.register, config.testAccounts.a3);
+    socket.emit(config.APIFunctions.register, config.testAccounts.a4);
+    socket.emit(config.APIFunctions.register, config.testAccounts.a5);
 
     setTimeout(function() {
         test.equal(registerData.success, true);

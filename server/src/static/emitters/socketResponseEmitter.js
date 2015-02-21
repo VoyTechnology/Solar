@@ -138,15 +138,15 @@ var socketResponseEmitter = {
             var message;
             if(conditions.reason == "Ignored"){message = "Ignored.";}
             if(conditions.reason == "noPlayer"){message = "Player not found.";}
+            if(conditions.reason == "invalidType"){message = "Invalid type.";}
             else {message = "Can't do that.";}
 
             response.data = {
                 success : false,
-                data : message
+                message : message
             };
-
-            socket.emit(response.message, response.data);
         }
+        socket.emit(response.message, response.data);
     },
 
     time : function(conditions, socket) {

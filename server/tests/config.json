@@ -38,8 +38,6 @@
         "pstatus" : "pstatus",
         "move" : "move",
         "turn" : "turn",
-        "playerChangedState" : "playerChangedState",
-        "playerLoggedIn" : "playerLoggedIn",
         "time" : "time",
         "chat" : "chat"
     },

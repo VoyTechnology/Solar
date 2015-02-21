@@ -10,7 +10,7 @@ var chatMessageEmitter = {
             }
         };
 
-        socket.brodcast.emit(message.message, message.data);
+        socket.broadcast.emit(message.message, message.data);
         delete message.data.time;
     },
 
