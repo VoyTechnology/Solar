@@ -6,12 +6,14 @@ var registerData = null;
 var loginData = null;
 var pstatusData = null;
 var timeData = null;
+var versionData = null;
 
 function resetData() {
     registerData = null;
     loginData = null;
     pstatusData = null;
     timeData = null;
+    versionData = null;
 }
 
 socket.on(config.callbacks.register, function(data) {
@@ -28,6 +30,10 @@ socket.on(config.callbacks.pstatus, function(data) {
 
 socket.on(config.callbacks.time, function(data) {
     timeData = data;
+});
+
+socket.on(config.callbacks.version, function(data) {
+    versionData = data;
 });
 
 // Registration tests
@@ -217,6 +223,18 @@ exports.Successful_Time_Get_Test = function(test) {
     setTimeout(function() {
         test.equal(timeData.success, true);
         test.equal(typeof timeData.time, "number");
+        resetData();
+        test.done();
+    }, config.waitTime);
+};
+
+exports.Successful_Version_Get_Test = function(test) {
+    test.expect(2);
+    socket.emit(config.APIFunctions.version);
+
+    setTimeout(function() {
+        test.equal(versionData.success, true);
+        test.equal(versionData.version, require("./package.json").version);
         resetData();
         test.done();
     }, config.waitTime);

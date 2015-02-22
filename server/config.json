@@ -19,6 +19,7 @@
         "pstatusRH" : "/src/request_handlers/pstatus.js",
         "chatRH" : "/src/request_handlers/chat.js",
         "timeRH" : "/src/request_handlers/time.js",
+        "versionRH" : "/src/request_handlers/version.js",
         "socketResponseEM" : "/src/static/emitters/socketResponseEmitter.js",
         "brodcastMessageEM" : "/src/static/emitters/brodcastMessageEmitter.js",
         "chatMessageEM" : "/src/static/emitters/chatMessageEmitter.js"

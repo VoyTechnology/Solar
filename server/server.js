@@ -28,14 +28,6 @@ io.on("connection", function(socket) {
 		require(global._home + global.config.paths.loginRH)(data, session, socket);
 	});
 
-	socket.on("disconnect", function() {
-		require(global._home + global.config.paths.disconnectRH)(session);
-	});
-
-	socket.on("pstatus", function() {
-		require(global._home + global.config.paths.pstatusRH)(session, socket);
-	});
-
 	socket.on("turn", function(data) {
 		require(global._home + global.config.paths.turnRH)(data, session, socket);
 	});
@@ -48,7 +40,19 @@ io.on("connection", function(socket) {
 		require(global._home + global.config.paths.chatRH)(data, session, socket);
 	});
 
+	socket.on("pstatus", function() {
+		require(global._home + global.config.paths.pstatusRH)(session, socket);
+	});
+
 	socket.on("time", function() {
 		require(global._home + global.config.paths.timeRH)(session, socket);
+	});
+
+	socket.on("version", function() {
+		require(global._home + global.config.paths.versionRH)(session, socket);
+	});
+
+	socket.on("disconnect", function() {
+		require(global._home + global.config.paths.disconnectRH)(session);
 	});
 });

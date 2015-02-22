@@ -159,6 +159,18 @@ var socketResponseEmitter = {
         };
 
         socket.emit(response.message, response.data);
+    },
+
+    version : function(socket) {
+        var response = {
+            message : "version",
+            data : {
+                success : true,
+                version : require(global._home + "/package.json").version
+            }
+        };
+
+        socket.emit(response.message, response.data);
     }
 };
 
