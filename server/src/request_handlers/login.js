@@ -1,14 +1,14 @@
 function login(data, session, socket) {
     if (session.thisPlayer.loggedIn) {return;}
-    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
+    var socketResponseEmitter = require(global._home + global.config.paths.socketResponseEM);
 
     if(data === null || typeof data.username === "undefined" || typeof data.password === "undefined") {
         return socketResponseEmitter.noData("login", socket);
     }
 
     global.db.players.findOne({username: data.username}, function(err, doc) {
-        var Player = require(global.config.paths.playerClass);
-        var brodcastMessageEmitter = require(global.config.paths.brodcastMessageEM);
+        var Player = require(global._home + global.config.paths.playerClass);
+        var brodcastMessageEmitter = require(global._home + global.config.paths.brodcastMessageEM);
         var responseConditions = null;
 
         if ((doc === null) || (data.password != doc.password)) {

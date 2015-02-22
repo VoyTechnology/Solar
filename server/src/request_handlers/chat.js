@@ -1,13 +1,13 @@
 function chat(data, session, socket) {
 
     if(!session.thisPlayer.loggedIn){return;}
-    var socketResponseEmitter = require(global.config.paths.socketResponseEM);
+    var socketResponseEmitter = require(global._home + global.config.paths.socketResponseEM);
 
     if(data === null || typeof data.type == "undefined" || typeof data.message != "string") {
         return socketResponseEmitter.noData("chat", socket);
     }
 
-    var chatMessageEmitter = require(global.config.paths.chatMessageEM);
+    var chatMessageEmitter = require(global._home + global.config.paths.chatMessageEM);
     var messageSent = false;
 
     var chatMessageEmitterDetails = {
