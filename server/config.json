@@ -1,0 +1,27 @@
+{
+    "serverIp" : "178.62.116.176",
+    "mainServerPort" : 3000,
+    "mapSize" : 5000,
+    "minPasswordSize" : 4,
+    "database" : {
+        "name" : "solar",
+        "collections" : {
+            "players" : "players"
+        }
+    },
+    "paths" : {
+        "playerClass" : "/src/classes/player.js",
+        "registerRH" : "/src/request_handlers/register.js",
+        "loginRH" : "/src/request_handlers/login.js",
+        "disconnectRH" : "/src/request_handlers/disconnect.js",
+        "moveRH" : "/src/request_handlers/move.js",
+        "turnRH" : "/src/request_handlers/turn.js",
+        "pstatusRH" : "/src/request_handlers/pstatus.js",
+        "chatRH" : "/src/request_handlers/chat.js",
+        "timeRH" : "/src/request_handlers/time.js",
+        "versionRH" : "/src/request_handlers/version.js",
+        "socketResponseEM" : "/src/static/emitters/socketResponseEmitter.js",
+        "brodcastMessageEM" : "/src/static/emitters/brodcastMessageEmitter.js",
+        "chatMessageEM" : "/src/static/emitters/chatMessageEmitter.js"
+    }
+}
