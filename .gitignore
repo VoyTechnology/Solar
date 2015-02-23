@@ -1,7 +1,6 @@
 node_modules/
 locales/
 nw
-nw.exe
 nwjs.app
 credits.html
 nw.pak
@@ -9,3 +8,4 @@ nw.pak
 *.dll
 *.dat
 *.ini
+*.exe
