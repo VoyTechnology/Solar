@@ -1,107 +1,58 @@
+// Config file
+global.config = require("./config.json");
+global._home = __dirname;
+
 // Standard stuff
 var app = require('express')();
 var socket = require('socket.io');
-var server = app.listen(3000);
+var server = app.listen(global.config.mainServerPort);
 var io = socket.listen(server);
 
 // Database initialisation
 var mongojs = require('mongojs');
-var db = mongojs("solar", ["players"]);
+global.db = mongojs(global.config.database.name, [global.config.database.collections.players]);
 
-// Custom class declerations
-var Player = require("./src/Player.js");
+// Global userArray
+global.loggedInPlayers = [];
 
 // Server
 io.on("connection", function(socket) {
-	console.log("Someone connected");
-	var loggedIn = false;
-	var thisPlayer;
+	console.log("connected");
+	var session = {thisPlayer : {loggedIn : false}};
 
 	socket.on("register", function(data) {
-		console.log("attempted registration");
-		db.players.count({ username: data.username }, function (err, count) {
-  			if (count) {
-  				socket.emit("registerFail",{
-  					id: 0,
-  					message: "Username taken"
-				});
-  			}
-  			else if (data.password.length < 4) {
-  				socket.emit("registerFail",{
-  				 id: 1,
-  				 message: "Password too short"
-  				});
-  			}
-  			else {
-  				var newPlayer = new Player(data.username, data.password);
-  				db.players.save(newPlayer, function(err) {
-  					if (err) {
-  						console.log("error saving model of newly registered player");
-  					}
-  					else {
-  						console.log("Successful registration!");
-  					}
-  				});
-  				socket.emit("registerSuccess");
-  			}
-		});
+		require(global._home + global.config.paths.registerRH)(data, socket);
 	});
 
 	socket.on("login", function(data) {
-		console.log("attempted login");
-		if (loggedIn) {return;}
-		db.players.findOne({username: data.username}, function(err, doc) {
-			if (doc === null) {
-				socket.emit("loginFail");
-			}
-			else if (data.password != doc.password) {
-				socket.emit("loginFail");
-			}
-			else {
-				thisPlayer = new Player(doc);
-				loggedIn   = true;
-				socket.emit("loginSuccess", {
-					player: thisPlayer
-				});
-				console.log(thisPlayer.username + " just logged in!");
-			}
-		});
+		require(global._home + global.config.paths.loginRH)(data, session, socket);
+	});
+
+	socket.on("turn", function(data) {
+		require(global._home + global.config.paths.turnRH)(data, session, socket);
+	});
+
+	socket.on("move", function(data) {
+		require(global._home + global.config.paths.moveRH)(data, session, socket);
+	});
+
+	socket.on("chat", function(data) {
+		require(global._home + global.config.paths.chatRH)(data, session, socket);
+	});
+
+	socket.on("pstatus", function() {
+		require(global._home + global.config.paths.pstatusRH)(session, socket);
+	});
+
+	socket.on("time", function() {
+		require(global._home + global.config.paths.timeRH)(session, socket);
+	});
+
+	socket.on("version", function() {
+		require(global._home + global.config.paths.versionRH)(session, socket);
 	});
 
 	socket.on("disconnect", function() {
-		if (!loggedIn) {return;}
-		loggedIn = false;
-
-		db.players.findOne({_id: thisPlayer._id}, function(err, doc) {
-			if (err) {
-				console.log("Error updating player database before disconnect");
-			}
-			else {
-				thisPlayer.speed = 0;
-				thisPlayer.playersInRange = [];
-				db.players.update({_id: doc._id}, thisPlayer);
-				console.log(thisPlayer.username + " disconnected!");
-			}
-		});
-	});
-
-	socket.on("changeDirection", function(data) {
-		if (thisPlayer.canTurnHere(data)) {
-			thisPlayer.direction = data;
-			socket.emit("changeDirectionSuccess", thisPlayer.direction);
-		}
-		else {
-			socket.emit("changeDirectionFail");
-		}
-	});
-
-	socket.on("changePosition", function(data) {
-		if (thisPlayer.canMoveHere(data)) {
-			thisPlayer.position = data;
-			socket.emit("changePositionSuccess", thisPlayer.position);
-		}
-		else {
-			socket.emit("changePositionFail");
-		}
+		require(global._home + global.config.paths.disconnectRH)(session);
 	});
 });

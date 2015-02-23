@@ -1,6 +1,6 @@
 {
-  "name": "Solar-Server",
-  "description": "server for a realm on solar",
+  "name": "solar_server",
+  "description": "the official server for Solar",
   "version": "0.0.1",
   "dependencies": {
     "express": "^4.11.2",
