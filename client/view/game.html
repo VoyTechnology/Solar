@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Solar</title>
+    <link rel="stylesheet" type="text/css" href="../res/style/game.css">
+
+    <!-- Include the main.test.js script -->
+    <script type="text/javascript" src="../tests/main.test.js"></script>
+
+    <!-- Load essential libraries -->
+    <script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../lib/socket.io-1.3.3.min.js"></script>
+    <script type="text/javascript" src="../lib/threejs-r70.min.js"></script>
+    <script type="text/javascript" src="../lib/FlyControls.js"></script>
+
+    <!-- Load Source files from the src directory -->
+    <script>
+      var fs = require('fs');
+      var files = fs.readdirSync('./src');
+      for( var i = 0; i < files.length; i++){
+        var file = files[i];
+        if( (file != 'main.js') && (file.substr(file.length - 3) == '.js') ){
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.src = '../src/'+files[i];
+          document.head.appendChild(s);
+        }
+      }
+    </script>
+  </head>
+  <body>
+
+    <!-- Define in-game menus -->
+    <div class="gonsole">
+      <pre class="content">-----Solar Gonsole-----<br></pre>
+      <span class="ginput_wrap">&gt;<input id="ginput">
+    </div>
+
+    <div id="menu">
+      <span id="menu_resume">Resume</span>
+      <span id="settings">Settings</span>
+      <span id="menu_exit">Exit Game</span>
+    </div>
+
+    <!-- Include the main.js script -->
+    <script type="text/javascript" src="../src/main.js"></script>
+
+
+  </body>
+</html>

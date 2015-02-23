@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /*background-color: black;*/
+  color: white;
+  font-family: sans-serif;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.gonsole {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 99;
+  background: rgba(0,0,0,0.8);
+  color: #eee;
+  display: none;
+}
+
+.gonsole .ginput_wrap {
+  position: fixed;
+  bottom: 0;
+  width: 50%;
+  display: inline-block;
+}
+
+.gonsole #ginput {
+  background-color: inherit;
+  border: 0;
+  color: white;
+  font-size: 1em;
+  width: 80%;
+  display: inline-block;
+}
+
+.gonsole #ginput:focus {
+  outline: none;
+}
+
+#menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  padding: 10%;
+  display: none;
+  z-index: 99;
+}
+
+#menu span {
+  font-size: 2em;
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  color: #aaa;
+  width: 20%;
+}
+
+#menu span:hover {
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+}
