@@ -4,20 +4,23 @@ function Player() {
 		this.loggedIn = false;
 		this.username = username;
 		this.password = password;
-		this.position = {x:0, y:0, z:0};
-		this.direction = {xAngle:0, yAngle:0};
-		this.maxSpeed = 50;
+		this.orientation = {x:0, y:0, z:0};
+		this.direction = {x:0, y:0, z:0};
+		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
+		this.playersInRange = [];
 	};
 
 	this.PlayerFromDoc = function(doc, socket) {
 		this.loggedIn = false;
 		this.username = doc.username;
+		this.ship = "CoolShip";
 		this.password = doc.password;
-		this.position = doc.position;
+		this.orientation = doc.orientation;
 		this.direction = doc.direction;
-		this.maxSpeed = doc.maxSpeed;
+		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
 		this._id = doc._id;
 		this.socket = socket;
+		this.playersInRange = [];
 	};
 
 	switch (typeof arguments[0]) {
@@ -31,57 +34,56 @@ function Player() {
 }
 
 Player.prototype.canMoveHere = function(desiredLocation) {
-	var response = {
-		success : null,
-		message : null
-	};
-	var desiredSpeed = Math.sqrt(
-		Math.pow((desiredLocation.x - this.position.x),2) +
-		Math.pow((desiredLocation.y - this.position.y),2) +
-		Math.pow((desiredLocation.z - this.position.z),2)
+	var response;
+
+	var desiredDistance = Math.sqrt(
+		Math.pow((desiredLocation.x - this.orientation.x),2) +
+		Math.pow((desiredLocation.y - this.orientation.y),2) +
+		Math.pow((desiredLocation.z - this.orientation.z),2)
 	);
 
-	if (desiredSpeed > this.maxSpeed)
+	if (desiredDistance > this.moveDistanceAvailable)
 	{
-		response.success = false;
-		response.message = "tooFar";
-	}
-	else if (desiredLocation.x > global.config.mapSize || desiredLocation.x < 0 ||
-		desiredLocation.y > global.config.mapSize || desiredLocation.y < 0 ||
-		desiredLocation.z > global.config.mapSize || desiredLocation.z < 0 ) {
-		response.success = false;
-		response.message = "invalidLocation";
+		response = {
+			success : false,
+			message : "tooFar"
+		};
 	}
 	else {
-		response.success = true;
+		response = {
+			success : true,
+			distanceMoved : desiredDistance
+		};
 	}
 
-	return response;
-};
-
-Player.prototype.canTurnHere = function(desiredDirection) {
-	var response = {
-		success : null,
-		message : null
-	};
-	if (desiredDirection.xAngle > 2*Math.PI || desiredDirection.xAngle < 0 ||
-		desiredDirection.yAngle > 2*Math.PI || desiredDirection.yAngle < 0) {
-		response.success = false;
-		response.message = "badAngle";
-	}
-	else {
-		response.success = true;
-	}
 	return response;
 };
 
 Player.prototype.distanceBetweenPlayers = function(Player) {
-		return Math.sqrt (
-			Math.pow((Player.position.x - this.position.x),2) +
-			Math.pow((Player.position.y - this.position.y),2) +
-			Math.pow((Player.position.z - this.position.z),2)
-		);
+	return Math.sqrt (
+		Math.pow((Player.orientation.x - this.orientation.x),2) +
+		Math.pow((Player.orientation.y - this.orientation.y),2) +
+		Math.pow((Player.orientation.z - this.orientation.z),2)
+	);
+};
 
+Player.prototype.addAvailableDistance = function(distance) {
+	this.moveDistanceAvailable += distance;
+};
+
+Player.prototype.subtractAvailableDistance = function(distance) {
+	this.moveDistanceAvailable -= distance;
+};
+
+Player.prototype.broadcastMessageConstructor = function() {
+	var message = {
+		username : this.username,
+		ship : this.ship,
+		position : this.position,
+		orientation : this.orientation
+	};	
+
+	return message;
 };
 
 module.exports = Player;

@@ -1,9 +1,0 @@
-{
-  "name": "solar-server-test-suit",
-  "description": "testing suit for the solar server",
-  "version": "0.0.1",
-  "dependencies": {
-    "mongojs": "^0.18.1",
-    "socket.io-client": "^1.3.3"
-  }
-}
