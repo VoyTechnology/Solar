@@ -1,6 +1,5 @@
-function time(session, socket) {
-    var socketResponseEmitter = require(global._home + global.config.paths.socketResponseEM);
-    socketResponseEmitter.time(null, socket);
+function time(session, callback) {
+    global.server.actions.callbackEM.time(null, callback);
 }
 
 module.exports = time;

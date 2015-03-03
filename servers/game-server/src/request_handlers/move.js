@@ -1,30 +1,36 @@
 function move(data, session, socket) {
-    if (!session.thisPlayer.loggedIn){return;}
-    var socketResponseEmitter = require(global._home + global.config.paths.socketResponseEM);
-
-    if(data === null || typeof data.x === "undefined" || typeof data.y === "undefined" || typeof data.z === "undefined") {
-        return socketResponseEmitter.noData("move", socket);
+    if (!session.thisPlayer.loggedIn || !session.movementSynced) {
+        return;
     }
 
-    var brodcastMessageEmitter = require(global._home + global.config.paths.brodcastMessageEM);
-    var responseConditions = null;
+    if(data === null || typeof data.timestamp == "undefined" || typeof data.position == "undefined" || typeof data.orientation == "undefined") {
+
+        global.server.actions.messageEM.moveError(
+            lobal.server.config.errorCodes.e101,
+            data,
+            session.thisPlayer
+        );
+    }
+
     var canMoveResponse = session.thisPlayer.canMoveHere(data);
 
     if (canMoveResponse.success) {
-        session.thisPlayer.position = data;
-        responseConditions = {
-            success : true
-        };
-    }
-    else {
-        responseConditions = {
-            success : false,
-            reason : canMoveResponse.message
-        };
-    }
+        session.thisPlayer.position = data.position;
+        session.thisPlayer.orientation = data.orientation;
 
-    socketResponseEmitter.move(responseConditions, socket);
-    brodcastMessageEmitter.playerChangedState(session.thisPlayer, socket);
+        session.thisPlayer.subtratAvailableMoveDistance(canMoveResponse.distanceMoved);
+        setTimeout(session.thisPlayer.addAvailableDistance(canMoveResponse.distanceMoved), 1000);
+
+    }
+    else if(canMoveResponse.message == "tooFar") {
+        session.movementSynced = false;
+
+        global.server.actions.messageEM.moveError(
+            lobal.server.config.errorCodes.e109,
+            data,
+            session.thisPlayer
+        );
+    }
 }
 
 module.exports = move;
