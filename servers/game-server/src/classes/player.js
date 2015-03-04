@@ -75,13 +75,24 @@ Player.prototype.subtractAvailableDistance = function(distance) {
 	this.moveDistanceAvailable -= distance;
 };
 
-Player.prototype.broadcastMessageConstructor = function() {
+Player.prototype.getEssentialDetails = function() {
 	var message = {
 		username : this.username,
 		ship : this.ship,
 		position : this.position,
 		orientation : this.orientation
-	};	
+	};
+
+	return message;
+};
+
+Player.prototype.getMoveMessageDetails = function(timestamp) {
+	var message = {
+		timestamp : timestamp,
+		username : this.username,
+		position : this.position,
+		orientation : this.orientation
+	};
 
 	return message;
 };

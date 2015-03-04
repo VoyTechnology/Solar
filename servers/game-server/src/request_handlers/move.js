@@ -19,6 +19,7 @@ function move(data, session, socket) {
         session.thisPlayer.orientation = data.orientation;
 
         session.thisPlayer.subtratAvailableMoveDistance(canMoveResponse.distanceMoved);
+        global.server.actions.messageEM.move(data, socket);
         setTimeout(session.thisPlayer.addAvailableDistance(canMoveResponse.distanceMoved), 1000);
 
     }

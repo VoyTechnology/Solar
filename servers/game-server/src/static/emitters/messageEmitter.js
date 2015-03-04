@@ -54,6 +54,24 @@ var messageEmitter = {
             orientation : thisPlayer.orientation
         };
         socket.emit("moveError", data);
+    },
+
+    otherPlayers : function(thisPlayer, socket) {
+        var message = {
+            players : []
+        };
+
+        for(var somePlayer in global.server.loggedInPlayers) {
+            if (somePlayer.username != thisPlayer.username) {
+                message.players.push(somePlayer.getEssentialDetails());
+            }
+        }
+
+        socket.emit("otherPlayers", message);
+    },
+
+    move : function(data, socket) {
+        socket.emit.broadcast("move", data);
     }
 };
 

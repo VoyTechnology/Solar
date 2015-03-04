@@ -65,7 +65,6 @@
         "chatRH" : "/src/request_handlers/chat.js",
         "timeRH" : "/src/request_handlers/time.js",
         "moveSyncRH" : "/src/request_handlers/moveSync.js",
-        "otherPlayersIT" : "/src/static/intervals/otherPlayers.js",
         "messageEM" : "/src/static/emitters/messageEmitter.js"
     }
 }

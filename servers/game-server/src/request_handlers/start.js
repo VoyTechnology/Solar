@@ -17,6 +17,7 @@ function start(data, session, socket) {
             session.thisPlayer.loggedIn = true;
             global.server.loggedInPlayers.push(session.thisPlayer);
             global.server.actions.messageEM.accepted(session.thisPlayer, socket);
+            global.server.actions.messageEM.otherPlayers(session.thisPlayer, socket);
         });
     });
 }
