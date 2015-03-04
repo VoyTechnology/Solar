@@ -1,0 +1,57 @@
+{
+    "serverIp" : "localhost",
+    "serverPort" : 3000,
+    "mapSize" : 5000,
+    "minPasswordSize" : 4,
+    "waitTime" : 3000,
+    "database" : {
+        "name" : "solar",
+        "collections" : {
+            "players" : "players"
+        }
+    },
+    "testAccounts" : {
+        "a1" : {
+            "username" : "testun1",
+            "password" : "testpa1"
+        },
+        "a2" : {
+            "username" : "testun2",
+            "password" : "testpa2"
+        },
+        "a3" : {
+            "username" : "testun3",
+            "password" : "testpa3"
+        },
+        "a4" : {
+            "username" : "testun4",
+            "password" : "testpa4"
+        },
+        "a5" : {
+            "username" : "testun5",
+            "password" : "testpa5"
+        }
+    },
+    "APIFunctions" : {
+        "register" : "register",
+        "login" : "login",
+        "pstatus" : "pstatus",
+        "move" : "move",
+        "turn" : "turn",
+        "time" : "time",
+        "chat" : "chat",
+        "version" : "version"
+    },
+    "callbacks" : {
+        "register" : "register",
+        "login" : "login",
+        "pstatus" : "pstatus",
+        "move" : "move",
+        "turn" : "turn",
+        "playerChangedState" : "playerChangedState",
+        "playerLoggedIn" : "playerLoggedIn",
+        "time" : "time",
+        "chat" : "chat",
+        "version" : "version"
+    }
+}
