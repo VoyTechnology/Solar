@@ -1,0 +1,16 @@
+{
+    "dbName" : "solar",
+    "dbIP" : "localhost",
+    "dbPort" : 27017,
+    "entryNamePattern" : "testun",
+    "specials" : [
+        {"username" : "VoyTechnology", "token" : "windowsislife"},
+        {"username" : "JamesS", "token" : "windowsislife"},
+        {"username" : "CanOpener", "token" : "windowsislife"}
+    ],
+    "collections" : [
+        "players",
+        "authentication"
+    ],
+    "numTestAccounts" : 500
+}
