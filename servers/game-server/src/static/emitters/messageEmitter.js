@@ -10,7 +10,7 @@ var messageEmitter = {
             major : global.server.version.major,
             minor : global.server.version.minor,
             orientation : thisPlayer.orientation,
-            direction : thisPlayer.direction
+            position : thisPlayer.position
         };
 
         socket.emit("accepted", response);
@@ -47,12 +47,15 @@ var messageEmitter = {
     },
 
     moveError : function(error, original, thisPlayer, socket) {
+        console.log("Output --- VVV");
+
         var data = {
             error : error,
             original : original,
             position : thisPlayer.position,
             orientation : thisPlayer.orientation
         };
+        console.log(data);
         socket.emit("moveError", data);
     },
 
@@ -61,9 +64,11 @@ var messageEmitter = {
             players : []
         };
 
-        for(var somePlayer in global.server.loggedInPlayers) {
-            if (somePlayer.username != thisPlayer.username) {
-                message.players.push(somePlayer.getEssentialDetails());
+
+        for(var i=0; i<global.server.loggedInPlayers.length; i++) {
+
+            if (global.server.loggedInPlayers[i].username != thisPlayer.username) {
+                message.players.push(global.server.loggedInPlayers[i].getEssentialDetails());
             }
         }
 
@@ -71,7 +76,9 @@ var messageEmitter = {
     },
 
     move : function(data, socket) {
-        socket.emit.broadcast("move", data);
+        console.log("Output --- VVV");
+        console.log(data);
+        socket.broadcast.emit("move", data);
     }
 };
 

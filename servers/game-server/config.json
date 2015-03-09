@@ -3,13 +3,13 @@
     "mainServerPort" : 3000,
     "mapSize" : 5000,
     "minPasswordSize" : 4,
-    "moveDistanceAvailable" : 50,
+    "PlayerMoveDistanceAvailable" : 50,
     "database" : {
         "name" : "solar",
-        "collections" : {
-            "players" : "players",
-            "authentication" : "authentication"
-        }
+        "collections" : [
+            "players",
+            "authentication"
+        ]
     },
     "errorCodes" : {
         "e0" :  {
