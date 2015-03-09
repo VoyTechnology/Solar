@@ -5,7 +5,7 @@ function Player() {
 		this.username = username;
 		this.password = password;
 		this.orientation = {x:0, y:0, z:0};
-		this.direction = {x:0, y:0, z:0};
+		this.position = {x:0, y:0, z:0};
 		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
 		this.playersInRange = [];
 	};
@@ -16,7 +16,7 @@ function Player() {
 		this.ship = "CoolShip";
 		this.password = doc.password;
 		this.orientation = doc.orientation;
-		this.direction = doc.direction;
+		this.position = doc.position;
 		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
 		this._id = doc._id;
 		this.socket = socket;
@@ -55,7 +55,7 @@ Player.prototype.canMoveHere = function(desiredLocation) {
 			distanceMoved : desiredDistance
 		};
 	}
-
+	
 	return response;
 };
 

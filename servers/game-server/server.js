@@ -5,7 +5,8 @@ global.server = {
 	_home : __dirname,
 	loggedInPlayers : [],
 	version : {major : 0, minor : 0},
-	actions : {}
+	actions : {},
+	db : null
 };
 
 global.server.actions = {
@@ -30,12 +31,7 @@ var io = socket.listen(server);
 
 // Database initialisation
 var mongojs = require('mongojs');
-
-global.db = mongojs(global.server.config.database.name, [
-	global.server.config.database.collections.players,
-	global.server.config.database.collections.authentication
-]);
-
+global.server.db = mongojs(global.server.config.database.name, global.server.config.database.collections);
 
 // Server
 io.on("connection", function(socket) {
@@ -60,6 +56,10 @@ io.on("connection", function(socket) {
 
 	socket.on("time", function(callback) {
 		global.server.actions.timeRH(session, callback);
+	});
+
+	socket.on("moveSync", function(data) {
+		global.server.actions.moveSyncRH(data, session);
 	});
 
 	socket.on("disconnect", function() {
