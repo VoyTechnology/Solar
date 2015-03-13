@@ -1,34 +1,43 @@
 function Player() {
 
-	this.PlayerUandP = function(username, password, socket) {
-		this.loggedIn = false;
+	this.register = function(username, id, socket) {
+		var doc = {
+			username : username,
+			id : id,
+			orientation : {x:0, y:0, z:0},
+			position : {x:0, y:0, z:0},
+			ship : "CoolShip"
+		};
+
+		global.server.db.players.insert(doc);
+
+		this.loggedIn = true;
 		this.username = username;
-		this.password = password;
+		this.id = id;
 		this.orientation = {x:0, y:0, z:0};
 		this.position = {x:0, y:0, z:0};
+		this.ship = "CoolShip";
 		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
-		this.playersInRange = [];
+		this.socket = socket;
 	};
 
-	this.PlayerFromDoc = function(doc, socket) {
-		this.loggedIn = false;
+	this.loadFromDB = function(doc, socket) {
+		this.loggedIn = true;
+		this.id = doc.id;
 		this.username = doc.username;
-		this.ship = "CoolShip";
-		this.password = doc.password;
+		this.ship = doc.ship;
 		this.orientation = doc.orientation;
 		this.position = doc.position;
 		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
-		this._id = doc._id;
 		this.socket = socket;
-		this.playersInRange = [];
 	};
 
 	switch (typeof arguments[0]) {
 		case "string" :
-			this.PlayerUandP(arguments[0], arguments[1]);
+			this.register(arguments[0], arguments[1]);
 			break;
 		case "object" :
-			this.PlayerFromDoc(arguments[0], arguments[1]);
+			this.loadFromDB(arguments[0], arguments[1]);
 			break;
 	}
 }
@@ -55,7 +64,7 @@ Player.prototype.canMoveHere = function(desiredLocation) {
 			distanceMoved : desiredDistance
 		};
 	}
-	
+
 	return response;
 };
 
@@ -86,15 +95,16 @@ Player.prototype.getEssentialDetails = function() {
 	return message;
 };
 
-Player.prototype.getMoveMessageDetails = function(timestamp) {
-	var message = {
-		timestamp : timestamp,
+Player.prototype.getDetailsForDatabase = function() {
+	var details = {
 		username : this.username,
+		id : this.id,
+		orientation : this.orientation,
 		position : this.position,
-		orientation : this.orientation
+		ship : this.ship
 	};
 
-	return message;
+	return details;
 };
 
 module.exports = Player;
