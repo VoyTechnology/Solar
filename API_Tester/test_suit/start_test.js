@@ -7,7 +7,7 @@ var socket = io.connect("http://" + config.serverIp + ":" + config.serverPort.to
 
 // accounts to use
 var account = {
-    username : config.testAccounts.namePattern + "1",
+    id : 1,
     token : "1"
 };
 
@@ -40,7 +40,7 @@ exports.Bad_Token_Authentication_Test = function(test) {
     test.expect(5);
 
     var message = {
-        username : account.username,
+        id : account.id,
         token : "bgdklgfweiopfjbklnjsdvl"
     };
 

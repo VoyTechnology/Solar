@@ -1,15 +1,16 @@
 function move(data, session, socket) {
-    console.log("input---VVV");
+    console.log("INPUT");
     console.log(data);
+    console.log("\n");
+
     if (!session.thisPlayer.loggedIn || !session.movementSynced) {
-        console.log(session.thisPlayer.username + " Not Logged In");
         return;
     }
 
-    if(data === null || typeof data.timestamp == "undefined" || typeof data.position == "undefined" || typeof data.orientation == "undefined") {
-        console.log("Bad Data");
-        global.server.actions.messageEM.moveError(
-            lobal.server.config.errorCodes.e101,
+    var badData = global.server.actions.inputAN.move(data);
+    if (!badData.sucess) {
+        return global.server.actions.messageEM.moveError(
+            badData.error,
             data,
             session.thisPlayer,
             socket
@@ -17,8 +18,7 @@ function move(data, session, socket) {
     }
 
     if(data.username != session.thisPlayer.username) {
-        console.log("Usernames Not Matching");
-        global.server.actions.messageEM.moveError(
+        return global.server.actions.messageEM.moveError(
             global.server.config.errorCodes.e107,
             data,
             session.thisPlayer,
@@ -27,6 +27,10 @@ function move(data, session, socket) {
     }
 
     var canMoveResponse = session.thisPlayer.canMoveHere(data.position);
+
+    console.log("CAN MOVE RESPONSE");
+    console.log(canMoveResponse);
+    console.log("\n");
 
     if (canMoveResponse.success) {
         session.thisPlayer.position = data.position;

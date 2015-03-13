@@ -21,19 +21,14 @@ var messageEmitter = {
     },
 
     chat : function(conditions, socket) {
-        var message = {
-            timestamp : conditions.timestamp,
-            originator : conditions.originator,
-            recipient : conditions.recipientOriginal,
-            text : conditions.text
-        };
+        var message = conditions.original;
 
-        if (conditions.recipient.length === 0) {
-            socket.emit.broadcast("chat", message);
+        if (conditions.recipientArr.length === 0) {
+            socket.broadcast.emit("chat", message);
         }
         else {
-            for (var player in conditions.recipientArr) {
-                player.socket.emit("chat", message);
+            for (var i=0; i<conditions.recipientArr.length; i++) {
+                conditions.recipientArr[i].socket.emit("chat", message);
             }
         }
     },
@@ -47,7 +42,6 @@ var messageEmitter = {
     },
 
     moveError : function(error, original, thisPlayer, socket) {
-        console.log("Output --- VVV");
 
         var data = {
             error : error,
@@ -55,8 +49,12 @@ var messageEmitter = {
             position : thisPlayer.position,
             orientation : thisPlayer.orientation
         };
-        console.log(data);
         socket.emit("moveError", data);
+
+        console.log("OUTPUT");
+        console.log(data);
+        console.log("\n");
+
     },
 
     otherPlayers : function(thisPlayer, socket) {
@@ -76,8 +74,6 @@ var messageEmitter = {
     },
 
     move : function(data, socket) {
-        console.log("Output --- VVV");
-        console.log(data);
         socket.broadcast.emit("move", data);
     }
 };

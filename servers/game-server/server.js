@@ -20,7 +20,9 @@ global.server.actions = {
 	timeRH : require(__dirname + global.server.config.paths.timeRH),
 	moveSyncRH : require(__dirname + global.server.config.paths.moveSyncRH),
 	// Emitters
-	messageEM : require(__dirname + global.server.config.paths.messageEM)
+	messageEM : require(__dirname + global.server.config.paths.messageEM),
+	// Analysers
+	inputAN : require(__dirname + global.server.config.paths.inputAN)
 };
 
 // Standard stuff
@@ -46,8 +48,8 @@ io.on("connection", function(socket) {
 		global.server.actions.startRH(data, session, socket);
 	});
 
-	socket.on("chat", function(data, callback) {
-		global.server.actions.charRH(data, session, socket);
+	socket.on("chat", function(data) {
+		global.server.actions.chatRH(data, session, socket);
 	});
 
 	socket.on("move", function(data) {
