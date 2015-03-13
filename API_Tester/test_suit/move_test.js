@@ -5,8 +5,8 @@ var config = require("./config.json");
 var io = require('socket.io-client');
 var socket1 = io.connect("http://" + config.serverIp + ":" + config.serverPort.toString());
 var socket2 = io.connect("http://" + config.serverIp + ":" + config.serverPort.toString(), {'force new connection': true});
-socket1.emit("start", {username: "testun1", token: "1"});
-socket2.emit("start", {username: "testun2", token: "2"});
+socket1.emit("start", {id: 1, token: "1"});
+socket2.emit("start", {id: 2, token: "2"});
 
 // callback data variables
 var moveErrorData = null;
@@ -20,7 +20,7 @@ function resetData() {
     moveData = null;
     otherPlayersData = null;
     sock2MoveData = null;
-    socket1.emit("moveSync", {});
+    socket1.emit("moveSync", {timestamp : 1234, id : 1});
 }
 
 resetData();
@@ -53,6 +53,7 @@ exports.Too_far_Move_Test = function(test) {
     setTimeout(function(){
         var message = {
             timestamp : new Date().getTime(),
+            id : 1,
             username : "testun1",
             position : {x:1000,y:1000,z:1000},
             orientation : {x:1.5,y:0,z:1}
@@ -83,6 +84,7 @@ exports.Succesful_Move_Test = function(test) {
 
     var message = {
         timestamp : new Date().getTime(),
+        id : 1,
         username : "testun1",
         position : {x:20,y:20,z:20},
         orientation : {x:1.5,y:0,z:1}
@@ -108,23 +110,3 @@ exports.Succesful_Move_Test = function(test) {
         resetData();
     }, config.waitTime);
 };
-
-/*
-exports.Database_Saving_Position_Test = function(test) {
-    test.expect();
-
-    var message = {
-
-    };
-
-    socket.emit("x", message);
-
-    setTimeout(function(){
-        test.notEqual();
-        test.equal();
-
-        test.done();
-        resetData();
-    }, config.waitTime);
-};
-*/
