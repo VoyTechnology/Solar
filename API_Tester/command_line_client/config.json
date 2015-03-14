@@ -1,4 +1,9 @@
 {
     "serverIp" : "localhost",
     "serverPort" : 3000,
+    "produceLogs" : true,
+    "paths" : {
+        "sockCS" : "/src/classes/sock.js",
+        "emitData" : "/data.json"
+    }
 }
