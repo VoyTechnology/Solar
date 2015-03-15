@@ -2,8 +2,28 @@
     "serverIp" : "localhost",
     "serverPort" : 3000,
     "produceLogs" : true,
+    "errorCodes" : {
+        "e100" : "Unknown command.",
+        "e101" : "Invalid parameters.",
+        "e102" : "Socket does not exist",
+        "e103" : "Server does not exist",
+        "e104" : "Socket is closed"
+    },
     "paths" : {
         "sockCS" : "/src/classes/sock.js",
+        "navCS" : "/src/classes/nav.js",
+        "newSockRH" : "/src/request_handlers/newSock.js",
+        "delSockRH" : "/src/request_handlers/delSock.js",
+        "closeSockRH" : "/src/request_handlers/closeSock.js",
+        "openSockRH" : "/src/request_handlers/openSock.js",
+        "emitRH" : "/src/request_handlers/emit.js",
+        "listSocksRH" : "/src/request_handlers/listSocks.js",
+        "startStressRH" : "/src/request_handlers/startStress.js",
+        "stopStressRH" : "/src/request_handlers/stopStress.js",
+        "useSockRH" : "/src/request_handlers/useSock.js",
+        "showLogRH" : "/src/request_handlers/showLog.js",
+        "leaveSockRH" : "/src/request_handlers/leaveSock.js",
+        "parameterCheckerST" : "/src/static/parameterChecker.js",
         "emitData" : "/data.json"
     }
 }

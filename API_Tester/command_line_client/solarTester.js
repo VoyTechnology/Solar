@@ -1,106 +1,117 @@
-global.assets = {
-    rl : require("readline").createInterface ({
-        input: process.stdin,
-        output: process.stdout
-    }),
-    __home : __dirname,
-    config : require(__dirname + "/config.json"),
-    sockets : [],
-    nav : {
-        base : "SolarTester",
-        socket : null,
-        full : null,
-        reload : function(){
-            global.assets.nav.full = global.assets.nav.base.green;
-            if(global.assets.nav.socket !== null) {
-                global.assets.nav.full += "." + global.assets.nav.socket.yellow;
-            }
-            global.assets.nav.full += " -> ";
-        }
-    },
-    fs : require("fs"),
-    actions : null
-};
-
-global.assets.actions = {
-    sockCS : require(__dirname + global.assets.config.paths.sockCS)
-};
-
-
 require("colors");
-global.assets.rl.pause();
+global.config = require(__dirname + "/config.json");
+global.nav = new (require(__dirname + global.config.paths.navCS))();
+global.__home = __dirname;
+global.fs = require("fs");
+global.classes = {
+    sock : require(__dirname + global.config.paths.sockCS)
+};
+global.requestHandlers = {
+    closeSock : require(__dirname + global.config.paths.closeSockRH),
+    delSock : require(__dirname + global.config.paths.delSockRH),
+    emit : require(__dirname + global.config.paths.emitRH),
+    leaveSock : require(__dirname + global.config.paths.leaveSockRH),
+    listSocks : require(__dirname + global.config.paths.listSocksRH),
+    newSock : require(__dirname + global.config.paths.newSockRH),
+    openSock : require(__dirname + global.config.paths.openSockRH),
+    showLog : require(__dirname + global.config.paths.showLogRH),
+    startStress : require(__dirname + global.config.paths.startStressRH),
+    stopStress : require(__dirname + global.config.paths.stopStressRH),
+    useSock : require(__dirname + global.config.paths.useSockRH)
+};
+global.static = {
+    parameterChecker : require(__dirname + global.config.paths.parameterCheckerST)
+};
+global.servers = {
+    game_server : {
+        sockets : []
+    }
+};
 
-global.assets.nav.reload();
-process.stdout.write(global.assets.nav.full);
-global.assets.rl.resume();
+var rl = require("readline").createInterface ({
+    input: process.stdin,
+    output: process.stdout
+}); rl.setPrompt("");
 
-global.assets.rl.on("line", function(command) {
 
-    global.assets.rl.pause();
+
+
+
+function prompt() {
+    process.stdout.write(global.nav.getPrompt());
+    rl.resume();
+}
+
+prompt();
+
+rl.on("line", function(command) {
+    rl.pause();
+
     var commandWords = command.split(" ");
 
     switch (commandWords[0].toLowerCase()) {
         case "newsock" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.newSock(commandWords, prompt);
             break;
 
         case "delsock" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.delSock(commandWords, prompt);
             break;
 
         case "closesock" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.closeSock(commandWords, prompt);
             break;
 
         case "opensock" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.openSock(commandWords, prompt);
             break;
 
         case "emit" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.emit(commandWords, prompt);
             break;
 
         case "listsocks" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.listSocks(commandWords, prompt);
             break;
 
         case "startstress" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.startStress(commandWords, prompt);
             break;
 
         case "stopstress" :
-            console.log("Good".green);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            commandWords.splice(0,1);
+            global.requestHandlers.stopStress(commandWords, prompt);
+            break;
+
+        case "usesock" :
+            commandWords.splice(0,1);
+            global.requestHandlers.useSock(commandWords, prompt);
+            break;
+
+        case "showlog" :
+            commandWords.splice(0,1);
+            global.requestHandlers.showLog(commandWords, prompt);
+            break;
+
+        case "leavesock" :
+            commandWords.splice(0,1);
+            global.requestHandlers.leaveSock(commandWords, prompt);
+            break;
+
+        case "" :
+            prompt();
             break;
 
         default :
-            console.log("Bad Command".red);
-            console.log(commandWords);
-            process.stdout.write(global.assets.nav.full);
-            global.assets.rl.resume();
+            console.log("ERROR".red);
+            console.log(global.config.errorCodes.e100.red);
+            prompt();
     }
-
 });
