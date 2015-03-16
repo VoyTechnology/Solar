@@ -10,7 +10,7 @@ var messageEmitter = {
             major : global.server.version.major,
             minor : global.server.version.minor,
             orientation : thisPlayer.orientation,
-            direction : thisPlayer.direction
+            position : thisPlayer.position
         };
 
         socket.emit("accepted", response);
@@ -21,19 +21,14 @@ var messageEmitter = {
     },
 
     chat : function(conditions, socket) {
-        var message = {
-            timestamp : conditions.timestamp,
-            originator : conditions.originator,
-            recipient : conditions.recipientOriginal,
-            text : conditions.text
-        };
+        var message = conditions.original;
 
-        if (conditions.recipient.length === 0) {
-            socket.emit.broadcast("chat", message);
+        if (conditions.recipientArr.length === 0) {
+            socket.broadcast.emit("chat", message);
         }
         else {
-            for (var player in conditions.recipientArr) {
-                player.socket.emit("chat", message);
+            for (var i=0; i<conditions.recipientArr.length; i++) {
+                conditions.recipientArr[i].socket.emit("chat", message);
             }
         }
     },
@@ -47,6 +42,7 @@ var messageEmitter = {
     },
 
     moveError : function(error, original, thisPlayer, socket) {
+
         var data = {
             error : error,
             original : original,
@@ -54,6 +50,11 @@ var messageEmitter = {
             orientation : thisPlayer.orientation
         };
         socket.emit("moveError", data);
+
+        console.log("OUTPUT");
+        console.log(data);
+        console.log("\n");
+
     },
 
     otherPlayers : function(thisPlayer, socket) {
@@ -61,9 +62,11 @@ var messageEmitter = {
             players : []
         };
 
-        for(var somePlayer in global.server.loggedInPlayers) {
-            if (somePlayer.username != thisPlayer.username) {
-                message.players.push(somePlayer.getEssentialDetails());
+
+        for(var i=0; i<global.server.loggedInPlayers.length; i++) {
+
+            if (global.server.loggedInPlayers[i].username != thisPlayer.username) {
+                message.players.push(global.server.loggedInPlayers[i].getEssentialDetails());
             }
         }
 
@@ -71,7 +74,7 @@ var messageEmitter = {
     },
 
     move : function(data, socket) {
-        socket.emit.broadcast("move", data);
+        socket.broadcast.emit("move", data);
     }
 };
 

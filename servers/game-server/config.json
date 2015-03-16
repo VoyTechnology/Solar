@@ -3,13 +3,13 @@
     "mainServerPort" : 3000,
     "mapSize" : 5000,
     "minPasswordSize" : 4,
-    "moveDistanceAvailable" : 50,
+    "PlayerMoveDistanceAvailable" : 50,
     "database" : {
         "name" : "solar",
-        "collections" : {
-            "players" : "players",
-            "authentication" : "authentication"
-        }
+        "collections" : [
+            "players",
+            "authentication"
+        ]
     },
     "errorCodes" : {
         "e0" :  {
@@ -65,6 +65,7 @@
         "chatRH" : "/src/request_handlers/chat.js",
         "timeRH" : "/src/request_handlers/time.js",
         "moveSyncRH" : "/src/request_handlers/moveSync.js",
-        "messageEM" : "/src/static/emitters/messageEmitter.js"
+        "messageEM" : "/src/static/emitters/messageEmitter.js",
+        "inputAN" : "/src/static/analysers/inputAnalyser.js"
     }
 }

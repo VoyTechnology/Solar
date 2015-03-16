@@ -1,10 +1,13 @@
 function chat(data, session, socket) {
+
     if (!session.thisPlayer.loggedIn) {
         return;
     }
 
-    if ( data === null || typeof data.timestamp == "undefined" || typeof data.originator == "undefined" || typeof data.originator == "undefined" || typeof data.text == "undefined" ) {
-        return global.server.actions.messageEM.chatError(global.server.config.errorCodes.e101, data, socket);
+    var badData = global.server.actions.inputAN.chat(data);
+    if ( !badData.sucess ) {
+        console.log("HEHEHEHEHEEH");
+        return global.server.actions.messageEM.chatError(badData.error, data, socket);
     }
 
     if (data.originator != session.thisPlayer.username) {
@@ -13,14 +16,15 @@ function chat(data, session, socket) {
 
     var recipientArr = [];
 
-    for (var playerName in data.recipient) {
+    for(var i=0; i<data.recipient.length; i++)
+    {
         var playerFound = false;
 
-        for (var player in global.server.loggedInPlayers) {
-            if (player.username == playerName) {
+        for(var j=0; j<global.server.loggedInPlayers.length; j++)
+        {
+            if(data.recipient[i] == global.server.loggedInPlayers[j].username) {
                 playerFound = true;
-                recipientArr.push(player);
-                break;
+                recipientArr.push(global.server.loggedInPlayers[j]);
             }
         }
 
@@ -29,11 +33,10 @@ function chat(data, session, socket) {
         }
     }
 
+
+
     var conditions = {
-        timestamp : data.timestamp,
-        originator : data.originator,
-        recipientOriginal : data.recipient,
-        text : data.text,
+        original : data,
         recipientArr : recipientArr
     };
 
