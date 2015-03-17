@@ -31,7 +31,7 @@ for (i=0; i<config.numTestAccounts; i++) {
     var entry = {
         username : config.entryNamePattern + num,
         password : "CoolPassword",
-        ship : "CoolShip",
+        ship : "astratis_v1",
         position : {x:0, y:0, z:0},
         orientation : {x:0, y:0, z:0}
     };
@@ -41,9 +41,9 @@ for (i=0; i<config.numTestAccounts; i++) {
 
 for (i=0; i<config.specials.length; i++) {
     var entry = {
-        username : config.specials[i],
+        username : config.specials[i].username,
         password : "windowsislife",
-        ship : "CoolShip",
+        ship : "astratis_v1",
         position : {x:0, y:0, z:0},
         orientation : {x:0, y:0, z:0}
     }

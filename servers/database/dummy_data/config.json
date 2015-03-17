@@ -12,5 +12,5 @@
         "players",
         "authentication"
     ],
-    "numTestAccounts" : 500
+    "numTestAccounts" : 20
 }
