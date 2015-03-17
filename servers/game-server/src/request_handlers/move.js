@@ -17,7 +17,7 @@ function move(data, session, socket) {
         );
     }
 
-    if(data.username != session.thisPlayer.username) {
+    if(data.id != session.thisPlayer.id) {
         return global.server.actions.messageEM.moveError(
             global.server.config.errorCodes.e107,
             data,
