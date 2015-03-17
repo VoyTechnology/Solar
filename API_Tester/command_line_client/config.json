@@ -2,12 +2,16 @@
     "serverIp" : "localhost",
     "serverPort" : 3000,
     "produceLogs" : true,
+    "logOutput" : 5,
     "errorCodes" : {
-        "e100" : "Unknown command.",
-        "e101" : "Invalid parameters.",
-        "e102" : "Socket does not exist",
-        "e103" : "Server does not exist",
-        "e104" : "Socket is closed"
+        "e100" : "ERROR\nUnknown command.\n",
+        "e101" : "ERROR\nInvalid parameters.\n",
+        "e102" : "ERROR\nSocket does not exist\n",
+        "e103" : "ERROR\nServer does not exist\n",
+        "e104" : "ERROR\nSocket is closed\n",
+        "e105" : "ERROR\nNot in game server.\n",
+        "e106" : "ERROR\nSocket with that name already exists.\n",
+        "e107" : "ERROR\nLog is empty.\n"
     },
     "paths" : {
         "sockCS" : "/src/classes/sock.js",

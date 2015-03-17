@@ -1,3 +1,5 @@
+// this static class is made to check parameters for each request handler
+
 var parameterChecker = {
 
     newSock : function(parameters) {

@@ -3,6 +3,7 @@ global.config = require(__dirname + "/config.json");
 global.nav = new (require(__dirname + global.config.paths.navCS))();
 global.__home = __dirname;
 global.fs = require("fs");
+global.io = require('socket.io-client');
 global.classes = {
     sock : require(__dirname + global.config.paths.sockCS)
 };
@@ -24,7 +25,11 @@ global.static = {
 };
 global.servers = {
     game_server : {
-        sockets : []
+        sockets : [],
+        stress : {
+            active : false,
+            sockets :[]
+        }
     }
 };
 
@@ -33,22 +38,52 @@ var rl = require("readline").createInterface ({
     output: process.stdout
 }); rl.setPrompt("");
 
+// prompting
+function prompt(err) {
+    if (err !== null) {
+        //referencing errorCodes for convenience
+        var ec = global.config.errorCodes;
 
-
-
-
-function prompt() {
+        switch (err) {
+            case 100 :
+                console.log(ec.e100.red);
+                break;
+            case 101 :
+                console.log(ec.e101.red);
+                break;
+            case 102 :
+                console.log(ec.e102.red);
+                break;
+            case 103 :
+                console.log(ec.e103.red);
+                break;
+            case 104 :
+                console.log(ec.e104.red);
+                break;
+            case 105 :
+                console.log(ec.e105.red);
+                break;
+            case 106 :
+                console.log(ec.e106.red);
+                break;
+            case 107 :
+                console.log(ec.e107.red);
+        }
+    }
     process.stdout.write(global.nav.getPrompt());
     rl.resume();
 }
 
 prompt();
 
+// called when a user writes a command
 rl.on("line", function(command) {
     rl.pause();
 
+    // tokenizing the array for easy acess to parameters
     var commandWords = command.split(" ");
 
+    // event handlers for each command below
     switch (commandWords[0].toLowerCase()) {
         case "newsock" :
             commandWords.splice(0,1);
@@ -105,13 +140,18 @@ rl.on("line", function(command) {
             global.requestHandlers.leaveSock(commandWords, prompt);
             break;
 
+        case "test" :
+            global.servers.game_server.sockets[0].clearLog();
+            console.log(global.servers.game_server.sockets);
+            prompt();
+            break;
+
         case "" :
             prompt();
             break;
 
         default :
-            console.log("ERROR".red);
-            console.log(global.config.errorCodes.e100.red);
+            console.log(global.servers.game_Server.sockets);
             prompt();
     }
 });

@@ -7,13 +7,13 @@ function nav() {
 
     this.getPrompt = function() {
         var promptText = "";
-        promptText += this.baseText.bold.green;
+        promptText += this.baseText.bold.yellow;
 
         if (this.server !== null) {
-            promptText += this.sectionSeparator + this.server.cyan;
+            promptText += this.sectionSeparator + this.server.gray;
         }
         if (this.socket !== null) {
-            promptText += this.sectionSeparator + this.socket.yellow;
+            promptText += this.sectionSeparator + this.socket.cyan;
         }
 
         promptText += this.promptText;
@@ -52,8 +52,8 @@ function nav() {
             return true;
         }
         else {
-            for (var i=0; i<global.game_server.sockets.length; i++) {
-                if (toSocket == global.game_server.sockets[i].name) {
+            for (var i=0; i<global.servers.game_server.sockets.length; i++) {
+                if (toSocket == global.servers.game_server.sockets[i].name) {
                     this.socket = toSocket;
                     return true;
                 }

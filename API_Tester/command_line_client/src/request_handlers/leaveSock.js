@@ -1,10 +1,17 @@
 function leaveSock(parameters, callback) {
 
     if (!global.static.parameterChecker.leaveSock(parameters)) {
-        console.log("ERROR".red);
-        console.log(global.config.errorCodes.e101.red);
-        callback();
+        callback(101);
     }
+
+    //checking if within game server
+    if (global.nav.server != "Game_Server") {
+        return callback(105);
+    }
+
+    global.nav.switchSocket(-1);
+    console.log();
+    callback();
 
 }
 
