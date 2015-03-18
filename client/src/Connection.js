@@ -144,20 +144,70 @@ Connection.prototype.disconnect = function(msg){
   });
 };
 
-
 Connection.prototype.sendMessage = function (recipients, msg) {
+     var that = this;
 
+     if (that.authorised) {
+
+         /*
+            temporary fix for the no usernames problem
+         */
+
+         var username = "";
+        
+         switch(+settings.get('username')) {
+
+             case 0 : username = "james"; break;
+             case 1 : username = "woj"; break;
+             case 2 : username = "mladen"; break;
+             default : username = "testun" + (+settings.get('username')).toString(); break;
+
+        }
+
+         /*
+
+         */
+
+         var messageData = {
+             timestamp: (new Date()).getTime(),
+             id: +settings.get('username'),
+             originator: username,
+             recipient: recipients,
+             text: msg
+         };
+
+         that._socket.emit('chat', messageData);
+
+         log.debug(messageData);
+
+         var gonsoleLogMessage = "";
+         if(recipients.length === 0) {
+             gonsoleLogMessage += "(G)";
+         }
+         gonsoleLogMessage += "you : ";
+         gonsoleLogMessage += msg;
+
+         gonsole.log(msg);
+     }
+};
+
+Connection.prototype.listenForChat = function () {
     var that = this;
 
-    if (that.authorised) {
+    that._socket.on('chat', function(data){
+        var msg = "";
 
-        var messageData = {
-            timestamp: (new Date()).getTime(),
-            originator: +settings.get('username'),
-            recipient: recipients,
-            text: msg
-        };
+        if(data.recipient.length === 0) {
+            msg += "(G)";
+        }
 
-        that._socket.emit('chat', messageData);
-    }
+        msg += data.originator +" : ";
+        msg += data.text;
+        gonsole.log(msg);
+    });
+
+    that._socket.on("chatError", function(data) {
+        log.warning("Chat Error");
+        log.warning(data.error.reasonText);
+    });
 };

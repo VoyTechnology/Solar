@@ -50,6 +50,13 @@ Gonsole.prototype.execCmd = function (msg) {
             //log.info("Solar v" + package.version);
             break;
 
+        case '/m':
+            log.debug(msg);
+            var reciever = [];
+            reciever.push(msg[1]);
+            connection.sendMessage(reciever, msg[2]);
+            break;
+
         default:
             log.error('Unknown command ' + msg[0]);
             break;

@@ -16,6 +16,7 @@ function init(){
   // Try to connect and then wait to see was connection successful
   connection.connect();
   connection.otherPlayers();
+  connection.listenForChat();
 
   setTimeout(function(){
 
