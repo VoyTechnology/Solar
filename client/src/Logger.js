@@ -18,7 +18,7 @@ var Logger = function(msg){
 Logger.prototype.info = function(msg){
   msg = "[INFO]\t" + msg;
   console.log(msg);
-  this.gonsoleLog(msg);
+  this.gonsoleLog("<be>"+msg+"</be>");
 };
 
 /**
@@ -28,9 +28,9 @@ Logger.prototype.info = function(msg){
  **/
 Logger.prototype.debug = function(msg){
   if(dev){
-    msg = "[DEBUG]\t" + msg;
+    msg = "[DEBUG] " + msg;
     console.log(msg);
-    this.gonsoleLog(msg);
+    this.gonsoleLog("<ye>"+msg+"</ye>");
   }
 };
 
@@ -43,7 +43,7 @@ Logger.prototype.debug = function(msg){
 Logger.prototype.warning = function(msg){
   msg = "[WARN]\t" + msg;
   console.log(msg);
-  this.gonsoleLog(msg);
+  this.gonsoleLog("<oe>"+msg+"</oe>");
 };
 
 /**
@@ -55,7 +55,7 @@ Logger.prototype.warning = function(msg){
 Logger.prototype.warn = function(msg){
   msg = "[WARN]\t" + msg;
   console.log(msg);
-  this.gonsoleLog(msg);
+  this.gonsoleLog("<oe>"+msg+"</oe>");
 };
 
 /**
@@ -66,7 +66,7 @@ Logger.prototype.warn = function(msg){
 Logger.prototype.error = function(msg){
   msg = "[ERROR]\t" + msg;
   console.log(msg);
-  this.gonsoleLog(msg);
+  this.gonsoleLog("<re>"+msg+"</re>");
 };
 
 /**
