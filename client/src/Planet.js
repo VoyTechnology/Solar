@@ -37,20 +37,37 @@ var Planet = function(prop){
 
 };
 
+/**
+ * Sets the distance away from the sun
+ * @method
+ */
 Planet.prototype.setDistance = function(distance){
 	this.distance = distance;
 };
 
+/**
+ * Sets the orbit time
+ * @method
+ */
 Planet.prototype.setOrbitTime = function(otime){
 	// Orbit time is provided in seconds
 	this.orbitTime = otime*1000;
 };
 
+/**
+ * Updates the location of the planet
+ * @method
+ */
 Planet.prototype.update = function( delta ){
 	this.pObj.position.x = this.distance * Math.cos( ( (new Date()).getTime() / this.orbitTime ));
 	this.pObj.position.z = this.distance * Math.sin( ( (new Date()).getTime() / this.orbitTime ));
 };
 
+/**
+ * Gets the planet object
+ * @method
+ * @returns {Object} THREE.js object 
+ */
 Planet.prototype.getObject = function(){
 	return this.pObj;
 };

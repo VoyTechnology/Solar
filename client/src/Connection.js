@@ -35,6 +35,10 @@ var Connection = function(){
 
 };
 
+/**
+ * Connects to the server
+ * @method
+ */
 Connection.prototype.connect = function(){
   var that = this;
 
@@ -75,6 +79,12 @@ Connection.prototype.connect = function(){
 
 };
 
+/**
+ * Sends the 'move' message to the server
+ * @method
+ * @param {Object} pos - Position of the player
+ * @param {Object} rot - Rotation of the player
+ */
 Connection.prototype.updateLocation = function(pos, rot){
   var that = this;
 
@@ -88,6 +98,10 @@ Connection.prototype.updateLocation = function(pos, rot){
   }
 };
 
+/**
+ * Gets other players
+ * @method
+ */
 Connection.prototype.otherPlayers = function(){
   var that = this;
 
@@ -102,6 +116,10 @@ Connection.prototype.otherPlayers = function(){
   this.updateOthers();
 };
 
+/**
+ * Listens for  the 'move' message from the server
+ * @method
+ */
 Connection.prototype.updateOthers = function(){
 
   var that = this;
@@ -122,27 +140,16 @@ Connection.prototype.updateOthers = function(){
   }
 };
 
+
+/**
+ * Disconnects from the server
+ * @method
+ * @param {string} msg - Message to send to the server
+ */
 Connection.prototype.disconnect = function(msg){
   var that = this;
 
   that._socket.emit('disconnect', {
     'reasonText': msg
   });
-};
-
-// Placeholder for future function
-Connection.prototype.sendPrivateMessage = function(to, msg){
-  var that = this;
-
-  if(this._authorised){
-
-  }
-};
-
-Connection.prototype.sendGlobalMessage = function(msg){
-  var that = this;
-
-  if(this._established){
-
-  }
 };
