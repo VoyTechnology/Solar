@@ -1,7 +1,7 @@
 {
   "devmode": true,
   "discovery": {
-    "address": "http://localhost:8080"
+    "address": "http://178.62.116.176:3003/getServers"
   },
   "server": {
     "protocol": "http",
