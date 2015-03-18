@@ -1,3 +1,11 @@
+/**
+ * @file Contains the Ship class
+ */
+
+/**
+ * Ship Class
+ * @class
+ */
 var Ship = function( shipName, isPlayerControling ){
 
   this.loaded = false;
@@ -30,6 +38,11 @@ var Ship = function( shipName, isPlayerControling ){
   });
 };
 
+/**
+ * Updates the location of player's ship
+ * @method
+ * @param {object} data - data to update with
+ */
 Ship.prototype.update = function( data ){
   this.model.position.x = data.position.x;
   this.model.position.y = data.position.y;

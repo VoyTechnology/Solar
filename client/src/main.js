@@ -9,18 +9,30 @@ var package = require('../package.json'),
     gui = require('nw.gui');
 
 // Define all document scope variables
+/** @global */
 var dev = config.devmode;
 
+/** @global */
 var settings, log, gonsole;
+/** @global */
 var scene, camera, renderer;
 
+/** @global */
 var clock, controls;
 
+/** @global */
 var connection;
 
+/** @global */
 var player;
+
+/** @global */
 var players = [];
+
+/** @global */
 var planets = [];
+
+/** @global */
 var models = [];
 
 // Test variables
