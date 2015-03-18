@@ -5,30 +5,78 @@
     <link rel="stylesheet" type="text/css" href="../res/style/launcher.css">
     <script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="../src/Settings.js"></script>
+    <script type="text/javascript" src="../src/solar.js"></script>
     <script>
       var gui = require('nw.gui');
+      var package = require('../package.json');
+      var config = require('../config.json');
       var settings, gameWin;
+      var formShown = false;
 
       $(document).ready( function(){
-        settings = new Settings();
+        settings = new Settings(config.defaults);
+
+        // Get the latest server address from the discovery server
+        $.getJSON(config.discovery.address, function(data){
+          if(data.success){
+            settings.set("gameServerAddress", data.addresses.gameServer);
+            settings.set("gameServerAddress", data.addresses.gameServer);
+            settings.set("gameServerAddress", data.addresses.gameServer);
+          }
+        });
+
 
         var fullscreen = !!settings.get('fullscreen');
 
-        //gui.Window.get().showDevTools();
+        // Load the changelog and news
+        $('#news').load("https://www.redbrick.dcu.ie/~voy/Solar/updates.php #post");
+        $('#changelog').load("https://www.redbrick.dcu.ie/~voy/Solar/updates.php #updates");
+
+        // Add in the version of the client
+        $('#version').html("v"+package.version);
+        $('#version').click( function(){
+          gui.Window.get().showDevTools();
+        });
 
         $('#exit').click( function(){
           gui.Window.get().close();
         });
 
+        if(settings.get("token").length !== 0){
+          $('#play').html("Play");
+        }
+
+        // Populate the form data if the username and password is saved
+        $("#username").val(settings.get("username"));
+
         $('#play').click( function(){
 
-          gameWin = gui.Window.open("game.html", {
-            toolbar: false,
-            frame: false,
-            fullscreen: fullscreen
-          });
+          if(settings.get("token").length === 0){
+            $('#loginForm').show();
+            var user = $("#username").val();
+            var pass = $("#password").val();
+            var remember = $("#remember").val();
 
-          gui.Window.get().close();
+            if( (user.length === 0) || (pass.length === 0) ){
+
+            } else {
+              $('#loginForm').hide();
+              if(remember){
+                settings.set("username", user);
+              }
+              settings.set("token", pass);
+              $("#play").html("Play");
+            }
+          } else {
+            gameWin = gui.Window.open("game.html", {
+              toolbar: true,
+              frame: false,
+              fullscreen: fullscreen
+            });
+
+            gui.Window.get().close();
+          }
+
         });
 
       });
@@ -40,6 +88,25 @@
       <div id="exit"></div>
     </div>
 
-    <div id="play">Play</div>
+    <div id="loginForm">
+      <input id="username" placeholder="Username" class="text-input">
+      <input id="password" type="password" placeholder="Password" class="text-input">
+      <input id="remember" type="checkbox">Remember Me</input>
+      <a href="#" onclick="gui.Shell.openExternal('http://solar.razoft.com/register');">No account? Register</a>
+    </div>
+
+    <div id="content">
+        <div class="s2o3">
+          <div id="news"></div>
+        </div>
+        <div class="s1o3">
+          <b>Changelog</b>
+          <div id="changelog"></div>
+        </div>
+    </div>
+
+    <div id="version"></div>
+
+    <div id="play" class="button">Login</div>
   </body>
 </html>
