@@ -47,7 +47,11 @@ echo "Saving in temporary directory $TMP_DIR"
 
 mkdir -p "$TMP_DIR/src"
 
-java -jar compiler.jar --language_in ECMASCRIPT5 --js "$SOURCE_DIR/src/**.js" --js_output_file "$TMP_DIR/src/solar.js"
+java -jar compiler.jar \
+	--compilation_level WHITESPACE_ONLY \
+	--language_in ECMASCRIPT5 \
+	--js "$SOURCE_DIR/src/**.js" \
+	--js_output_file "$TMP_DIR/src/solar.js"
 
 # Copy the rest of files
 cp "$SOURCE_DIR/package.json" "$TMP_DIR/package.json"
@@ -62,6 +66,7 @@ cp -r "$SOURCE_DIR/lib" "$TMP_DIR/lib"
 cp -r "$SOURCE_DIR/res" "$TMP_DIR/res"
 cp -r "$SOURCE_DIR/view" "$TMP_DIR/view"
 cp -r "$SOURCE_DIR/lang" "$TMP_DIR/lang"
+cp "$SOURCE_DIR/src/Settings.js" "$TMP_DIR/src/Settings.js"
 
 FULL_TARGET_DIR=$(readlink -f $TARGET_DIR)
 FULL_SOURCE_DIR=$(readlink -f $SOURCE_DIR)
