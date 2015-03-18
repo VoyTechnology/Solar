@@ -16,7 +16,7 @@ var Gonsole = function () {
  * @param {string} msg - Message to log
  */
 Gonsole.prototype.log = function (msg) {
-    $('.gonsole .content').append("<ge>" + msg + "<ge>");
+    $('.gonsole .content').append("<ge>" + msg + "</ge>");
 };
 
 /**
@@ -47,7 +47,7 @@ Gonsole.prototype.execCmd = function (msg) {
             break;
 
         case '/version':
-            log.info("Solar v" + package.version);
+            //log.info("Solar v" + package.version);
             break;
 
         default:
