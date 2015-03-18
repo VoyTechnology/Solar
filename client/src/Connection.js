@@ -6,24 +6,14 @@
  * Stores the server connection
  * @class
  */
-var Connection = function(){
+var Connection = function( gameServerAddress ){
   var that = this;
 
   // Check is the connection established
   this.established = false;
   this.authorised = false;
 
-  var connString = "";
-  connString += config.server.protocol;
-  connString += "://";
-  connString += config.server.address;
-  connString += ":";
-  connString += config.server.port;
-  connString += "/";
-
-  console.log(connString);
-
-  this._socket = io(connString);
+  this._socket = io(gameServerAddress);
 
   this._socket.on('connection', function(){
     log.debug("Connection Initialized");
