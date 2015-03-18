@@ -18,10 +18,11 @@
 
         // Get the latest server address from the discovery server
         $.getJSON(config.discovery.address, function(data){
+          console.log(data);
           if(data.success){
-            settings.set("gameServerAddress", data.addresses.gameServer);
-            settings.set("gameServerAddress", data.addresses.gameServer);
-            settings.set("gameServerAddress", data.addresses.gameServer);
+            settings.set("gameServerAddress", data.servers.gameServer);
+            settings.set("authServerAddress", data.servers.authServer);
+            settings.set("tradeServerAddress", data.servers.tradeServer);
           }
         });
 
