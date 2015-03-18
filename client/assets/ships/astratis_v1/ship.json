@@ -1,0 +1,25 @@
+{
+  "name":"Astratis",
+  "model":"astratis_v1",
+  "model_format": "collada",
+  "lod": {
+    "high": "",
+    "med": "",
+    "low": ""
+  },
+  "material" : {
+    "interior": "",
+    "exterior": ""
+  },
+  "camera": {
+    "x": 10,
+    "y": -20
+  },
+  "size": 20,
+  "max_speed": 0.5,
+  "max_rotation": 0.3,
+  "weight": 13,
+  "acceleration": {
+    "forward": 1
+  }
+}
