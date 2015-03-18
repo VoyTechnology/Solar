@@ -7,7 +7,7 @@ function init(){
   // Assign values to their corresponding definitions
   settings  =   new Settings(config.defaults);
   log       =   new Logger("Logger initialized");
-  connection=   new Connection();
+  connection=   new Connection( settings.get('gameServerAddress') );
   gonsole   =   new Gonsole();
   player    =   new Player();
 
@@ -16,12 +16,6 @@ function init(){
   // Try to connect and then wait to see was connection successful
   connection.connect();
   connection.otherPlayers();
-
-  settings  = new Settings();
-  log       = new Logger("Logger initialized");
-  gonsole   = new Gonsole();
-  connection =  new Connection("Connection...");
-
 
   setTimeout(function(){
 
