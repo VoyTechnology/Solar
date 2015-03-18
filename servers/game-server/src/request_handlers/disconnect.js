@@ -1,19 +1,25 @@
-function disconnect(session) {
-    if (!session.thisPlayer.loggedIn) {return;}
+/*
+This file contains code to be
+executed when the server receives
+a "disconnect" message
+*/
 
-    global.server.db.players.findOne({id: session.thisPlayer.id}, function(err, doc) {
-        if (doc === null){return;}
+function disconnect(playerID) {
 
-        for(var i=0; i<global.server.loggedInPlayers.length; i++) {
+    // looking for the player
+    for(var i=0; i<global.server.loggedInPlayers.length; i++) {
 
-            if(global.server.loggedInPlayers[i].id == session.thisPlayer.id) {
-                global.server.loggedInPlayers.splice(i, 1);
-                break;
-            }
+        if(global.server.loggedInPlayers[i].id == playerID) {
+
+            // if found, update and remove it form loggedInPlayers array
+            var playerDetails = global.server.loggedInPlayers[i].getEssentialDetails();
+            global.server.db.players.update({id : playerID}, playerDetails);
+            global.server.loggedInPlayers.splice(i, 1);
+            return;
         }
+    }
 
-        global.server.db.players.update({id: doc.id}, session.thisPlayer.getDetailsForDatabase());
-    });
+
 }
 
 module.exports = disconnect;

@@ -1,3 +1,8 @@
+/*
+this file is specifically for emitting messages
+from the server to specific clients
+*/
+
 var messageEmitter = {
 
     rejected : function(error, socket) {
@@ -13,6 +18,7 @@ var messageEmitter = {
             position : thisPlayer.position
         };
 
+        console.log("accepted");
         socket.emit("accepted", response);
     },
 
@@ -49,12 +55,8 @@ var messageEmitter = {
             position : thisPlayer.position,
             orientation : thisPlayer.orientation
         };
+
         socket.emit("moveError", data);
-
-        console.log("OUTPUT");
-        console.log(data);
-        console.log("\n");
-
     },
 
     otherPlayers : function(thisPlayer, socket) {

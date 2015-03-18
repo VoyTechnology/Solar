@@ -1,5 +1,14 @@
+/*
+This file contains functions whos sole purpose is to check
+if data received with certain messages is valid.
+e.g. the "chat" function in this file checks data to make sure
+it is correctly formatted for a "chat" message as per version
+of API
+*/
+
 var inputAnalyser = {
 
+    // chat Data analyser
     chat : function(data) {
         var message = {
             sucess : false,
@@ -24,6 +33,7 @@ var inputAnalyser = {
         return message;
     },
 
+    // move Data analyser
     move : function(data) {
         var message = {
             sucess : false,
@@ -37,9 +47,6 @@ var inputAnalyser = {
 
         }
         else if (typeof data.position != "object" || typeof data.orientation != "object") {
-
-        }
-        else if (typeof data.username != "string") {
 
         }
         else if (typeof data.position.x != "number" || typeof data.position.y != "number" || typeof data.position.z != "number") {
@@ -56,6 +63,7 @@ var inputAnalyser = {
         return message;
     },
 
+    // start Data analyser
     start : function(data) {
         var message = {
             sucess : false,
@@ -74,6 +82,7 @@ var inputAnalyser = {
         return message;
     },
 
+    // moveSync Data analyser
     moveSync : function(data) {
         var message = {
             sucess : false,
