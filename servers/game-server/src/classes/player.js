@@ -1,47 +1,22 @@
-function Player() {
+/*
+The class used to store player information inside ram.
+*/
 
-	this.register = function(username, id, socket) {
-		var doc = {
-			username : username,
-			id : id,
-			orientation : {x:0, y:0, z:0},
-			position : {x:0, y:0, z:0},
-			ship : "CoolShip"
-		};
+function Player(doc, socket) {
 
-		global.server.db.players.insert(doc);
+	// establishing player variables
+	this.loggedIn = true;
+	this.id = doc.id;
+	this.username = doc.username;
+	this.ship = doc.ship;
+	this.orientation = doc.orientation;
+	this.position = doc.position;
+	this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
+	this.socket = socket;
 
-		this.loggedIn = true;
-		this.username = username;
-		this.id = id;
-		this.orientation = {x:0, y:0, z:0};
-		this.position = {x:0, y:0, z:0};
-		this.ship = "CoolShip";
-		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
-		this.socket = socket;
-	};
-
-	this.loadFromDB = function(doc, socket) {
-		this.loggedIn = true;
-		this.id = doc.id;
-		this.username = doc.username;
-		this.ship = doc.ship;
-		this.orientation = doc.orientation;
-		this.position = doc.position;
-		this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
-		this.socket = socket;
-	};
-
-	switch (typeof arguments[0]) {
-		case "string" :
-			this.register(arguments[0], arguments[1]);
-			break;
-		case "object" :
-			this.loadFromDB(arguments[0], arguments[1]);
-			break;
-	}
 }
 
+// function that returns a boolean indicating if a player can possibly move to a desired location.
 Player.prototype.canMoveHere = function(desiredLocation) {
 	var response;
 
@@ -68,6 +43,7 @@ Player.prototype.canMoveHere = function(desiredLocation) {
 	return response;
 };
 
+// function that returns a distance between two players.
 Player.prototype.distanceBetweenPlayers = function(Player) {
 	return Math.sqrt (
 		Math.pow((Player.orientation.x - this.orientation.x),2) +
@@ -76,35 +52,33 @@ Player.prototype.distanceBetweenPlayers = function(Player) {
 	);
 };
 
+/*
+this function is used for managing the speed at which a
+player is travelling and making sure he does not go over it.
+*/
 Player.prototype.addAvailableDistance = function(distance) {
 	this.moveDistanceAvailable += distance;
 };
 
+/*
+this function is used for managing the speed at which a
+player is travelling and making sure he does not go over it.
+*/
 Player.prototype.subtractAvailableDistance = function(distance) {
 	this.moveDistanceAvailable -= distance;
 };
 
+// this function returns the essential details of a player.
 Player.prototype.getEssentialDetails = function() {
 	var message = {
 		username : this.username,
+		id : this.id,
 		ship : this.ship,
 		position : this.position,
 		orientation : this.orientation
 	};
 
 	return message;
-};
-
-Player.prototype.getDetailsForDatabase = function() {
-	var details = {
-		username : this.username,
-		id : this.id,
-		orientation : this.orientation,
-		position : this.position,
-		ship : this.ship
-	};
-
-	return details;
 };
 
 module.exports = Player;

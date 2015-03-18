@@ -1,9 +1,7 @@
 {
     "serverIp" : "178.62.116.176",
     "mainServerPort" : 3000,
-    "mapSize" : 5000,
-    "minPasswordSize" : 4,
-    "PlayerMoveDistanceAvailable" : 50,
+    "PlayerMoveDistanceAvailable" : 500,
     "database" : {
         "name" : "solar",
         "collections" : [
@@ -55,6 +53,10 @@
         "e109" : {
             "code" : 109,
             "reasonText" : "Out of bounds"
+        },
+        "e110" : {
+            "code" : 110,
+            "reasonText" : "This player is already logged in"
         }
     },
     "paths" : {
@@ -63,7 +65,6 @@
         "disconnectRH" : "/src/request_handlers/disconnect.js",
         "moveRH" : "/src/request_handlers/move.js",
         "chatRH" : "/src/request_handlers/chat.js",
-        "timeRH" : "/src/request_handlers/time.js",
         "moveSyncRH" : "/src/request_handlers/moveSync.js",
         "messageEM" : "/src/static/emitters/messageEmitter.js",
         "inputAN" : "/src/static/analysers/inputAnalyser.js"
