@@ -10,6 +10,9 @@ Solar Discovery Server, allows the client to get the addresses of individual ser
 4. Run `go build discovery-server.go`  
 5. This will produce an executable `discovery-server`
 
+## Configuration ##
+To configure the addresses that the server provides edit the `config.json` file
+
 ## Running ##
 To run the server: `./discovery-server`
 
