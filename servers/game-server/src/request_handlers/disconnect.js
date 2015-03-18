@@ -6,6 +6,9 @@ a "disconnect" message
 
 function disconnect(session) {
 
+    // updating players document in PLAYERS collection
+    global.server.db.players.update({id: session.thisPlayer.id}, session.thisPlayer.getEssentialDetails());
+
     // looking for player in logged in players array
     for(var i=0; i<global.server.loggedInPlayers.length; i++) {
 
@@ -15,9 +18,6 @@ function disconnect(session) {
             break;
         }
     }
-
-    // updating players document in PLAYERS collection
-    global.server.db.players.update({id: session.thisPlayer.id}, session.thisPlayer.getEssentialDetails());
 }
 
 module.exports = disconnect;
