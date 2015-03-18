@@ -9,5 +9,5 @@ function render(){
 
   update();
 
-  renderer.render( scene, camera );
+  renderer.render( scene, player.camera );
 }
