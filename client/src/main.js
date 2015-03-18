@@ -18,7 +18,10 @@ var clock, controls;
 
 var connection;
 
-var me, players;
+var player;
+var players = [];
+var planets = [];
+var models = [];
 
 // Test variables
 var isRendering;
