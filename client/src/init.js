@@ -5,17 +5,11 @@
 function init(){
 
   // Assign values to their corresponding definitions
-<<<<<<< HEAD
   settings  =   new Settings(config.defaults);
   log       =   new Logger("Logger initialized");
   connection=   new Connection();
   gonsole   =   new Gonsole();
   player    =   new Player();
-
-  // setTimeout( function(){
-  //   var connected_event = new Event('server_connected');
-  //   connection.established = true;
-  // }, 1000);
 
   document.addEventListener('server_connected', hide_loading_window());
 
@@ -23,12 +17,10 @@ function init(){
   connection.connect();
   connection.otherPlayers();
 
-=======
   settings  = new Settings();
   log       = new Logger("Logger initialized");
   gonsole   = new Gonsole();
   connection =  new Connection("Connection...");
->>>>>>> 0fc9e7c816543e0f31ed0474f5c7579ef4c4f65a
 
 
   setTimeout(function(){
