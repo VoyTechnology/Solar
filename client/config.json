@@ -1,16 +1,96 @@
 {
   "devmode": true,
+  "discovery": {
+    "address": "http://localhost:8080"
+  },
   "server": {
     "protocol": "http",
     "address": "178.62.116.176",
     "port": 3000
   },
-  "game": {
-    "unit_size": 1
+  "connectionTimeout": 20000,
+  "defaults": {
+    "field_of_view": 75,
+    "screen_aspect_ratio": 1.77777777,
+    "min_render_distance": 0.0000001,
+    "max_render_distance": 9999999999999999999,
+    "antialiasing": true,
+    "fullscreen": true,
+    "language": "en",
+    "token": "",
+    "username": "",
+    "wireframe": true
   },
   "keys": {
     "27": "ESC",
-    "123": "GONSOLE",
-    "13": "ENTER"
+    "123": "F12",
+    "13": "ENTER",
+    "84": "T",
+
+    "87": "W",
+    "83": "S",
+
+    "65": "A",
+    "68": "D",
+
+    "81": "Q",
+    "69": "E",
+
+    "82": "R",
+    "70": "F",
+
+    "38": "UP",
+    "40": "DOWN",
+
+    "37": "LEFT",
+    "39": "RIGHT"
+  },
+  "planets": [
+    {
+      "name": "Infernales",
+      "radius": 2000,
+      "type": "rock",
+      "seed": 123456789,
+      "distance": 10000,
+      "atmosphere": {
+        "composition": {
+          "oxygen": "0"
+        }
+      }
+    },{
+      "name": "Bailor",
+      "radius": 2500,
+      "type": "metal",
+      "seed": 234567890,
+      "distance": 40000
+    },{
+      "name": "Promedea",
+      "radius": 3000,
+      "type": "green",
+      "seed": 345678901,
+      "distance": 70000
+    },{
+      "name": "Dimidium",
+      "radius": 3100,
+      "type": "water",
+      "seed": 100000000,
+      "distance": 100000
+    },{
+      "name": "CHANGE_ME_GAS",
+      "radius": 5000,
+      "type": "gas",
+      "seed": 1000000000,
+      "distance": 150000
+    },{
+      "name": "Tenebris",
+      "radius": 1000,
+      "type": "rock",
+      "seed": 4567890123,
+      "distance": 250000
+    }
+  ],
+  "errors": {
+    "801": "Cannot Connect to game server",
+    "802": "Connection timed out"
   }
 }
