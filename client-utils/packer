@@ -1,0 +1,127 @@
+#!/bin/bash
+
+echo "Packing up Solar Client..."
+
+# Read the arguments
+SOURCE_DIR=$1
+TARGET_DIR=$2
+UTIL_DIR=`pwd`
+
+if [ "$SOURCE_DIR" == "" ] && [ "$TARGET_DIR" == "" ];
+then
+	echo "Usage: $0 <directory> <directory>"
+	exit 0
+fi
+
+if ! ls $SOURCE_DIR &>/dev/null
+then
+	echo "source is not a directory"
+	exit 0
+
+elif ! ls $TARGET_DIR &>/dev/null
+then
+	echo "creating directory $TARGET_DIR"
+	mkdir -p $TARGET_DIR
+fi
+
+
+# Define the names of each directory for each OS
+WIN64_DIR="nwjs/windows_x64"
+WIN32_DIR="nwjs/windows_x86"
+OSX64_DIR="nwjs/osx_x64"
+OSX32_DIR="nwjs/osx_x86"
+LIN64_DIR="nwjs/linux_x64"
+LIN32_DIR="nwjs/linux_x86"
+
+WIN64_BIN="Solar_x64.exe"
+WIN32_BIN="Solar_x86.exe"
+OSX64_BIN="Solar_x64.app"
+OSX32_BIN="Solar_x86.app"
+LIN64_BIN="Solar_x64"
+LIN32_BIN="Solar_x32"
+
+
+# Create a temporary directory where compressed files will go
+TMP_DIR=`mktemp -d`
+echo "Saving in temporary directory $TMP_DIR"
+
+mkdir -p "$TMP_DIR/src"
+
+java -jar compiler.jar --language_in ECMASCRIPT5 --js "$SOURCE_DIR/src/**.js" --js_output_file "$TMP_DIR/src/solar.js"
+
+# Copy the rest of files
+cp "$SOURCE_DIR/package.json" "$TMP_DIR/package.json"
+
+# Edit the config file to set the dev mode to false
+cp "$SOURCE_DIR/config.json" "$TMP_DIR/config_old.json"
+./edit_config "$TMP_DIR"
+rm "$TMP_DIR/config_old.json"
+
+cp -r "$SOURCE_DIR/assets" "$TMP_DIR/assets"
+cp -r "$SOURCE_DIR/lib" "$TMP_DIR/lib"
+cp -r "$SOURCE_DIR/res" "$TMP_DIR/res"
+cp -r "$SOURCE_DIR/view" "$TMP_DIR/view"
+cp -r "$SOURCE_DIR/lang" "$TMP_DIR/lang"
+
+FULL_TARGET_DIR=$(readlink -f $TARGET_DIR)
+FULL_SOURCE_DIR=$(readlink -f $SOURCE_DIR)
+
+cd $TMP_DIR && zip -r "$FULL_TARGET_DIR/solar.nw" .
+rm -r $TMP_DIR
+
+cd $FULL_TARGET_DIR
+
+#Perform OS Specific packaging
+
+# Windows x64
+mkdir ./tmp_WIN64
+cp -r "$UTIL_DIR/$WIN64_DIR/." ./tmp_WIN64
+cat solar.nw >> "./tmp_WIN64/$WIN64_BIN"
+cd "./tmp_WIN64" && zip -r ../Solar_windows_x64.zip .
+cd $FULL_TARGET_DIR
+rm -r ./tmp_WIN64
+
+# Windows x86
+mkdir ./tmp_WIN32
+cp -r "$UTIL_DIR/$WIN32_DIR/." ./tmp_WIN32
+cat solar.nw >> "./tmp_WIN32/$WIN32_BIN"
+cd "./tmp_WIN32" && zip -r ../Solar_windows_x86.zip .
+cd $FULL_TARGET_DIR
+rm -r ./tmp_WIN32
+
+# linux x64
+mkdir ./tmp_LIN64
+cp -r "$UTIL_DIR/$LIN64_DIR/." ./tmp_LIN64
+cat solar.nw >> "./tmp_LIN64/$LIN64_BIN" && chmod +x $LIN64_BIN
+cd "./tmp_LIN64" && zip -r ../Solar_linux_x64.zip .
+cd $FULL_TARGET_DIR
+rm -r ./tmp_LIN64
+
+# linux x86
+mkdir ./tmp_LIN32
+cp -r "$UTIL_DIR/$LIN32_DIR/." ./tmp_LIN32
+cat solar.nw >> "./tmp_LIN32/$LIN32_BIN" && chmod +x $LIN32_BIN
+cd "./tmp_LIN32" && zip -r ../Solar_linux_x86.zip .
+cd $FULL_TARGET_DIR
+rm -r ./tmp_LIN32
+
+# OSX x64
+mkdir ./tmp_OSX64
+cp -r "$UTIL_DIR/$OSX64_DIR/." ./tmp_OSX64
+cat solar.nw >> "./tmp_OSX64/$OSX64_BIN/Content/Resources"
+cd "./tmp_OSX64" && zip -r ../Solar_osx_x64.zip .
+cd $FULL_TARGET_DIR
+rm -r ./tmp_OSX64
+
+# OSX x86
+mkdir ./tmp_OSX32
+cp -r "$UTIL_DIR/$OSX64_DIR/." ./tmp_OSX32
+cat solar.nw >> "./tmp_OSX32/$OSX32_BIN/Content/Resources"
+cd "./tmp_OSX32" && zip -r ../Solar_osx_x86.zip .
+cd $FULL_TARGET_DIR
+rm -r ./tmp_OSX32
+
+
+rm solar.nw
+
+echo "Finished Packing"
