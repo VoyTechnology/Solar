@@ -21,9 +21,9 @@ Player.prototype.canMoveHere = function(desiredLocation) {
 	var response;
 
 	var desiredDistance = Math.sqrt(
-		Math.pow((desiredLocation.x - this.orientation.x),2) +
-		Math.pow((desiredLocation.y - this.orientation.y),2) +
-		Math.pow((desiredLocation.z - this.orientation.z),2)
+		Math.pow((desiredLocation.x - this.position.x),2) +
+		Math.pow((desiredLocation.y - this.position.y),2) +
+		Math.pow((desiredLocation.z - this.position.z),2)
 	);
 
 	if (desiredDistance > this.moveDistanceAvailable)
