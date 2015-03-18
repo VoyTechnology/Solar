@@ -6,7 +6,6 @@
 var open = {
   "menu": false,
   "gonsole": false,
-
 };
 
 // Bind keyboard characters to special actions
@@ -15,22 +14,24 @@ $(document).keydown( function( e ){
     case 'ESC':
       if(open.gonsole){
         open.gonsole ^= 1;
-        $('.gonsole').toggle();
       } else {
         open.menu ^= 1;
         $('#menu').toggle();
       }
       break;
 
-    case 'GONSOLE':
-      if(!open.menu){
+    case 'T':
+      if(!open.menu && !open.gonsole){
+        $('#ginput_wrap').toggle();
+        $('#ginput').focus();
         open.gonsole ^= 1;
-        $('.gonsole').toggle();
       }
       break;
 
     case 'ENTER':
       if(open.gonsole){
+        open.gonsole ^= 1;
+        $('#ginput_wrap').toggle();
         gonsole.checkInput();
       }
       break;
@@ -44,5 +45,5 @@ $('#menu_resume').click( function(){
 
 $('#menu_exit').click( function(){
   console.log("Quitting");
-  gui.Window.get().close();
+  closeWindow();
 });
