@@ -9,15 +9,13 @@ var height = window.innerHeight,
 /**
  * Settings Class. Checks and sets the default if they do not exist
  * @class
+ * @param {object} default - Provides the default values for the settings
  **/
-function Settings(){
-  this.set('field_of_view',       this.get('field_of_view')         || 75                 );
-  this.set('screen_aspect_ratio', this.get('screen_aspect_ratio')   || width/height       );
-  this.set('min_render_distance', this.get('min_render_distance')   || 0.000001           );
-  this.set('max_render_distance', this.get('max_render_distance')   || 999999999999999999 );
-  this.set('antialiasing',        this.get('antialiasing')          || true               );
-  this.set('fullscreen',          this.get('fullscreen')            || true               );
-  this.set('language',            this.get('language')              || "en"               );
+function Settings(defaults){
+  for(var d = Object.keys(defaults).length - 1; d >= 0; d--){
+    var key = Object.keys(defaults)[d];
+    this.set(key, this.get(key) || defaults[key]);
+  }
 }
 
 /**
@@ -33,9 +31,16 @@ Settings.prototype.get = function(key){
 /**
  * Sets specific settings
  * @method
- * @param {string} key - Key of the value to set
+ * @param {string|object} key - Key of the value to set
  * @param {string} value - Value corresponding to the key
  **/
 Settings.prototype.set = function(key, value){
-  window.localStorage[key] = value;
+  if(typeof key == "object"){
+    var keys = Object.keys(key);
+    for(var k = keys.length - 1; i > 0; i--){
+      window.localStorage[key[k]] = value;
+    }
+  } else {
+    window.localStorage[key] = value;
+  }
 };
