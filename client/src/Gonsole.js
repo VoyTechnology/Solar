@@ -16,7 +16,7 @@ var Gonsole = function () {
  * @param {string} msg - Message to log
  */
 Gonsole.prototype.log = function (msg) {
-    $('.gonsole .content').append(msg + "\n");
+    $('.gonsole .content').append("<ge>" + msg + "<ge>");
 };
 
 /**
@@ -73,7 +73,7 @@ Gonsole.prototype.checkInput = function () {
             this.execCmd(input);
         }
         else {
-            Connection.prototype.sendMessage([], inputs);
+            connection.sendMessage([], inputs);
         }
         // Clear the input at the end
         this.clrin();
