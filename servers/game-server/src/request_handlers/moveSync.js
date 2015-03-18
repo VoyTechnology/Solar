@@ -1,11 +1,19 @@
+/*
+This file contains code to be
+executed when the server receives
+a "moveSync" message
+*/
+
 function moveSync(data, session) {
 
+    // checking to see if the data received is valid
     var badData = global.server.actions.inputAN.moveSync(data);
     if(!badData.sucess) {
-        console.log("here");
+        // if not, return
         return;
     }
 
+    // sync the players movement so that he can move freely again
     session.movementSynced = true;
 }
 

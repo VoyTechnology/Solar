@@ -2,15 +2,17 @@
     "dbName" : "solar",
     "dbIP" : "localhost",
     "dbPort" : 27017,
+    "deleteFirst" : true,
     "entryNamePattern" : "testun",
-    "specials" : [
-        {"username" : "VoyTechnology", "token" : "windowsislife"},
-        {"username" : "JamesS", "token" : "windowsislife"},
-        {"username" : "CanOpener", "token" : "windowsislife"}
-    ],
+    "startingPosition" : {
+        "x" : 0,
+        "y" : 1000,
+        "z" : 0
+    },
+    "numSpecialAccounts" : 3,
     "collections" : [
         "players",
         "authentication"
     ],
-    "numTestAccounts" : 20
+    "numTestAccounts" : 1000
 }

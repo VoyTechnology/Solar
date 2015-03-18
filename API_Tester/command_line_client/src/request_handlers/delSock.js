@@ -1,3 +1,6 @@
+/*
+
+*/
 function delSock(parameters, callback) {
 
     //validating parameters

@@ -1,3 +1,8 @@
+/*
+this is the file that controlls the input and calls other
+files based on which command is called
+*/
+
 require("colors");
 global.config = require(__dirname + "/config.json");
 global.nav = new (require(__dirname + global.config.paths.navCS))();
@@ -5,16 +10,15 @@ global.__home = __dirname;
 global.fs = require("fs");
 global.io = require('socket.io-client');
 global.classes = {
-    sock : require(__dirname + global.config.paths.sockCS)
+    sock : require(__dirname + global.config.paths.sockCS),
+    stressSock : require(__dirname + global.config.paths.stressSockCS)
 };
 global.requestHandlers = {
-    closeSock : require(__dirname + global.config.paths.closeSockRH),
     delSock : require(__dirname + global.config.paths.delSockRH),
     emit : require(__dirname + global.config.paths.emitRH),
     leaveSock : require(__dirname + global.config.paths.leaveSockRH),
     listSocks : require(__dirname + global.config.paths.listSocksRH),
     newSock : require(__dirname + global.config.paths.newSockRH),
-    openSock : require(__dirname + global.config.paths.openSockRH),
     showLog : require(__dirname + global.config.paths.showLogRH),
     startStress : require(__dirname + global.config.paths.startStressRH),
     stopStress : require(__dirname + global.config.paths.stopStressRH),
@@ -68,6 +72,16 @@ function prompt(err) {
                 break;
             case 107 :
                 console.log(ec.e107.red);
+                break;
+            case 108 :
+                console.log(ec.e108.red);
+                break;
+            case 109 :
+                console.log(ec.e109.red);
+                break;
+            case 110 :
+                console.log(ec.e110.red);
+                break;
         }
     }
     process.stdout.write(global.nav.getPrompt());
@@ -93,16 +107,6 @@ rl.on("line", function(command) {
         case "delsock" :
             commandWords.splice(0,1);
             global.requestHandlers.delSock(commandWords, prompt);
-            break;
-
-        case "closesock" :
-            commandWords.splice(0,1);
-            global.requestHandlers.closeSock(commandWords, prompt);
-            break;
-
-        case "opensock" :
-            commandWords.splice(0,1);
-            global.requestHandlers.openSock(commandWords, prompt);
             break;
 
         case "emit" :
@@ -147,11 +151,13 @@ rl.on("line", function(command) {
             break;
 
         case "" :
+            console.log();
             prompt();
             break;
 
         default :
-            console.log(global.servers.game_Server.sockets);
-            prompt();
+            prompt(100);
     }
 });
+
+// 178.62.116.176

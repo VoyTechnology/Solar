@@ -21,10 +21,6 @@ function newSock(parameters, callback) {
     var socket = new global.classes.sock(parameters[0], true);
     global.servers.game_server.sockets.push(socket);
 
-    //switching to socket
-    global.nav.switchSocket(parameters[0]);
-
-    
     console.log((parameters[0] + " Created\n").green);
     return callback();
 }
