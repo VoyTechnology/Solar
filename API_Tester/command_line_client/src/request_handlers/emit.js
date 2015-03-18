@@ -36,7 +36,9 @@ function emit(parameters, callback) {
             socketsArray[i].emit(parameters[0], data);
             var logShowName = [];
             logShowName.push(global.nav.socket);
-            return global.requestHandlers.showLog(logShowName, callback);
+            console.log("Done".green);
+            console.log();
+            return callback();
         }
 
     }

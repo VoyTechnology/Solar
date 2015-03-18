@@ -41,6 +41,7 @@ function stopStress(parameters, callback) {
     console.log("Stress test completed".green);
     console.log("Number of messages sent : " + numMessagesSent.toString().bold.green);
     console.log("Number of messages received : " + numMessagesReceived.toString().bold.yellow);
+    console.log();
     return callback();
 }
 
