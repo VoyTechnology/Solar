@@ -49,19 +49,19 @@ io.on("connection", function(socket) {
 		movementSynced : true
 	};
 
-	socket.on("start", function(data) { // Done
+	socket.on("start", function(data) {
 		global.server.actions.startRH(data, session, socket);
 	});
 
-	socket.on("chat", function(data) { // Done
+	socket.on("chat", function(data) {
 		global.server.actions.chatRH(data, session, socket);
 	});
 
-	socket.on("move", function(data) { // Done
+	socket.on("move", function(data) {
 		global.server.actions.moveRH(data, session, socket);
 	});
 
-	socket.on("moveSync", function(data) { // Done
+	socket.on("moveSync", function(data) {
 		global.server.actions.moveSyncRH(data, session);
 	});
 

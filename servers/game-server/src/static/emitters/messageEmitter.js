@@ -4,10 +4,9 @@ from the server to specific clients
 */
 
 var messageEmitter = {
-    
+
     rejected : function(error, socket) {
         socket.emit("rejected", error);
-        console.log("rejected");
     },
 
     accepted : function(thisPlayer, socket) {
@@ -24,7 +23,6 @@ var messageEmitter = {
     },
 
     disconnect : function(error, socket) {
-        console.log("disconnect");
         socket.emit("disconnect", error);
     },
 
@@ -32,12 +30,10 @@ var messageEmitter = {
         var message = conditions.original;
 
         if (conditions.recipientArr.length === 0) {
-            console.log("chat broad");
             socket.broadcast.emit("chat", message);
         }
         else {
             for (var i=0; i<conditions.recipientArr.length; i++) {
-                console.log("chat single");
                 conditions.recipientArr[i].socket.emit("chat", message);
             }
         }
@@ -48,7 +44,6 @@ var messageEmitter = {
             error : error,
             original : original
         };
-        console.log("chatError");
         socket.emit("chatError", data);
     },
 
@@ -61,7 +56,6 @@ var messageEmitter = {
             orientation : thisPlayer.orientation
         };
 
-        console.log("moveError");
         socket.emit("moveError", data);
     },
 
@@ -78,12 +72,10 @@ var messageEmitter = {
             }
         }
 
-        console.log("otherPlayers");
         socket.emit("otherPlayers", message);
     },
 
     move : function(data, socket) {
-        console.log("move broad");
         socket.broadcast.emit("move", data);
     }
 };
