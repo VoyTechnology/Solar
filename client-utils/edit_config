@@ -1,0 +1,15 @@
+#!/usr/bin/node
+
+var fs = require('fs');
+
+var dir = process.argv[2];
+
+var config = JSON.parse(fs.readFileSync( dir+"/config_old.json" ));
+
+config.devmode = false;
+
+fs.writeFileSync( dir+"/config.json", JSON.stringify(config) );
+console.log("Writing file to "+ dir);
+console.log("Config file updated");
+
+
