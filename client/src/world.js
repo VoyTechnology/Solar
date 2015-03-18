@@ -3,6 +3,7 @@
  */
 
 function world(){
+  log.debug("world Initialized");
 
   // Add ambient lighting to all objects
   var ambientLight = new THREE.AmbientLight( 0x070707 );
@@ -21,12 +22,10 @@ function world(){
   scene.add(stars);
 
   // Add the sun
-  var sun = new Sun(1, 0xffffff, 0xffffff, 0.8, 10000000);
+  var sun = new Sun(400, 0xffffdd, 0xfffffe, 0.8, 10000000);
 
-  // Create and add a planet
-  var planet = new Planet(1, 3, 0, 10, "../res/icons/2_no_clouds_8k.jpg");
-  scene.add(planet);
-
-  // Move the camera back
-  camera.position.z = 15;
+  /* Create individual Planets */
+  for(var p = 0; p < config.planets.length; p++){
+    planets.push( new Planet( config.planets[p] ) );
+  }
 }
