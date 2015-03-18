@@ -18,21 +18,42 @@ canvas {
 
 .gonsole {
   position: fixed;
-  top: 0;
+  bottom: 1em;
   left: 0;
-  width: 50%;
-  height: 100%;
+  width: 30%;
+  height: 30%;
   z-index: 99;
   background: rgba(0,0,0,0.8);
   color: #eee;
-  display: none;
 }
 
-.gonsole .ginput_wrap {
+/* Gonsole entry */
+.gonsole ge {
+  display: block;
+}
+
+ge>ye {
+  color: yellow;
+}
+
+ge>re {
+  color: red;
+}
+
+ge>gre {
+  color: green;
+}
+
+ge>be {
+  color: blue;
+}
+
+.gonsole #ginput_wrap {
   position: fixed;
   bottom: 0;
-  width: 50%;
-  display: inline-block;
+  left: 0;
+  width: 100%;
+  display: none;
 }
 
 .gonsole #ginput {
@@ -47,6 +68,8 @@ canvas {
 .gonsole #ginput:focus {
   outline: none;
 }
+
+
 
 #menu {
   position: fixed;
@@ -73,5 +96,47 @@ canvas {
 #menu span:hover {
   background-color: rgba(255,255,255,0.1);
   color: white;
+  cursor: pointer;
+}
+
+#game_error {
+  z-index: 100;
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  padding-top: 20%;
+  display: none;
+}
+
+#game_error #game_error_message {
+  font-size: 2em;
+}
+
+#game_loading {
+  z-index: 100;
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  padding-top: 20%;
+}
+
+#game_loading #loading_placeholder {
+  font-size: 2em;
+}
+
+
+#game_error #close_game {
+  margin: 5% auto;
+  background-color: red;
+  padding: 1em;
+  width: 10em;
   cursor: pointer;
 }
