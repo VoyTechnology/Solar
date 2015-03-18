@@ -7,7 +7,7 @@ a "disconnect" message
 function disconnect(playerID) {
 
     // looking for the player
-    for(var i=0; i<global.server.loggedInPLayers.length; i++) {
+    for(var i=0; i<global.server.loggedInPlayers.length; i++) {
 
         if(global.server.loggedInPlayers[i].id == playerID) {
 
