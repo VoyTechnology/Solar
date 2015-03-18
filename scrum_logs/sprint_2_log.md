@@ -89,3 +89,23 @@ __James__:
 ---
 
 ---
+
+### Monday 16/3/15 ###
+__Mladen__:
+* Work on command line client
+
+__Wojtek__:
+* Fixed multiplayer support
+
+---
+
+### Tuesday ###
+__Mladen__:
+* Stress Test
+
+__Wojtek__:
+* Project build tools
+* Discovery Server
+
+__James__:
+* Chat
