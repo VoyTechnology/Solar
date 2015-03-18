@@ -8,7 +8,7 @@ function init(){
   settings  = new Settings();
   log       = new Logger("Logger initialized");
   gonsole   = new Gonsole();
-  connection =  new Connection();
+  connection =  new Connection("Connection...");
 
   scene = new THREE.Scene();
   clock = new THREE.Clock();

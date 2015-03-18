@@ -6,7 +6,7 @@
  * Handles the game console
  * @class
  */
-var Gonsole = function(){
+var Gonsole = function () {
 
 };
 
@@ -15,57 +15,67 @@ var Gonsole = function(){
  * @method
  * @param {string} msg - Message to log
  */
-Gonsole.prototype.log = function(msg){
-  $('.gonsole .content').append(msg + "\n");
+Gonsole.prototype.log = function (msg) {
+    $('.gonsole .content').append(msg + "\n");
 };
 
 /**
  * Clears the input
  * @method
  */
-Gonsole.prototype.clrin = function(){
-  $('#ginput').val("");
+Gonsole.prototype.clrin = function () {
+    $('#ginput').val("");
+};
+
+
+Gonsole.prototype.execCmd = function (msg) {
+    switch (msg[0]) {
+        case '/clear':
+            $('.gonsole .content').empty();
+            break;
+
+        case '/devtools':
+            if (dev) {
+                gui.Window.get().showDevTools();
+            } else {
+                log.error("Whatya doin.");
+            }
+            break;
+
+        case '/test':
+            test();
+            break;
+
+        case '/version':
+            log.info("Solar v" + package.version);
+            break;
+
+        default:
+            log.error('Unknown command ' + msg[0]);
+            break;
+    }
 };
 
 /**
  * Check the input that the user entered
  * @method
  */
-Gonsole.prototype.checkInput = function(){
 
-  var cmds = $('#ginput').val();
+Gonsole.prototype.checkInput = function () {
 
-  if(cmds.length !== 0){
-    var cmd = cmds.split(" ");
+    var inputs = $('#ginput').val();
 
-    switch(cmd[0]){
-      case 'clear':
-        $('.gonsole .content').empty();
-        break;
+    if (inputs.length !== 0) {
+        var input = inputs.split(" ");
+        var firstWord = input[0];
 
-      case 'devtools':
-        if(dev){
-          gui.Window.get().showDevTools();
-        } else {
-          log.error("Whatya doin.");
+        if (firstWord.charAt(0) == "/") {
+            this.execCmd(input);
         }
-        break;
-
-      case 'test':
-        test();
-        break;
-
-      case 'version':
-        log.info("Solar v"+ package.version);
-        break;
-
-      default:
-        log.error('Unknown command ' + cmd[0]);
-        break;
+        else {
+            Connection.prototype.sendMessage([], inputs);
+        }
+        // Clear the input at the end
+        this.clrin();
     }
-
-    // Clear the input at the end
-    this.clrin();
-
-  }
 };
