@@ -66,6 +66,6 @@ io.on("connection", function(socket) {
 	});
 
 	socket.on("disconnect", function() {
-		global.server.actions.disconnectRH(session.thisPlayer);
+		global.server.actions.disconnectRH(session.thisPlayer.id);
 	});
 });

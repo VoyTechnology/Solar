@@ -4,20 +4,22 @@ executed when the server receives
 a "disconnect" message
 */
 
-function disconnect(thisPlayer) {
+function disconnect(playerID) {
 
-    // updating players document in PLAYERS collection
-    global.server.db.players.update({id: thisPlayer.id}, thisPlayer.getEssentialDetails());
+    // looking for the player
+    for(var i=0; i<global.server.loggedInPLayers.length; i++) {
 
-    // looking for player in logged in players array
-    for(var i=0; i<global.server.loggedInPlayers.length; i++) {
+        if(global.server.loggedInPlayers[i].id == playerID) {
 
-        if(global.server.loggedInPlayers[i].id == thisPlayer.id) {
-            // if found, remove him
+            // if found, update and remove it form loggedInPlayers array
+            var playerDetails = global.server.loggedInPlayers[i].getEssentialDetails();
+            global.server.db.players.update({id : playerID}, playerDetails);
             global.server.loggedInPlayers.splice(i, 1);
-            break;
+            return;
         }
     }
+
+
 }
 
 module.exports = disconnect;
