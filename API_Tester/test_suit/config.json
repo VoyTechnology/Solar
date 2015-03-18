@@ -1,0 +1,18 @@
+{
+    "serverIp" : "localhost",
+    "serverPort" : 3000,
+    "mapSize" : 5000,
+    "minPasswordSize" : 4,
+    "waitTime" : 1000,
+    "database" : {
+        "name" : "solar",
+        "collections" : [
+            "players",
+            "authentication"
+        ]
+    },
+    "testAccounts" : {
+        "numAccounts" : 500,
+        "namePattern" : "testun"
+    }
+}

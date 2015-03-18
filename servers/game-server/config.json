@@ -1,0 +1,71 @@
+{
+    "serverIp" : "178.62.116.176",
+    "mainServerPort" : 3000,
+    "mapSize" : 5000,
+    "minPasswordSize" : 4,
+    "PlayerMoveDistanceAvailable" : 50,
+    "database" : {
+        "name" : "solar",
+        "collections" : [
+            "players",
+            "authentication"
+        ]
+    },
+    "errorCodes" : {
+        "e0" :  {
+            "code" : 0,
+            "reasonText" : "Okay"
+        },
+        "e100" : {
+            "code" : 100,
+            "reasonText" : "Other error"
+        },
+        "e101" : {
+            "code" : 101,
+            "reasonText" : "Missing parameter in request"
+        },
+        "e102" : {
+            "code" : 102,
+            "reasonText" : "Unknown parameter in request"
+        },
+        "e103" : {
+            "code" : 103,
+            "reasonText" : "Unknown request"
+        },
+        "e104" : {
+            "code" : 104,
+            "reasonText" : "Server not ready or busy"
+        },
+        "e105" : {
+            "code" : 105,
+            "reasonText" : "??????"
+        },
+        "e106" : {
+            "code" : 106,
+            "reasonText" : "Authentication failure"
+        },
+        "e107" : {
+            "code" : 107,
+            "reasonText" : "Sender not the originator of chat message"
+        },
+        "e108" : {
+            "code" : 108,
+            "reasonText" : "Unknown player"
+        },
+        "e109" : {
+            "code" : 109,
+            "reasonText" : "Out of bounds"
+        }
+    },
+    "paths" : {
+        "playerCS" : "/src/classes/player.js",
+        "startRH" : "/src/request_handlers/start.js",
+        "disconnectRH" : "/src/request_handlers/disconnect.js",
+        "moveRH" : "/src/request_handlers/move.js",
+        "chatRH" : "/src/request_handlers/chat.js",
+        "timeRH" : "/src/request_handlers/time.js",
+        "moveSyncRH" : "/src/request_handlers/moveSync.js",
+        "messageEM" : "/src/static/emitters/messageEmitter.js",
+        "inputAN" : "/src/static/analysers/inputAnalyser.js"
+    }
+}
