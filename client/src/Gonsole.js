@@ -55,7 +55,7 @@ Gonsole.prototype.runCmd = function( input ){
             break;
 
         default:
-            log.error('Unknown command ' + msg[0]);
+            log.error('Unknown command ' + input[0]);
             break;
     }
 };
