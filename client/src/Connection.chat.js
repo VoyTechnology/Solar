@@ -37,4 +37,4 @@ Connection.prototype.listenForChat = function () {
         msg += data.text;
         gonsole.log(msg);
     });
-};/*
+};*/

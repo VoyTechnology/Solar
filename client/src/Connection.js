@@ -12,6 +12,7 @@ var Connection = function( gameServerAddress ){
   // Check is the connection established
   this.established = false;
   this.authorised = false;
+  this.messages = 0;
 
   this._socket = io(gameServerAddress);
 
@@ -49,7 +50,7 @@ Connection.prototype.connect = function(){
     player.setCamera({position: data.position, rotation: data.orientation});
 
     // Clear the token
-    settings.set('token', '');
+  //  settings.set('token', '');
   });
 
   that._socket.on('rejected', function( data ){
@@ -144,70 +145,96 @@ Connection.prototype.disconnect = function(msg){
   });
 };
 
-Connection.prototype.sendMessage = function (recipients, msg) {
-     var that = this;
+// Connection.prototype.sendMessage = function (recipients, msgData) {
+//      var that = this;
+//
+//      if (that.authorised) {
+//
+//          /*
+//             temporary fix for the no usernames problem
+//          */
+//
+//          var username = "";
+//
+//
+//
+//          /*
+//
+//          */
+//
+//          var messageData = {
+//              timestamp: msgData.timestamp,
+//              id: +settings.get('username'),
+//              originator: username,
+//              recipient: recipients,
+//              text: msgData.text
+//          };
+//
+//          that._socket.emit('chat', messageData);
+//
+//          log.debug(messageData);
+//
+//          var gonsoleLogMessage = "";
+//          if(recipients.length === 0) {
+//              gonsoleLogMessage += "(G)";
+//          }
+//          gonsoleLogMessage += "you : ";
+//          gonsoleLogMessage += msg;
+//
+//          gonsole.log(msg);
+//      }
+// };
 
-     if (that.authorised) {
+Connection.prototype.sendMessage = function( sendData ){
+  var that = this;
 
-         /*
-            temporary fix for the no usernames problem
-         */
+  if(that.authorised){
+    var username = "";
 
-         var username = "";
-        
-         switch(+settings.get('username')) {
+    switch(+settings.get('username')) {
+      case 0 : username = "james"; break;
+      case 1 : username = "woj"; break;
+      case 2 : username = "mladen"; break;
+      default : username = "testun" + settings.get('username'); break;
+    }
 
-             case 0 : username = "james"; break;
-             case 1 : username = "woj"; break;
-             case 2 : username = "mladen"; break;
-             default : username = "testun" + (+settings.get('username')).toString(); break;
+    that._socket.emit('chat', {
+      timestamp: sendData.timestamp,
+      originator: username,
+      recipient: sendData.reciepients,
+      text: sendData.text
+    });
 
-        }
+    that.messages++;
 
-         /*
+    if(that.messages > 6){
+      gonsole.clearFirst();
+      that.messages--;
+    }
 
-         */
-
-         var messageData = {
-             timestamp: (new Date()).getTime(),
-             id: +settings.get('username'),
-             originator: username,
-             recipient: recipients,
-             text: msg
-         };
-
-         that._socket.emit('chat', messageData);
-
-         log.debug(messageData);
-
-         var gonsoleLogMessage = "";
-         if(recipients.length === 0) {
-             gonsoleLogMessage += "(G)";
-         }
-         gonsoleLogMessage += "you : ";
-         gonsoleLogMessage += msg;
-
-         gonsole.log(msg);
-     }
+  }
 };
 
 Connection.prototype.listenForChat = function () {
     var that = this;
 
     that._socket.on('chat', function(data){
-        var msg = "";
 
-        if(data.recipient.length === 0) {
-            msg += "(G)";
-        }
+      if(that.messages > 6){
+        gonsole.clearFirst();
+        that.messages--;
+      }
 
-        msg += data.originator +" : ";
-        msg += data.text;
-        gonsole.log(msg);
+      if(data.reciepient.length === 0){
+        gonsole.log("&lt;<gre>"+originator+"</gre>&gt; " + data.text);
+      } else {
+        gonsole.log("[ <gre>"+reciepients.join(", ")+"->me</gre> ] " + data.text);
+      }
     });
 
     that._socket.on("chatError", function(data) {
-        log.warning("Chat Error");
-        log.warning(data.error.reasonText);
+      gonsole.revertMessage( data );
     });
+
+
 };

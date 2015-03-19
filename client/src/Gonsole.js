@@ -28,8 +28,8 @@ Gonsole.prototype.clrin = function () {
 };
 
 
-Gonsole.prototype.execCmd = function (msg) {
-    switch (msg[0]) {
+Gonsole.prototype.runCmd = function( input ){
+    switch( input[0] ){
         case '/clear':
             $('.gonsole .content').empty();
             break;
@@ -51,10 +51,7 @@ Gonsole.prototype.execCmd = function (msg) {
             break;
 
         case '/m':
-            log.debug(msg);
-            var reciever = [];
-            reciever.push(msg[1]);
-            connection.sendMessage(reciever, msg[2]);
+            this.sendPrivate( input );
             break;
 
         default:
@@ -68,21 +65,59 @@ Gonsole.prototype.execCmd = function (msg) {
  * @method
  */
 
-Gonsole.prototype.checkInput = function () {
+Gonsole.prototype.sendPrivate = function( input ){
+  input.shift();
 
-    var inputs = $('#ginput').val();
+  var reciepients = input[0].split(",");
 
-    if (inputs.length !== 0) {
-        var input = inputs.split(" ");
-        var firstWord = input[0];
+  input.shift();
 
-        if (firstWord.charAt(0) == "/") {
-            this.execCmd(input);
-        }
-        else {
-            connection.sendMessage([], inputs);
-        }
-        // Clear the input at the end
-        this.clrin();
+  var message = {
+    timestamp: (new Date()).getTime(),
+    reciepients: reciepients,
+    text: input.join(" ")
+  };
+
+  connection.sendMessage( message );
+
+  this.log("[<gre timestamp='"+message.timestamp+"'>me->"+reciepients.join(", ")+"</gre>] "+input.join(" "));
+
+};
+
+Gonsole.prototype.sendPublic = function( input ){
+  var message = {
+    timestamp: (new Date()).getTime(),
+    reciepients: [],
+    text: input.join(" ")
+  };
+
+  connection.sendMessage( message );
+
+  this.log("&lt;<gre timestamp='"+message.timestamp+"'>"+settings.get('username')+"</gre>&gt; "+input.join(" "));
+};
+
+Gonsole.prototype.checkInput = function(){
+  var raw = $('#ginput').val();
+
+  if(raw.length !== 0){
+    var input = raw.split(" ");
+
+    if(input[0].charAt(0) == "/"){
+      this.runCmd( input );
+    } else {
+      this.sendPublic( input );
     }
+  }
+
+  this.clrin();
+};
+
+Gonsole.prototype.revertMessage = function( data ){
+  $("gre[timestamp='"+data.original.timestamp+"']")
+    .css("color", "red")
+    .append(" Error: "+ data.error.reasonText);
+};
+
+Gonsole.prototype.clearFirst = function(){
+  $(".gonsole .content").find('ge').first().remove();
 };
