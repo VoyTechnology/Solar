@@ -225,10 +225,10 @@ Connection.prototype.listenForChat = function () {
         that.messages--;
       }
 
-      if(data.reciepient.length === 0){
-        gonsole.log("&lt;<gre>"+originator+"</gre>&gt; " + data.text);
+      if(data.recipient.length === 0){
+        gonsole.log("&lt;<gre>"+data.originator+"</gre>&gt; " + data.text);
       } else {
-        gonsole.log("[ <gre>"+reciepients.join(", ")+"->me</gre> ] " + data.text);
+        gonsole.log("[ <gre>"+data.originator+"->me</gre> ] " + data.text);
       }
     });
 
