@@ -1,0 +1,23 @@
+{
+    "port" : 3001,
+    "database" : {
+        "name" : "solar",
+        "ip" : "localhost",
+        "collections" : [
+            "authentication",
+            "players"
+        ]
+    },
+    "paths" : {
+        "authenticate" : "/src/request_handlers/authenticate.js",
+        "register" : "/src/request_handlers/register.js",
+        "completeRegister" : "/src/request_handlers/completeRegister.js",
+        "newPassword" : "/src/request_handlers/newPassword.js",
+        "completeNewPassword" : "/src/request_handlers/completeNewPassword.js"
+    },
+    "errorCodes" : [
+        "Username taken.",
+        "Password too short.",
+        "Token expired."
+    ]
+}
