@@ -5,25 +5,24 @@ from the server to specific clients
 
 var messageEmitter = {
 
-    rejected : function(error, socket) {
-        socket.emit("rejected", error);
+    rejected : function(code, socket) {
+        socket.emit("rejected", actions.errorCode(code));
     },
 
     accepted : function(thisPlayer, socket) {
         var response = {
             timestamp : new Date().getTime(),
-            major : global.server.version.major,
-            minor : global.server.version.minor,
+            major : version.major,
+            minor : version.minor,
             orientation : thisPlayer.orientation,
             position : thisPlayer.position
         };
 
-        console.log("accepted");
         socket.emit("accepted", response);
     },
 
-    disconnect : function(error, socket) {
-        socket.emit("disconnect", error);
+    disconnect : function(code, socket) {
+        socket.emit("disconnect", actions.errorCode(code));
     },
 
     chat : function(conditions, socket) {
@@ -39,18 +38,18 @@ var messageEmitter = {
         }
     },
 
-    chatError : function(error, original, socket) {
+    chatError : function(errorCode, original, socket) {
         var data = {
-            error : error,
+            error : actions.errorCode(errorCode),
             original : original
         };
         socket.emit("chatError", data);
     },
 
-    moveError : function(error, original, thisPlayer, socket) {
+    moveError : function(errorCode, original, thisPlayer, socket) {
 
         var data = {
-            error : error,
+            error : actions.errorCode(errorCode),
             original : original,
             position : thisPlayer.position,
             orientation : thisPlayer.orientation
@@ -65,10 +64,10 @@ var messageEmitter = {
         };
 
 
-        for(var i=0; i<global.server.loggedInPlayers.length; i++) {
+        for(var i=0; i<loggedInPlayers.length; i++) {
 
-            if (global.server.loggedInPlayers[i].username != thisPlayer.username) {
-                message.players.push(global.server.loggedInPlayers[i].getEssentialDetails());
+            if (loggedInPlayers[i].username != thisPlayer.username) {
+                message.players.push(loggedInPlayers[i].getEssentialDetails());
             }
         }
 

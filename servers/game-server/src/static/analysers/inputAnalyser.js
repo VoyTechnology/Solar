@@ -12,7 +12,7 @@ var inputAnalyser = {
     chat : function(data) {
         var message = {
             sucess : false,
-            error : global.server.config.errorCodes.e101
+            error : 101
         };
 
         if (data === null) {
@@ -37,7 +37,7 @@ var inputAnalyser = {
     move : function(data) {
         var message = {
             sucess : false,
-            error : global.server.config.errorCodes.e101
+            error : 101
         };
 
         if (data === null) {
@@ -67,7 +67,7 @@ var inputAnalyser = {
     start : function(data) {
         var message = {
             sucess : false,
-            error : global.server.config.errorCodes.e101
+            error : 101
         };
 
         if(data === null) {
@@ -86,7 +86,7 @@ var inputAnalyser = {
     moveSync : function(data) {
         var message = {
             sucess : false,
-            error : global.server.config.errorCodes.e101
+            error : 101
         };
 
         if (data === null) {
