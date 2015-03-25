@@ -13,11 +13,15 @@
         "register" : "/src/request_handlers/register.js",
         "completeRegister" : "/src/request_handlers/completeRegister.js",
         "newPassword" : "/src/request_handlers/newPassword.js",
-        "completeNewPassword" : "/src/request_handlers/completeNewPassword.js"
+        "completeNewPassword" : "/src/request_handlers/completeNewPassword.js",
+        "parameterAnalyser" : "/src/static/parameterAnalyser.js",
+        "responseEmitter" : "/src/static/responseEmitter.js",
+        "emailEmitter" : "/src/static/emailEmitter.js"
     },
     "errorCodes" : [
         "Username taken.",
         "Password too short.",
-        "Token expired."
+        "Token expired.",
+        "Parameters invalid."
     ]
 }
