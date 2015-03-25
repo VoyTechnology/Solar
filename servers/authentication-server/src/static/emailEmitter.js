@@ -1,6 +1,6 @@
 function emailEmitter() {
-    this.transporter = nodemailer.createTransport({
-        service: 'gmail',
+    this.transporter = nodemailer.createTransport("SMTP",{
+        service: 'Gmail',
         auth: {
             user: 'razoftsolar@gmail.com',
             pass: 'N0t@Wind0w$P@$$w0rd'
@@ -10,7 +10,7 @@ function emailEmitter() {
 
 emailEmitter.prototype.sendMail = function(to, subject, text) {
     var mailOptions = {
-        from: "<razoftsolar@gmail.com>", // sender address
+        from: "razoftsolar@gmail.com", // sender address
         to: "", // list of receivers
         subject: subject, // Subject line
         text: text, // plaintext body
