@@ -9,56 +9,19 @@
             "authentication"
         ]
     },
-    "errorCodes" : {
-        "e0" :  {
-            "code" : 0,
-            "reasonText" : "Okay"
-        },
-        "e100" : {
-            "code" : 100,
-            "reasonText" : "Other error"
-        },
-        "e101" : {
-            "code" : 101,
-            "reasonText" : "Missing parameter in request"
-        },
-        "e102" : {
-            "code" : 102,
-            "reasonText" : "Unknown parameter in request"
-        },
-        "e103" : {
-            "code" : 103,
-            "reasonText" : "Unknown request"
-        },
-        "e104" : {
-            "code" : 104,
-            "reasonText" : "Server not ready or busy"
-        },
-        "e105" : {
-            "code" : 105,
-            "reasonText" : "??????"
-        },
-        "e106" : {
-            "code" : 106,
-            "reasonText" : "Authentication failure"
-        },
-        "e107" : {
-            "code" : 107,
-            "reasonText" : "Sender not the originator of chat message"
-        },
-        "e108" : {
-            "code" : 108,
-            "reasonText" : "Unknown player"
-        },
-        "e109" : {
-            "code" : 109,
-            "reasonText" : "Out of bounds"
-        },
-        "e110" : {
-            "code" : 110,
-            "reasonText" : "This player is already logged in"
-        }
-    },
+    "errorCodes" : [
+        "Other error",
+        "Missing parameter in request",
+        "Unknown parameter in request",
+        "Unknown request",
+        "Server not ready or busy",
+        "??????",
+        "Authentication failure",
+        "Sender not the originator of chat message",
+        "Unknown player",
+        "Out of bounds",
+        "This player is already logged in"
+    ],
     "paths" : {
         "playerCS" : "/src/classes/player.js",
         "startRH" : "/src/request_handlers/start.js",

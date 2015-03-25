@@ -1,7 +1,7 @@
 {
-  "name": "solar_server",
+  "name": "solar_server_game",
   "description": "the official server for Solar",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "dependencies": {
     "express": "^4.11.2",
     "mongojs": "^0.18.1",

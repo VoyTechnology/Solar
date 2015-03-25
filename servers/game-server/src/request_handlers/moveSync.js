@@ -7,7 +7,7 @@ a "moveSync" message
 function moveSync(data, session) {
 
     // checking to see if the data received is valid
-    var badData = global.server.actions.inputAN.moveSync(data);
+    var badData = actions.inputAN.moveSync(data);
     if(!badData.sucess) {
         // if not, return
         return;
