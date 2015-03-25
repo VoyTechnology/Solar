@@ -9,6 +9,8 @@ global.config = require(__dirname + "/config.json");
 global.__home = __dirname;
 global.db = mongojs(config.database.name, config.database.collections);
 global.nodemailer = nodeMailer;
+global.pendingRegisters = [];
+global.pendingNewPasswords = [];
 global.actions = {
     authenticate : require(__dirname + config.paths.authenticate),
     register : require(__dirname + config.paths.register),
@@ -27,10 +29,10 @@ app.use(bodyParser.urlencoded({extended : false }));
 
 // adding server event handlers
 app.get("/authenticate", actions.authenticate);
-app.post("/register", actions.register);
-app.post("/completeRegister", actions.completeRegister);
-app.post("/newPassword", actions.newPassword);
-app.post("/completeNewPassword", actions.completeNewPassword);
+app.get("/register", actions.register);
+app.get("/completeRegister", actions.completeRegister);
+app.get("/newPassword", actions.newPassword);
+app.get("/completeNewPassword", actions.completeNewPassword);
 
 // starting Server
 app.listen(config.port);
