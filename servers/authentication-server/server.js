@@ -17,7 +17,7 @@ global.actions = {
     completeNewPassword : require(__dirname + config.paths.completeNewPassword),
     parameterAnalyser : require(__dirname + config.paths.parameterAnalyser),
     responseEmitter : require(__dirname + config.paths.responseEmitter),
-    emailEmitter : require(__dirname + config.paths.emailEmitter)()
+    mailer : new (require(__dirname + config.paths.emailEmitter))()
 };
 
 // initialising server
