@@ -11,7 +11,7 @@ function Player(doc, socket) {
 	this.ship = doc.ship;
 	this.orientation = doc.orientation;
 	this.position = doc.position;
-	this.moveDistanceAvailable = global.server.config.PlayerMoveDistanceAvailable;
+	this.moveDistanceAvailable = config.PlayerMoveDistanceAvailable;
 	this.socket = socket;
 
 }
