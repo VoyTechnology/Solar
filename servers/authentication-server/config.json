@@ -1,7 +1,8 @@
 {
     "ip" : "localhost",
     "port" : 3001,
-    "registrationTokenLife" : 1,
+    "registrationTokenLifeHours" : 1,
+    "loginTokenLifeMinutes" : 5,
     "database" : {
         "name" : "solar",
         "ip" : "localhost",
@@ -27,7 +28,8 @@
         "Parameters invalid.",
         "Email already used.",
         "Have not registerd.",
-        "Already registerd"
+        "Already registerd",
+        "Invalid username or password"
     ],
     "defaultPlayer" : {
         "_id" : "default",

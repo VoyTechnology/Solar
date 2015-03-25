@@ -1,5 +1,4 @@
 function register(req, res) {
-    console.log(req.query);
     // if parameters invalid
     if (!actions.parameterAnalyser.register(req)) {
         return actions.responseEmitter.error(103, res);
@@ -32,6 +31,7 @@ function register(req, res) {
             // creating a pending register entry
             var pendingRegisterEntry = {
                 username : req.query.username,
+                token : null,
                 password : req.query.password,
                 email : req.query.email,
                 registerToken : registerToken
@@ -48,7 +48,7 @@ function register(req, res) {
                         return;
                     }
                 }
-            }, config.registrationTokenLife * 3600000);
+            }, config.registrationTokenLifeHours * 3600000);
 
             // sending an email with a link to complete registration
             actions.mailer.sendMail(
