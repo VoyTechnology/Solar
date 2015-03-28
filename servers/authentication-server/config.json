@@ -1,5 +1,5 @@
 {
-    "ip" : "localhost",
+    "ip" : "178.62.116.176",
     "port" : 3001,
     "registrationTokenLifeHours" : 1,
     "loginTokenLifeMinutes" : 5,

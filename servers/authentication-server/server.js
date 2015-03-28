@@ -3,12 +3,15 @@ var express = require("express");
 var mongojs = require("mongojs");
 var bodyParser = require("body-parser");
 var nodeMailer = require("nodemailer");
+var passwordHash = require('password-hash');
+
 
 // setting up global variables
 global.config = require(__dirname + "/config.json");
 global.__home = __dirname;
 global.db = mongojs(config.database.name, config.database.collections);
 global.nodemailer = nodeMailer;
+global.passTool = passwordHash;
 global.pendingRegisters = [];
 global.pendingNewPasswords = [];
 global.actions = {

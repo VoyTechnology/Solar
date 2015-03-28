@@ -4,16 +4,11 @@ function authenticate(req, res) {
         return actions.responseEmitter.error(103, res);
     }
 
-    // object cointaining query data for simplicity and readability
-    var dbQueryData = {
-        username : req.query.username,
-        password : req.query.password
-    };
 
     // looking for players entry in authentication collection
-    db.authentication.findOne(dbQueryData, function(err, doc) {
+    db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if not found return an error
-        if (doc === null) {
+        if (doc === null || !passTool.verify(req.query.password, doc.password)) {
             return actions.responseEmitter.error(107, res);
         }
 
@@ -21,7 +16,7 @@ function authenticate(req, res) {
         var loginToken = Math.floor(new Date().getTime() + (Math.random() * 100000) * (Math.random() * 100000));
 
         // updating document in authentication database to contain login token
-        db.authentication.update(dbQueryData, {$set :{token : loginToken}}, function(err) {
+        db.authentication.update({username : req.query.username}, {$set :{token : loginToken}}, function(err) {
             // setting timeout function to remove login token from database
             setTimeout(function() {
                 db.authentication.update (dbQueryData, {$set :{token : null}});
