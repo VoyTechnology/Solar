@@ -4,7 +4,6 @@ function authenticate(req, res) {
         return actions.responseEmitter.error(103, res);
     }
 
-
     // looking for players entry in authentication collection
     db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if not found return an error
@@ -13,17 +12,18 @@ function authenticate(req, res) {
         }
 
         // creating a loginToken
-        var loginToken = Math.floor(new Date().getTime() + (Math.random() * 100000) * (Math.random() * 100000));
+        var loginToken = Math.floor(new Date().getTime() + (Math.random() * 100000) * (Math.random() * 100000)).toString();
+        var hashedToken = passTool.generate(loginToken);
 
         // updating document in authentication database to contain login token
-        db.authentication.update({username : req.query.username}, {$set :{token : loginToken}}, function(err) {
+        db.authentication.update({username : req.query.username}, {$set :{token : hashedToken}}, function(err) {
             // setting timeout function to remove login token from database
             setTimeout(function() {
-                db.authentication.update (dbQueryData, {$set :{token : null}});
+                db.authentication.update ({username : req.query.username}, {$set :{token : null}});
             }, config.loginTokenLifeMinutes * 60000);
 
             // returning the token to the user
-            res.json({token : loginToken});
+            res.json({token : loginToken, id : doc._id});
             res.end();
         });
     });
