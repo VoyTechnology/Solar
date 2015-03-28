@@ -43,7 +43,7 @@ var inputAnalyser = {
         if (data === null) {
 
         }
-        else if (typeof data.timestamp != "number" || typeof data.id != "number") {
+        else if (typeof data.timestamp != "number" || typeof data.id != "string") {
 
         }
         else if (typeof data.position != "object" || typeof data.orientation != "object") {
@@ -72,7 +72,7 @@ var inputAnalyser = {
 
         if(data === null) {
         }
-        else if (typeof data.token != "string" || typeof data.id != "number") {
+        else if (typeof data.token != "string" || typeof data.id != "string") {
         }
         else {
             message.success = true;
@@ -92,7 +92,7 @@ var inputAnalyser = {
         if (data === null) {
 
         }
-        else if (typeof data.timestamp != "number" || typeof data.id != "number") {
+        else if (typeof data.timestamp != "number" || typeof data.id != "string") {
 
         }
         else {

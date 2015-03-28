@@ -2,12 +2,15 @@
 var express = require("express");
 var socketIO = require("socket.io");
 var mongojs = require("mongojs");
+var passwordHash = require("password-hash");
 
 // Setting up global variables
 global.config = require("./config.json");
 global.package = require("./package.json");
 global._home = __dirname;
+global.passTool = passwordHash;
 global.loggedInPlayers = [];
+global.objectID = mongojs.ObjectId;
 global.db = mongojs(config.database.name, config.database.collections);
 global.actions = {
 	playerCS : require(__dirname + config.paths.playerCS),
@@ -62,7 +65,7 @@ io.on("connection", function(socket) {
 	});
 
 	socket.on("disconnect", function() {
-		actions.disconnectRH(session.thisPlayer.id);
+		actions.disconnectRH(session.thisPlayer._id);
 	});
 });
 

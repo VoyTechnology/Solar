@@ -24,7 +24,7 @@ function move(data, session, socket) {
     }
 
     // checking if id from data matches the id of the logged in player
-    if(data.id != session.thisPlayer.id) {
+    if(data.id != session.thisPlayer._id) {
         // if not return moveError message
         return actions.messageEM.moveError(
             107,

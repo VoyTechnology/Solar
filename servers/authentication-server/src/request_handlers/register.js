@@ -32,7 +32,7 @@ function register(req, res) {
             var pendingRegisterEntry = {
                 username : req.query.username,
                 token : null,
-                password : req.query.password,
+                password : passTool.generate(req.query.password), // generating password hash from regular password
                 email : req.query.email,
                 registerToken : registerToken
             };

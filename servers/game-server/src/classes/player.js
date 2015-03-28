@@ -6,7 +6,7 @@ function Player(doc, socket) {
 
 	// establishing player variables
 	this.loggedIn = true;
-	this.id = doc.id;
+	this._id = doc._id;
 	this.username = doc.username;
 	this.ship = doc.ship;
 	this.orientation = doc.orientation;
@@ -72,7 +72,7 @@ Player.prototype.subtractAvailableDistance = function(distance) {
 Player.prototype.getEssentialDetails = function() {
 	var message = {
 		username : this.username,
-		id : this.id,
+		_id : this._id,
 		ship : this.ship,
 		position : this.position,
 		orientation : this.orientation
