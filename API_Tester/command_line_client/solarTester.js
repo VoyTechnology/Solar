@@ -29,12 +29,12 @@ global.static = {
 };
 global.servers = {
     game_server : {
-        sockets : [],
-        stress : {
-            active : false,
-            sockets :[]
-        }
+        sockets : []
     }
+};
+global.stress = {
+    active : false,
+    sockets :[]
 };
 
 var rl = require("readline").createInterface ({
@@ -44,45 +44,9 @@ var rl = require("readline").createInterface ({
 
 // prompting
 function prompt(err) {
-    if (err !== null) {
-        //referencing errorCodes for convenience
-        var ec = global.config.errorCodes;
-
-        switch (err) {
-            case 100 :
-                console.log(ec.e100.red);
-                break;
-            case 101 :
-                console.log(ec.e101.red);
-                break;
-            case 102 :
-                console.log(ec.e102.red);
-                break;
-            case 103 :
-                console.log(ec.e103.red);
-                break;
-            case 104 :
-                console.log(ec.e104.red);
-                break;
-            case 105 :
-                console.log(ec.e105.red);
-                break;
-            case 106 :
-                console.log(ec.e106.red);
-                break;
-            case 107 :
-                console.log(ec.e107.red);
-                break;
-            case 108 :
-                console.log(ec.e108.red);
-                break;
-            case 109 :
-                console.log(ec.e109.red);
-                break;
-            case 110 :
-                console.log(ec.e110.red);
-                break;
-        }
+    if (typeof err == "number") {
+        var index = err - 100;
+        console.log(config.errorCodes[index].red);
     }
     process.stdout.write(global.nav.getPrompt());
     rl.resume();
@@ -144,10 +108,9 @@ rl.on("line", function(command) {
             global.requestHandlers.leaveSock(commandWords, prompt);
             break;
 
-        case "test" :
-            global.servers.game_server.sockets[0].clearLog();
-            console.log(global.servers.game_server.sockets);
-            prompt();
+        case "exit" :
+            console.log("\n\nHave a nice day!\n\n".bold.green);
+            process.exit(code=0);
             break;
 
         case "" :

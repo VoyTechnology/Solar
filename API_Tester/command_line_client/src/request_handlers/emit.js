@@ -1,32 +1,32 @@
 function emit(parameters, callback) {
 
     //validating parameters
-    if (!global.static.parameterChecker.emit(parameters)) {
+    if (!static.parameterChecker.emit(parameters)) {
         return callback(101);
     }
 
     //checking if within game server
-    if (global.nav.server != "Game_Server") {
+    if (nav.server != "Game_Server") {
         return callback(105);
     }
 
     //checking if within a socket
-    if(global.nav.socket === null) {
+    if(nav.socket === null) {
         return callback(102);
     }
 
     // referencing socketsArray for convenience
-    var socketsArray = global.servers.game_server.sockets;
+    var socketsArray = servers.game_server.sockets;
 
     // looking for socket with that name
     for(var i=0; i<socketsArray.length; i++) {
 
         // if found
-        if(global.nav.socket == socketsArray[i].name) {
+        if(nav.socket == socketsArray[i].name) {
 
             // get data from json file
-            var data = require(global.__home + global.config.paths.emitData);
-            delete require.cache[require.resolve(global.__home + global.config.paths.emitData)];
+            var data = require(__home + config.paths.emitData);
+            delete require.cache[require.resolve(__home + config.paths.emitData)];
 
             // if timestamp present in data, overide it with actual timestamp
             if (typeof data.timestamp != "undefined") {
@@ -35,7 +35,7 @@ function emit(parameters, callback) {
 
             socketsArray[i].emit(parameters[0], data);
             var logShowName = [];
-            logShowName.push(global.nav.socket);
+            logShowName.push(nav.socket);
             console.log("Done".green);
             console.log();
             return callback();

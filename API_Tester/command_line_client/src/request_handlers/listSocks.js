@@ -1,17 +1,17 @@
 function listSocks(parameters, callback) {
 
     // validating parameters
-    if (!global.static.parameterChecker.listSocks(parameters)) {
+    if (!static.parameterChecker.listSocks(parameters)) {
         callback(101);
     }
 
     //checking if within game server
-    if (global.nav.server != "Game_Server") {
+    if (nav.server != "Game_Server") {
         return callback(105);
     }
 
     // referencing socket array for convenience
-    var socketsArray = global.servers.game_server.sockets;
+    var socketsArray = servers.game_server.sockets;
 
     var numSocks = socketsArray.length;
 
