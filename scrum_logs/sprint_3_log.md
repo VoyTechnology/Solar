@@ -11,9 +11,13 @@
 **Wojciech** : <br>Finishing the website frontend (CSS).<br><br>
 **James** : <br>Working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
 ****
-****
 ###Friday - 27 / 03 / 2015###
 **Mladen** : <br>No Work done on project.<br><br>
 **Wojciech** : <br>Solving ship shaking problem. looking into the efects of using bitwise operators and spiliting into chunks.<br><br>
+**James** : <br>Still working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
+****
+###Saturday - 28 / 03 / 2015###
+**Mladen** : <br>Flattened out Command line client structure. made Command line client error codes an array. Implemented Hash and salt on password for database storage and also on token upon authentication because that's being stored in the database too.<br><br>
+**Wojciech** : <br>Still solving Ship shaking problem. splitting into chunks seems to have worked but brought up some unexpected problems that are being cleared up now<br><br>
 **James** : <br>Still working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
 ****
