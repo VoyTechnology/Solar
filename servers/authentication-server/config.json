@@ -1,5 +1,5 @@
 {
-    "ip" : "178.62.116.176",
+    "ip" : "localhost",
     "port" : 3001,
     "registrationTokenLifeHours" : 1,
     "loginTokenLifeMinutes" : 5,
@@ -12,6 +12,7 @@
         ]
     },
     "paths" : {
+        "ipFinder" : "/src/static/ipFinder.js",
         "authenticate" : "/src/request_handlers/authenticate.js",
         "register" : "/src/request_handlers/register.js",
         "completeRegister" : "/src/request_handlers/completeRegister.js",

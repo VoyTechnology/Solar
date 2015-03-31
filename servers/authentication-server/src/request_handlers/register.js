@@ -57,7 +57,7 @@ function register(req, res) {
                 "Complete Registration",
 
                 "Please visit this link to complete registration  " +
-                "http://" + config.ip + ":" + config.port.toString() +
+                "http://" + myIP + ":" + config.port.toString() +
                 "/completeRegister?token=" + registerToken.toString()
             );
 
