@@ -14,6 +14,7 @@ global.nodemailer = nodeMailer;
 global.passTool = passwordHash;
 global.pendingRegisters = [];
 global.pendingNewPasswords = [];
+global.activeAuthenticateTokens = [];
 global.actions = {
     authenticate : require(__dirname + config.paths.authenticate),
     register : require(__dirname + config.paths.register),

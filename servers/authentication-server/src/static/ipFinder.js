@@ -16,6 +16,9 @@ function ipFinder() {
         res.on('data', function(chunk) { ipAddress += chunk; });
         res.on('end', function() {
             global.myIP = ipAddress;
+            if(!isNaN(myIP[myIP.length-1])) {
+                myIP = myIP.slice(0, myIP.length-1);
+            }
         });
         }).on('error', function(err) {
         throw err;
