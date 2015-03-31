@@ -35,5 +35,3 @@ This command will show the latest 10 messages sent and received by the socket th
 This command will begin a stress test. The x parameter is the number of connections to the server you wish the stress test to make. Once a stress test is started the client will create x new sockets, log them into the server (by using test accounts) and make them move around randomly. You may if you wish have more control over how much movement the sockets are doing by editing some properties inside the config.json file.
 9. **stopStress**<br>
 This command will stop a stress test if there is one running. It will display some statistics when the stress test has successfully stopped.
-10. **exit**<br>
-I'll leave this one to the imagination.

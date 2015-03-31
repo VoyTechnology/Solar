@@ -1,6 +1,14 @@
 {
-    "timestamp" : 368389679893492,
-    "originator" : "james",
-    "recipient" : ["woj"],
-    "text" : "Hey man!"
+    "timestamp":36838967347821,
+    "id":"55172f4c56970edb43aefd42",
+    "position": {
+        "x": 5,
+        "y": 100000,
+        "z": 1.125
+    },
+    "orientation": {
+        "x":2.2,
+        "y":1.4,
+        "z":0
+    }
 }

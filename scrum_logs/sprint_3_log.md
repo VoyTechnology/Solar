@@ -21,3 +21,18 @@
 **Wojciech** : <br>Still solving Ship shaking problem. splitting into chunks seems to have worked but brought up some unexpected problems that are being cleared up now<br><br>
 **James** : <br>Still working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
 ****
+###Sunday - 29 / 03 / 2015###
+**Mladen** : <br>Solved MongoDB objectID conversion function problems. Now comfortable with using player id as their database document ObjectIDs<br><br>
+**Wojciech** : <br>Planet texturing<br><br>
+**James** : <br>Still working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
+****
+###Monday - 30 / 03 / 2015###
+**Mladen** : <br>Worked on PlayerArray object for game server with binary search functionality<br><br>
+**Wojciech** : <br>Implemened the authentication procedure on the client<br><br>
+**James** : <br>Still working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
+****
+###Tuesday - 31 / 03 / 2015###
+**Mladen** : <br>General tightening of the servers code and figuring out how to make installation and running more convenient<br><br>
+**Wojciech** : <br>General tightening of the client and website code.<br><br>
+**James** : <br>Still working on "newPassword" and "completeNewPassword" calls for the authentication server.<br>
+****

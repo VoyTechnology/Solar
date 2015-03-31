@@ -71,7 +71,7 @@ function stressSock(id) {
     };
 
     // connecting socket to server
-    this.socket = global.io.connect("http://" + config.serverIp + ":" + config.serverPort.toString(), {'force new connection': true});
+    this.socket = global.io.connect("http://" + server.ip + ":" + server.port.toString(), {'force new connection': true});
 
     /*
     socket event handlers
