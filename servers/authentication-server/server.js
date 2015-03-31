@@ -25,6 +25,9 @@ global.actions = {
     mailer : new (require(__dirname + config.paths.emailEmitter))()
 };
 
+// locating This machines IP address
+require(__dirname + config.paths.ipFinder)();
+
 // initialising server
 var app = express();
 app.use(bodyParser.json());

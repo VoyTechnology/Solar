@@ -23,7 +23,7 @@ function authenticate(req, res) {
             }, config.loginTokenLifeMinutes * 60000);
 
             // returning the token to the user
-            res.json({token : loginToken, id : doc._id});
+            res.json({token : loginToken, id : doc._id, success : true});
             res.end();
         });
     });
