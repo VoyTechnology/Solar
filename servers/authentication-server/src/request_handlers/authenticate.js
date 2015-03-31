@@ -43,11 +43,11 @@ function authenticate(req, res) {
                         activeAuthenticateTokens.splice(i, 1);
                     }
                 }
-            }, config.loginTokenLifeMinutes * 60000);
+            }, args.ltm * 60000);
 
             // appending activeAuthenticateTokensList
             activeAuthenticateTokens.push(autnenticationListEntry);
-            
+
             // returning the token to the user
             res.json({token : loginToken, id : doc._id, success : true});
             res.end();

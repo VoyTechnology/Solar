@@ -45,7 +45,7 @@ function register(req, res) {
                         return;
                     }
                 }
-            }, config.registrationTokenLifeHours * 3600000);
+            }, args.rth * 3600000);
 
             // appending pending registrations array
             pendingRegisters.push(pendingRegisterEntry);
@@ -57,7 +57,7 @@ function register(req, res) {
                 "Complete Registration",
 
                 "Please visit this link to complete registration : " +
-                "http://" + myIP + ":" + config.port.toString() +
+                "http://" + (args.local?"localhost":myIP) + ":" + args.port.toString() +
                 "/completeRegister?token=" + registerToken.toString()
             );
 
