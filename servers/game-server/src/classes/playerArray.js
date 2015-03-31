@@ -4,6 +4,7 @@ function playerArray() {
 }
 
 playerArray.prototype.search = function(target, id, array) {
+    console.log(array);
     var minIndex = 0;
     var maxIndex = array.length;
     var currentIndex;
@@ -34,6 +35,7 @@ playerArray.prototype.search = function(target, id, array) {
 };
 
 playerArray.prototype.push = function(player) {
+    console.log("Push Called");
     if (this.playersByID.length === 0 && this.playersByUsername.length === 0) {
         this.playersByID.push(player);
         this.playersByUsername.push(player);
@@ -59,6 +61,7 @@ playerArray.prototype.push = function(player) {
 };
 
 playerArray.prototype.remove = function(target, id) {
+    console.log("Remove Called");
     var firstIDIndex = this.search(target, id, (id=="U"?this.playersByUsername:this.playersByID));
     var secondIDIndex = this.search(target, (id=="U"?"I":"U"), (id=="U"?this.playersByID:this.playersByUsername));
     var playerReference;
@@ -80,6 +83,7 @@ playerArray.prototype.remove = function(target, id) {
 };
 
 playerArray.prototype.getPlayer = function(target, id) {
+    console.log("getPlayer Called");
     var playersRelativeIndex = this.search(target, id, (id=="U"?this.playersByUsername:this.playersByID));
     if (!playersRelativeIndex.success) return -1;
 
