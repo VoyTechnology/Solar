@@ -34,6 +34,11 @@ playerArray.prototype.search = function(target, id, array) {
 };
 
 playerArray.prototype.push = function(player) {
+    if (this.playersByID.length === 0 && this.playersByUsername.length === 0) {
+        this.playersByID.push(player);
+        this.playersByUsername.push(player);
+    }
+    
     var idArrayIndex = this.search(player._id, "I", this.playersByID);
     var usernameArrayIndex = this.search(player.username, "U", this.playersByUsername);
 
