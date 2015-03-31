@@ -10,7 +10,7 @@ function disconnect(playerID) {
     var playerToRemove = playerArray.remove(playerID, "I");
 
     // getting players details
-    var playersDetails = playerToRemove.getEssentialDetails;
+    var playerDetails = playerToRemove.getEssentialDetails;
 
     // updating database
     db.players.update({_id : objectID(playerID)}, playerDetails);
