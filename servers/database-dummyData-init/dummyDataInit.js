@@ -26,7 +26,7 @@ function next(i) {
     // creating document for AUTHENTICATION collection
     var authenticationData = {
         $set : {
-            id : i,
+            _id : i.toString(),
             token : i.toString(),
             email : "example@gmail.com",
             username : config.entryNamePattern + i.toString(),
@@ -36,7 +36,7 @@ function next(i) {
     // creating document for PLAYERS collection
     var playerData = {
         $set : {
-            id : i,
+            _id : i.toString(),
             username : config.entryNamePattern + i.toString(),
             ship : "astratis_v1",
             position : config.startingPosition,
@@ -45,9 +45,9 @@ function next(i) {
     };
 
     // uploading document to AUTHENTICATION collection
-    db.authentication.update({id : i}, authenticationData, {upsert:true}, function() {
+    db.authentication.update({_id : i.toString()}, authenticationData, {upsert:true}, function() {
         // uploading document to PLAYERS collection after finished uploading to AUTHENTICATION collection
-        db.players.update({id : i}, playerData, {upsert:true}, function() {
+        db.players.update({_id : i.toString()}, playerData, {upsert:true}, function() {
             // itterating counter
             i++;
             // checking if enough accounts already created
