@@ -3,6 +3,7 @@
   "description": "the official server for Solar",
   "version": "0.1.1",
   "dependencies": {
+    "commander": "^2.7.1",
     "express": "^4.11.2",
     "mongojs": "^0.18.1",
     "password-hash": "^1.2.2",

@@ -3,6 +3,13 @@ var express = require("express");
 var socketIO = require("socket.io");
 var mongojs = require("mongojs");
 var passwordHash = require("password-hash");
+global.args = require("commander");
+
+args.version(1.1);
+args.option("-p, --port [port]", "Specify the server port, (def 3000)", 3000);
+args.option("--pmda [pmda]", "Specify max units per socond players can move, (def 500)", 500);
+args.parse(process.argv);
+
 
 // Setting up global variables
 global.config = require("./config.json");
@@ -35,7 +42,7 @@ global.version = {
 
 // socket.IO server initialisation
 var app = express();
-var server = app.listen(config.mainServerPort);
+var server = app.listen(args.port);
 var io = socketIO.listen(server);
 
 // Server event handlers
@@ -69,4 +76,4 @@ io.on("connection", function(socket) {
 	});
 });
 
-console.log("Listening on port : " + config.mainServerPort.toString());
+console.log("Listening on port : " + args.port.toString());
