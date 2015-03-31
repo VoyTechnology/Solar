@@ -9,6 +9,7 @@ var config = require(__dirname + "/config.json");
 // establishing connection to database
 var mongojs = require('mongojs');
 var db = mongojs(config.dbName, config.collections);
+var OID = mongojs.ObjectId;
 
 // determining how many test accounts to create by
 // checking if a command line argument was supplied
@@ -26,7 +27,7 @@ function next(i) {
     // creating document for AUTHENTICATION collection
     var authenticationData = {
         $set : {
-            _id : i.toString(),
+            _id : OID(i.toString()),
             token : i.toString(),
             email : "example@gmail.com",
             username : config.entryNamePattern + i.toString(),
@@ -36,7 +37,7 @@ function next(i) {
     // creating document for PLAYERS collection
     var playerData = {
         $set : {
-            _id : i.toString(),
+            _id : OID(i.toString()),
             username : config.entryNamePattern + i.toString(),
             ship : "astratis_v1",
             position : config.startingPosition,
@@ -45,9 +46,9 @@ function next(i) {
     };
 
     // uploading document to AUTHENTICATION collection
-    db.authentication.update({_id : i.toString()}, authenticationData, {upsert:true}, function() {
+    db.authentication.update({_id : OID(i.toString())}, authenticationData, {upsert:true}, function() {
         // uploading document to PLAYERS collection after finished uploading to AUTHENTICATION collection
-        db.players.update({_id : i.toString()}, playerData, {upsert:true}, function() {
+        db.players.update({_id : OID(i.toString())}, playerData, {upsert:true}, function() {
             // itterating counter
             i++;
             // checking if enough accounts already created
