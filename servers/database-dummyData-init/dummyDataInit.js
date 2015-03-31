@@ -21,13 +21,29 @@ else {
     numTestAccounts = parseInt(process.argv[2]);
 }
 
+// this function is used to create a string of suitable length
+// for the mongodb objectID conversion function from an index i
+function indexToID(i) {
+    var stringID = "";
+    var paddingLength = 12 - ((i.toString()).length);
+
+    for(var j=0 ; j<paddingLength; j++) {
+        stringID += "0";
+    }
+
+    stringID += i.toString();
+    return stringID;
+}
+
 // this function creates and inserts next test account entry.
 function next(i) {
+
+    var idToUse = indexToID(i);
 
     // creating document for AUTHENTICATION collection
     var authenticationData = {
         $set : {
-            _id : OID(i.toString()),
+            _id : OID(idToUse),
             token : i.toString(),
             email : "example@gmail.com",
             username : config.entryNamePattern + i.toString(),
@@ -37,7 +53,7 @@ function next(i) {
     // creating document for PLAYERS collection
     var playerData = {
         $set : {
-            _id : OID(i.toString()),
+            _id : OID(idToUse),
             username : config.entryNamePattern + i.toString(),
             ship : "astratis_v1",
             position : config.startingPosition,
@@ -46,9 +62,9 @@ function next(i) {
     };
 
     // uploading document to AUTHENTICATION collection
-    db.authentication.update({_id : OID(i.toString())}, authenticationData, {upsert:true}, function() {
+    db.authentication.update({_id : OID(idToUse)}, authenticationData, {upsert:true}, function() {
         // uploading document to PLAYERS collection after finished uploading to AUTHENTICATION collection
-        db.players.update({_id : OID(i.toString())}, playerData, {upsert:true}, function() {
+        db.players.update({_id : OID(idToUse)}, playerData, {upsert:true}, function() {
             // itterating counter
             i++;
             // checking if enough accounts already created
