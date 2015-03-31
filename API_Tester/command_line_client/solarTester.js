@@ -9,6 +9,10 @@ global.nav = new (require(__dirname + global.config.paths.navCS))();
 global.__home = __dirname;
 global.fs = require("fs");
 global.io = require('socket.io-client');
+global.server = {
+    ip : config.defaultServerIP,
+    port : config.defaultServerPort
+};
 global.classes = {
     sock : require(__dirname + global.config.paths.sockCS),
     stressSock : require(__dirname + global.config.paths.stressSockCS)
@@ -36,6 +40,17 @@ global.stress = {
     active : false,
     sockets :[]
 };
+
+//Determining which server details to use based on command line arguments.
+if(process.argv.length == 3) {
+    if (process.argv[2].indexOf(":") != -1) {
+        var splitByColon = process.argv[2].split(":");
+        if (splitByColon.length == 2) {
+            server.ip = splitByColon[0];
+            server.port = splitByColon[1];
+        }
+    }
+}
 
 var rl = require("readline").createInterface ({
     input: process.stdin,

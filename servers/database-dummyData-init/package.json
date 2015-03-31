@@ -3,6 +3,7 @@
   "description": "database dummy data initialiser",
   "version": "0.0.1",
   "dependencies": {
-    "mongojs": "^0.18.1"
+    "mongojs": "^0.18.1",
+    "password-hash": "^1.2.2"
   }
 }

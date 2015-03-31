@@ -11,6 +11,9 @@ var mongojs = require('mongojs');
 var db = mongojs(config.dbName, config.collections);
 var OID = mongojs.ObjectId;
 
+// loading in password hash and salt module
+var passHash = require("password-hash");
+
 // determining how many test accounts to create by
 // checking if a command line argument was supplied
 var numTestAccounts;
@@ -39,6 +42,7 @@ function indexToID(i) {
 function next(i) {
 
     var idToUse = indexToID(i);
+    var passToUse = "testpass" + i.toString();
 
     // creating document for AUTHENTICATION collection
     var authenticationData = {
@@ -47,7 +51,7 @@ function next(i) {
             token : i.toString(),
             email : "example@gmail.com",
             username : config.entryNamePattern + i.toString(),
-            password : "CoolPass"
+            password : passHash.generate(passToUse)
         }
     };
     // creating document for PLAYERS collection

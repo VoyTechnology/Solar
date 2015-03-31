@@ -39,7 +39,7 @@ function sock(name, keepLog) {
         return logString;
     };
 
-    this.socket = global.io.connect("http://" + config.serverIp + ":" + config.serverPort.toString(), {'force new connection': true});
+    this.socket = global.io.connect("http://" + server.ip + ":" + server.port.toString(), {'force new connection': true});
 
     if(keepLog) {
         this.socket.on("connected", this.callbackFunctionGenerator("connected", this));
@@ -68,7 +68,7 @@ sock.prototype.close = function() {
 };
 
 sock.prototype.open = function() {
-    this.socket.connect("http://" + config.serverIp + ":" + config.serverPort.toString());
+    this.socket.connect("http://" + server.ip + ":" + server.port.toString());
 };
 
 module.exports = sock;
