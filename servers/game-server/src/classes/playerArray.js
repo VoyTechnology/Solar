@@ -84,6 +84,7 @@ playerArray.prototype.remove = function(target, id) {
 
 playerArray.prototype.getPlayer = function(target, id) {
     console.log("getPlayer Called");
+    if (this.playersByUsername.length === 0) return -1;
     var playersRelativeIndex = this.search(target, id, (id=="U"?this.playersByUsername:this.playersByID));
     if (!playersRelativeIndex.success) return -1;
 
