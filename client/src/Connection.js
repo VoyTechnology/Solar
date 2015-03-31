@@ -51,7 +51,7 @@ Connection.prototype.connect = function(){
     player.controls.update( clock.getDelta() );
 
     // Clear the token
-  //  settings.set('token', '');
+    settings.set('token', '');
   });
 
   that._socket.on('rejected', function( data ){
