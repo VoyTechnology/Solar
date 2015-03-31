@@ -9,7 +9,7 @@ global.config = require("./config.json");
 global.package = require("./package.json");
 global._home = __dirname;
 global.passTool = passwordHash;
-global.loggedInPlayers = [];
+global.playerArray = new (require(__dirname + config.paths.playerArrayCS))();
 global.objectID = mongojs.ObjectId;
 global.db = mongojs(config.database.name, config.database.collections);
 global.actions = {
@@ -30,7 +30,7 @@ global.actions = {
 };
 global.version = {
 	major : 1,
-	minor : 1
+	minor : 2
 };
 
 // socket.IO server initialisation

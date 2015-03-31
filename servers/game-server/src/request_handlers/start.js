@@ -13,14 +13,11 @@ function start(data, session, socket) {
         return actions.messageEM.rejected(badData.error, socket);
     }
 
-    //Checking if this player is already logged in.
-    for (var i=0; i<loggedInPlayers.length; i++)
-    {
-        // if so, send rejected message with error 110
-        if (data.id == loggedInPlayers[i]._id) {
-            return actions.messageEM.rejected(110, socket);
-        }
+    // checking if player is already logged in.
+    if (playerArray.getPlayer(data.id, "I") != -1) {
+        return actions.messageEM.rejected(110, socket);
     }
+
 
     // fetching user from AUTHENTICATION collection
     db.authentication.findOne({_id : objectID(data.id)}, function (err, authDoc) {
@@ -40,7 +37,7 @@ function start(data, session, socket) {
                 // if found load player into memmory
                 session.thisPlayer = new actions.playerCS(playerDoc, socket);
                 // save player to logged in players array
-                loggedInPlayers.push(session.thisPlayer);
+                playerArray.push(session.thisPlayer);
 
                 // send accepted message
                 actions.messageEM.accepted(session.thisPlayer, socket);

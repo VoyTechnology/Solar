@@ -24,6 +24,7 @@
     ],
     "paths" : {
         "playerCS" : "/src/classes/player.js",
+        "playerArrayCS" : "/src/classes/playerArray.js",
         "startRH" : "/src/request_handlers/start.js",
         "disconnectRH" : "/src/request_handlers/disconnect.js",
         "moveRH" : "/src/request_handlers/move.js",

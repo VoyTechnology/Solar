@@ -30,19 +30,13 @@ function chat(data, session, socket) {
     // finding players to send message to
     for(var i=0; i<data.recipient.length; i++)
     {
-        var playerFound = false;
+        var playerFound = playerArray.getPlayer(data.recipient[i], "U");
 
-        for(var j=0; j<loggedInPlayers.length; j++)
-        {
-            if(data.recipient[i] == loggedInPlayers[j].username) {
-                playerFound = true;
-                recipientArr.push(loggedInPlayers[j]);
-            }
-        }
-
-        if (!playerFound) {
+        if (playerFound == -1) {
             return actions.messageEM.chatError(108, data, socket);
         }
+
+        recipientArr.push(playerFound);
     }
 
     // data that is sent to message emitter
