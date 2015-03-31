@@ -6,6 +6,7 @@ a "move" message
 
 function move(data, session, socket) {
 
+    console.log(data);
     // checking if player is logged in
     if (!session.thisPlayer.loggedIn || !session.movementSynced) {
         return;
