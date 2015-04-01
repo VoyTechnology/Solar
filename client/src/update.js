@@ -29,9 +29,9 @@ function update(){
 
   // Do actions every 3 frames (20 times a second)
   if(frameCount % 3 === 0){
-    if( (myPos != myLastPos) || (myDir != myLastDir) ){
+    //if( (myPos != myLastPos) || (myDir != myLastDir) ){
       connection.updateLocation(myPos, myDir);
-    }
+    //}
   }
 
   myLastPos = player.tP.position;
