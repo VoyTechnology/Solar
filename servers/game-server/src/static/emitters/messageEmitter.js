@@ -19,7 +19,6 @@ var messageEmitter = {
         };
 
         socket.emit("accepted", response);
-        console.log("accepted");
     },
 
     disconnect : function(code, socket) {
@@ -37,7 +36,6 @@ var messageEmitter = {
                 conditions.recipientArr[i].socket.emit("chat", message);
             }
         }
-        console.log("chat");
     },
 
     chatError : function(errorCode, original, socket) {
@@ -46,7 +44,6 @@ var messageEmitter = {
             original : original
         };
         socket.emit("chatError", data);
-        console.log("chatError");
     },
 
     moveError : function(errorCode, original, thisPlayer, socket) {
@@ -59,8 +56,6 @@ var messageEmitter = {
         };
 
         socket.emit("moveError", data);
-        console.log("moveError");
-        console.log(data);
     },
 
     otherPlayers : function(thisPlayer, socket) {
@@ -76,7 +71,6 @@ var messageEmitter = {
         }
 
         socket.emit("otherPlayers", message);
-        console.log("otherPlayers");
     },
 
     move : function(data, socket) {

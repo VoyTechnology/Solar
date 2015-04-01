@@ -41,7 +41,7 @@ var parameterAnalyser = {
     },
 
     completeNewPassword : function(req) {
-        if (typeof req.query.username != "string") {
+        if (typeof req.query.token != "string") {
             return false;
         }
         if (typeof req.query.password != "string") {

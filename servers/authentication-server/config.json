@@ -25,8 +25,9 @@
         "Parameters invalid.",
         "Email already used.",
         "Have not registerd.",
-        "Already registerd",
-        "Invalid username or password"
+        "Already registerd.",
+        "Invalid username or password.",
+        "Already pending."
     ],
     "defaultPlayer" : {
         "_id" : "default",
