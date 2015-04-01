@@ -44,16 +44,16 @@ var inputAnalyser = {
 
         }
         else if (typeof data.timestamp != "number" || typeof data.id != "string") {
-
+            console.log("1");
         }
         else if (typeof data.position != "object" || typeof data.orientation != "object") {
-
+            console.log(2);
         }
         else if (typeof data.position.x != "number" || typeof data.position.y != "number" || typeof data.position.z != "number") {
-
+            console.log(3);
         }
         else if (typeof data.orientation.x != "number" || typeof data.orientation.y != "number" || typeof data.orientation.z != "number") {
-
+            console.log(4);
         }
         else {
             message.sucess = true;

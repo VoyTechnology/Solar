@@ -5,6 +5,7 @@ this is a socket object speciffic to stress testing
 function stressSock(id) {
     // initialising socket properties
     this.id = id;
+    this.hardID = "";
     this.socket = null;
     this.messagesSent = 0;
     this.messagesReceived = 0;
@@ -23,7 +24,7 @@ function stressSock(id) {
         return function() {
             this.moveData = {
                 timestamp : new Date().getTime(),
-                id : selfReference.id,
+                id : selfReference.hardID,
                 position : {
                     x : (Math.random()*10) + startPos.x,
                     y : (Math.random()*10) + startPos.y,
@@ -48,7 +49,7 @@ function stressSock(id) {
             // data to be sent in moveSync message
             var moveSyncData = {
                 timestamp : new Date().getTime(),
-                id : selfReference.id
+                id : selfReference.hardID
             };
 
             // sending the data
@@ -87,11 +88,22 @@ function stressSock(id) {
     this.socket.on("accepted", this.itterateMessagesReceived(this));
     this.socket.on("rejected", function(data){console.log(data.reasonText);});
 
+
+
+    // adding padding to the id
+    var paddingLength = 24 - ((this.id.toString()).length);
+    for(var j=0 ; j<paddingLength; j++) {
+        this.hardID += "0";
+    }
+    this.hardID += id.toString();
+
     // emitting start to the server
     var startData = {
-        id : this.id,
+        id : this.hardID,
         token : this.id.toString()
     };
+
+    // emitting start
     this.socket.emit("start", startData);
 }
 
