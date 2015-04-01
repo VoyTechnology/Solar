@@ -20,7 +20,10 @@ playerArray.prototype.push = function(player) {
 
 playerArray.prototype.remove = function(target, id) {
     var index = this.search(target, id, this.players);
-    var thePlayer = players[i];
+    if(index == -1) {
+        return -1;
+    }
+    var thePlayer = this.players[index];
     this.players.splice(index, 1);
     return thePlayer;
 };
