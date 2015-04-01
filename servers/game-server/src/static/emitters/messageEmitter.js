@@ -7,7 +7,6 @@ var messageEmitter = {
 
     rejected : function(code, socket) {
         socket.emit("rejected", actions.errorCode(code));
-        console.log(actions.errorCode(code));
     },
 
     accepted : function(thisPlayer, socket) {
@@ -82,7 +81,6 @@ var messageEmitter = {
 
     move : function(data, socket) {
         socket.broadcast.emit("move", data);
-        console.log("move");
     }
 };
 

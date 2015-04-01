@@ -7,7 +7,7 @@ global.args = require("commander");
 
 args.version(1.1);
 args.option("-p, --port [port]", "Server port, default 3000", 3000);
-args.option("--pmda [pmda]", "Max units per socond players can move, default 500)", 500);
+args.option("--pmda [pmda]", "Max units per socond players can move, default 10000000000000)", 10000000000000);
 args.parse(process.argv);
 
 
