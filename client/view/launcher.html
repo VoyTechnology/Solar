@@ -69,14 +69,12 @@
             } else {
               var getQuery = settings.get("authServerAddress")+"/authenticate?username="+user+"&password="+pass;
               $.get(getQuery, function(data){
-                console.log(data);
-                  if(data.success){
-                    enablePlay(remember, user, data.id, data.token);
-                  } else {
-                    $('#errorMessage').html(data.error.reasonText);
-                  }
+                if(data.success){
+                  enablePlay(remember, user, data.id, data.token);
+                } else {
+                  $('#errorMessage').html(data.error.reasonText);
                 }
-              );
+              });
             }
 
           } else {
