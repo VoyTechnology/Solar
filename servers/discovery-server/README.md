@@ -2,42 +2,50 @@
 
 Solar Discovery Server, allows the client to get the addresses of individual servers
 
-## Compiling ##
-
-1. Download Go from [go-lang.org/dl](https://golang.org/dl/) for your platform  
-2. Install Go based on instructions from [golang.org/doc/install](https://golang.org/doc/install)  
-3. Navigate to the `discovery-server` directory  
-4. Run `go build discovery-server.go`  
-5. This will produce an executable `discovery-server`
-
-## Configuration ##
-To configure the addresses that the server provides edit the `config.json` file
+## Installing ##
+While inside the directory, run `npm install`
 
 ## Running ##
-To run the server: `./discovery-server`
+To get the list of CLI arguments use `node discovery.js --help`.
 
-## Running as a Daemon ##
-By default the server will run in the current shell  
-To detach it use `& disown` at the end
+>`node discovery.js`  
 
-To kill the daemon use platform specific instructions
-> Ubuntu: `pkill discovery-server`
-
-## Tests ##
-Tests require node.js
-
-To configure the address of the discovery-server to test change value of
-`address` in `test-config.json`
-
-__Run the tests:__
->`npm install`  
->`npm test`
+Allows to run with the default server values provided in `config.json`.
 
 ---
 
+>`AUTH_SERVER_ADDRESS=http://localhost:3001 node discovery.js`
 
+Allows to define the server addresses using ENV variables. Available servers:
+  * AUTH_SERVER_ADDRESS
+  * GAME_SERVER_ADDRESS
+  * TRADE_SERVER_ADDRESS
 
-## WARNING ##
-Since this server will not require to be changed frequently (only when other servers change their address), the server addresses and port are hardcoded.
+---
 
-The port can be changed in the main() function and the server address values inside the var () block. They must be in order presented by AddressesMessage struct
+>`node discovery.js --local`
+
+Runs the discovery server with all addresses local
+
+---
+
+>`node discovery.js --port [port]`
+
+Allows to change the listening port of the discovery server. Default: `3003`
+
+---
+
+## Running as a Daemon ##
+To run the discovery server as daemon, use `forever start discover.js`.
+You can pass the CLI arguments as defined in __Running__
+
+## Tests ##
+
+To configure the address of the discovery-server to test change, use the `--address` argument. Default is localhost
+
+__Run the tests:__
+>`npm test`  
+> or  
+> `npm test --address [address]`
+
+---
