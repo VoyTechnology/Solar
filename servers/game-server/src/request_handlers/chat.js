@@ -6,7 +6,6 @@ a "chat" message
 
 function chat(data, session, socket) {
 
-    console.log(data);
     // checking if player on this session has not been accepted login
     if (!session.thisPlayer.loggedIn) {
         return;

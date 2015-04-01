@@ -4,8 +4,6 @@ function authenticate(req, res) {
         return actions.responseEmitter.error(103, res);
     }
 
-    console.log(req.query);
-
     // looking for players entry in authentication collection
     db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if not found return an error

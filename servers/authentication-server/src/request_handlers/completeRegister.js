@@ -18,7 +18,6 @@ function completeRegister(req, res) {
 
     // removing registerToken
     delete registrationEntry.registerToken;
-    console.log("here");
     // updating databases
     db.authentication.insert(registrationEntry, function() {
         // adding player to Players collection
