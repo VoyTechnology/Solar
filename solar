@@ -1,0 +1,71 @@
+#!/bin/bash
+
+usage="
+
+  Usage: ./solar [options]
+
+  Options:
+
+    help            displays this window
+    pull            pulls the github repositiory
+    install         installs all necessary dependencies
+    run [servers]   runs all servers locally
+    stop [servers]  stops all servers
+    play            launches the client and allows to to play
+    tester          launches CLI tester
+    remove          removes the entire Solar directory
+    pack            packs complete binaries to client-ready/
+
+"
+
+root=`pwd`
+
+nwjs_addr="http://dl.nwjs.io/v0.12.0/nwjs-v0.12.0-"
+os_arch=`uname -m`
+
+case $1 in
+  pull)
+    git clone https://github.com/CPSSD/space.git Solar
+    ;;
+  install)
+    cd "$root/Solar/client/" && \
+      case $OSTYPE in
+        linux*)
+          wget $nwjs_addr"linux-x64".tar.gz && \
+            tar -zxvf $nwjs_addr"linux-x64".tar.gz -C ./
+          ;;
+      esac
+    cd "$root/Solar/servers/authentication-server" && sudo npm install -g && npm install
+    cd "$root/Solar/servers/discovery-server" && sudo npm install -g && npm install
+    cd "$root/Solar/servers/game-server" && sudo npm install -g && npm install
+    cd "$root/Solar/servers/database-dummyData-init" && sudo npm install -g && npm install
+    cd "$root/Solar/API_Tester/command_line_client" && sudo npm install -g && npm install
+    cd "$root/Solar/client-utils/" && \
+      wget http://dl.razoft.net/solar/nwjs.zip && \
+      unzip nwjs.zip
+    ;;
+  run)
+    cd "$root/Solar/servers/database-dummyData-init " && node dummyDataInit.js --local
+    cd "$root/Solar/servers/authentication-server" && forever start server.js --local
+    cd "$root/Solar/servers/discovery-server" && forever start discovery.js --local
+    cd "$root/Solar/servers/game-server" && forever start server.js
+    ;;
+  stop)
+    forever stopall
+    ;;
+  play)
+    cd "$root/Solar/client/" && chmod +x ./nw && ./nw --local
+    ;;
+  tester)
+    cd "$root/Solar/API_Tester/command_line_client" && node solarTester.js
+    ;;
+  pack)
+    cd "$root/Solar/client-utils/" && chmod +x ./packer && ./packer ../client ../client-ready
+    ;;
+  remove)
+    rm -rf "$root/Solar"
+    ;;
+  *)
+    echo "$usage"
+    ;;
+esac
