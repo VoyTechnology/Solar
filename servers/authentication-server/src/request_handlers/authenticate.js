@@ -1,7 +1,6 @@
 function authenticate(req, res) {
     // if parameters invalid
     if (!actions.parameterAnalyser.authenticate(req)) {
-        console.log(1);
         return actions.responseEmitter.error(103, res);
     }
 
@@ -11,7 +10,6 @@ function authenticate(req, res) {
     db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if not found return an error
         if (doc === null || !passTool.verify(req.query.password, doc.password)) {
-            console.log(2);
             return actions.responseEmitter.error(107, res);
         }
 
