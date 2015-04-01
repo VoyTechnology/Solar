@@ -2,9 +2,11 @@ var parameterAnalyser = {
 
     authenticate : function(req) {
         if (typeof req.query.username != "string") {
+            console.log("1 PA");
             return false;
         }
         if (typeof req.query.password != "string") {
+            console.log("2 PA");
             return false;
         }
         return true;
