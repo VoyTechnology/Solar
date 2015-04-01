@@ -8,6 +8,7 @@
  */
 var Player = function(){
   this.ship = {};
+  this.id = null;
 
   this.camera = new THREE.PerspectiveCamera(
     +settings.get('field_of_view'),
@@ -67,7 +68,9 @@ Player.prototype.update = function( delta ){
  * Sets the camera position
  * @method
  */
-Player.prototype.setCamera = function( data ){
+Player.prototype.setCamera = function( data, id ){
+  this.id = id;
+
   this.tP.position.x = data.position.x;
   this.tP.position.y = data.position.y;
   this.tP.position.z = data.position.z;

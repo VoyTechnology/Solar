@@ -16,12 +16,16 @@
       $(document).ready( function(){
         settings = new Settings(config.defaults);
 
+        var discoveryAddress = (gui.App.argv[0] == '--local')
+          ? "http://localhost:3003"
+          : config.discovery.address;
+
         // Get the latest server address from the discovery server
-        $.getJSON(config.discovery.address, function(data){
+        $.getJSON(discoveryAddress, function(data){
           if(data.success){
-            settings.set("gameServerAddress", data.servers.gameServer);
-            settings.set("authServerAddress", data.servers.authServer);
-            settings.set("tradeServerAddress", data.servers.tradeServer);
+            settings.set("gameServerAddress", data.addresses.gameServer);
+            settings.set("authServerAddress", data.addresses.authServer);
+            settings.set("tradeServerAddress", data.addresses.tradeServer);
           }
         });
 
@@ -65,19 +69,17 @@
             } else {
               var getQuery = settings.get("authServerAddress")+"/authenticate?username="+user+"&password="+pass;
               $.get(getQuery, function(data){
-                console.log(data);
-                  if(data.success){
-                    enablePlay(remember, user, data.id, data.token);
-                  } else {
-                    $('#errorMessage').html(data.error.reasonText);
-                  }
+                if(data.success){
+                  enablePlay(remember, user, data.id, data.token);
+                } else {
+                  $('#errorMessage').html(data.error.reasonText);
                 }
-              );
+              });
             }
 
           } else {
             gameWin = gui.Window.open("game.html", {
-              toolbar: false,
+              toolbar: config.devmode,
               frame: false,
               fullscreen: fullscreen
             });

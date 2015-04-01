@@ -38,7 +38,7 @@ WIN32_BIN="Solar_x86.exe"
 OSX64_BIN="Solar_x64.app"
 OSX32_BIN="Solar_x86.app"
 LIN64_BIN="Solar_x64"
-LIN32_BIN="Solar_x32"
+LIN32_BIN="Solar_x86"
 
 
 # Create a temporary directory where compressed files will go
@@ -48,7 +48,7 @@ echo "Saving in temporary directory $TMP_DIR"
 mkdir -p "$TMP_DIR/src"
 
 java -jar compiler.jar \
-	--compilation_level WHITESPACE_ONLY \
+	--compilation_level SIMPLE_OPTIMIZATIONS \
 	--language_in ECMASCRIPT5 \
 	--js "$SOURCE_DIR/src/**.js" \
 	--js_output_file "$TMP_DIR/src/solar.js"
