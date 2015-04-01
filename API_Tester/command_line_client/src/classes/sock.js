@@ -2,7 +2,6 @@ function sock(name, keepLog) {
     this.socket = null;
     this.name = name;
     this.log = [];
-    this.filePath = global.__home + "/logs/" + name + ".txt";
 
     this.callbackFunctionGenerator = function(id, selfReference) {
         return function(data) {
@@ -39,7 +38,7 @@ function sock(name, keepLog) {
         return logString;
     };
 
-    this.socket = global.io.connect("http://" + server.ip + ":" + server.port.toString(), {'force new connection': true});
+    this.socket = io.connect("http://" + args.gsIP + ":" + args.gsPort.toString(), {'force new connection': true});
 
     if(keepLog) {
         this.socket.on("connected", this.callbackFunctionGenerator("connected", this));

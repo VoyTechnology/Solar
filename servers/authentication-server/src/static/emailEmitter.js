@@ -9,8 +9,9 @@ function emailEmitter() {
 }
 
 emailEmitter.prototype.sendMail = function(to, subject, text) {
+    // Solar Team <razoftsolar@gmail.com>
     var mailOptions = {
-        from: "razoftsolar@gmail.com", // sender address
+        from: "Solar Team <razoftsolar@gmail.com>", // sender address
         to: "", // list of receivers
         subject: subject, // Subject line
         text: text, // plaintext body

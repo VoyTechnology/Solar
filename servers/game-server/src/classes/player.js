@@ -11,7 +11,7 @@ function Player(doc, socket) {
 	this.ship = doc.ship;
 	this.orientation = doc.orientation;
 	this.position = doc.position;
-	this.moveDistanceAvailable = config.PlayerMoveDistanceAvailable;
+	this.moveDistanceAvailable = args.pmda;
 	this.socket = socket;
 
 }
@@ -57,7 +57,10 @@ this function is used for managing the speed at which a
 player is travelling and making sure he does not go over it.
 */
 Player.prototype.addAvailableDistance = function(distance) {
-	this.moveDistanceAvailable += distance;
+	var that = this;
+	return function() {
+		that.moveDistanceAvailable += distance;
+	};
 };
 
 /*

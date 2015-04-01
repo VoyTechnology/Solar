@@ -34,13 +34,13 @@ function delSock(parameters, callback) {
     }
 
     // looping through sockets
-    for(var i=0; i<servers.game_server.sockets.length; i++) {
+    for(var i=0; i<sockets.length; i++) {
 
         // Deleting socket if found
-        if (parameters[0] == servers.game_server.sockets[i].name) {
-            servers.game_server.sockets[i].socket.disconnect();
-            delete servers.game_server.sockets[i].socket;
-            servers.game_server.sockets.splice(i, 1);
+        if (parameters[0] == sockets[i].name) {
+            sockets[i].socket.disconnect();
+            delete sockets[i].socket;
+            sockets.splice(i, 1);
             console.log((parameters[0] + " Deleted.\n").green);
 
             // leaving socket if inside deleted socket

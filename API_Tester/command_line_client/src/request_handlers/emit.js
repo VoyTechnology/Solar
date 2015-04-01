@@ -15,14 +15,11 @@ function emit(parameters, callback) {
         return callback(102);
     }
 
-    // referencing socketsArray for convenience
-    var socketsArray = servers.game_server.sockets;
-
     // looking for socket with that name
-    for(var i=0; i<socketsArray.length; i++) {
+    for(var i=0; i<sockets.length; i++) {
 
         // if found
-        if(nav.socket == socketsArray[i].name) {
+        if(nav.socket == sockets[i].name) {
 
             // get data from json file
             var data = require(__home + config.paths.emitData);
@@ -33,7 +30,7 @@ function emit(parameters, callback) {
                 data.timestamp = new Date().getTime();
             }
 
-            socketsArray[i].emit(parameters[0], data);
+            sockets[i].emit(parameters[0], data);
             var logShowName = [];
             logShowName.push(nav.socket);
             console.log("Done".green);

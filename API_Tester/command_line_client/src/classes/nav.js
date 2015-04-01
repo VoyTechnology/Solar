@@ -52,8 +52,8 @@ function nav() {
             return true;
         }
         else {
-            for (var i=0; i<global.servers.game_server.sockets.length; i++) {
-                if (toSocket == global.servers.game_server.sockets[i].name) {
+            for (var i=0; i<sockets.length; i++) {
+                if (toSocket == sockets[i].name) {
                     this.socket = toSocket;
                     return true;
                 }

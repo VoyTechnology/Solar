@@ -1,16 +1,4 @@
 {
-    "defaultServerIp" : "178.62.116.176",
-    "defaultServerPort" : 3000,
-    "produceLogs" : true,
-    "logOutput" : 10,
-    "stressIdStart" : 50,
-    "numTestAccountsAvailable" : 1000,
-    "intervalSpeedStressMovement" : 20,
-    "startingPosition" : {
-        "x" : 0,
-        "y" : 1000,
-        "z" : 0
-    },
     "errorCodes" : [
         "ERROR\nUnknown command.\n",
         "ERROR\nInvalid parameters.\n",

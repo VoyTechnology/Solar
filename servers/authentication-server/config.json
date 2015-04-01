@@ -1,8 +1,4 @@
 {
-    "ip" : "localhost",
-    "port" : 3001,
-    "registrationTokenLifeHours" : 1,
-    "loginTokenLifeMinutes" : 5,
     "database" : {
         "name" : "solar",
         "ip" : "localhost",
