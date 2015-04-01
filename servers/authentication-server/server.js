@@ -52,6 +52,7 @@ app.get("/register", actions.register);
 app.get("/completeRegister", actions.completeRegister);
 app.get("/newPassword", actions.newPassword);
 app.get("/completeNewPassword", actions.completeNewPassword);
+app.get("/version", function(req,res){res.json({major:1,minor:1});res.end();});
 
 // starting Server
 app.listen(args.port);
