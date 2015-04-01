@@ -47,7 +47,7 @@ Connection.prototype.connect = function(){
 
     new Event('server_connected');
 
-    player.setCamera({position: data.position, rotation: data.orientation});
+    player.setCamera({position: data.position, rotation: data.orientation}, settings.get('id'));
     player.controls.update( clock.getDelta() );
 
     // Clear the token
@@ -82,10 +82,14 @@ Connection.prototype.updateLocation = function(pos, rot){
 
   if(that.authorised){
     that._socket.emit('move', {
-      timestamp: (new Date()).getTime(),
-      id: settings.get('id'),
+      timestamp: Date.now(),
+      id: player.id,
       position: pos,
-      orientation: rot
+      orientation: {
+        x: rot.x,
+        y: rot.y,
+        z: rot.z
+      }
     });
   }
 };
