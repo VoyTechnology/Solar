@@ -9,9 +9,9 @@ global.args = require("commander");
 // setting up command line arguments parser
 args.version(1.1);
 args.option("-l, --local", "Use this if running all servers locally", false);
-args.option("-p, --port [port]", "Specifies the port of the server, 3001 default", 3001);
-args.option("--rth [rth]", "Specifies how long a registratin token is valid in hours", 5);
-args.option("--ltm [ltm]", "Specifies how long a login token is valid in minutes", 5);
+args.option("-p, --port [port]", "Port of the server, default 3001", 3001);
+args.option("--rth [rth]", "How long a registratin token is valid in hours, default 5", 5);
+args.option("--ltm [ltm]", "How long a login token is valid in minutes, default 5", 5);
 args.parse(process.argv);
 
 // setting up global variables

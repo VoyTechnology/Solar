@@ -6,8 +6,8 @@ var passwordHash = require("password-hash");
 global.args = require("commander");
 
 args.version(1.1);
-args.option("-p, --port [port]", "Specify the server port, (def 3000)", 3000);
-args.option("--pmda [pmda]", "Specify max units per socond players can move, (def 500)", 500);
+args.option("-p, --port [port]", "Server port, default 3000", 3000);
+args.option("--pmda [pmda]", "Max units per socond players can move, default 500)", 500);
 args.parse(process.argv);
 
 

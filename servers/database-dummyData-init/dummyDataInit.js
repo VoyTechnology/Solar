@@ -4,10 +4,10 @@ var mongojs = require('mongojs');
 var args = require("commander");
 
 args.version(1.1);
-args.option("--num [num]", "Specify the number of accounts to create, default 100", 100);
-args.option("--spX [spX]", "Specify player starting position X axis", 0);
-args.option("--spY [spY]", "Specify player starting position Y axis", 2000);
-args.option("--spZ [spZ]", "Specify player starting position Z axis", 0);
+args.option("--num [num]", "Number of accounts to create, default 100", 100);
+args.option("--spX [spX]", "Player starting position X axis, default 0", 0);
+args.option("--spY [spY]", "Player starting position Y axis, default 2000", 2000);
+args.option("--spZ [spZ]", "Player starting position Z axis, default 0", 0);
 args.parse(process.argv);
 
 // Setting up needed variables
