@@ -4,7 +4,7 @@ function playerArray() {
 
 playerArray.prototype.search = function(target, id, array) {
     for(var i=0; i<array.length; i++) {
-        if ((id=="U"?players[i].username:players[i]._id) == target) {
+        if ((id=="U"?array[i].username:array[i]._id) == target) {
             return i;
         }
     }
