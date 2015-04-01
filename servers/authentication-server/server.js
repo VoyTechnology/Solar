@@ -47,22 +47,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false }));
 
 // adding server event handlers
-if (args.local) {
-    app.get("/authenticate", actions.authenticate);
-    app.get("/register", actions.register);
-    app.get("/completeRegister", actions.completeRegister);
-    app.get("/newPassword", actions.newPassword);
-    app.get("/completeNewPassword", actions.completeNewPassword);
-    app.get("/version", function(req,res){res.json({major:1,minor:1});res.end();});
-}
-else {
-    app.post("/authenticate", actions.authenticate);
-    app.post("/register", actions.register);
-    app.post("/completeRegister", actions.completeRegister);
-    app.post("/newPassword", actions.newPassword);
-    app.post("/completeNewPassword", actions.completeNewPassword);
-    app.get("/version", function(req,res){res.json({major:1,minor:1});res.end();});
-}
+app.get("/authenticate", actions.authenticate);
+app.get("/register", actions.register);
+app.get("/completeRegister", actions.completeRegister);
+app.get("/newPassword", actions.newPassword);
+app.get("/completeNewPassword", actions.completeNewPassword);
+app.get("/version", function(req,res){res.json({major:1,minor:1});res.end();});
 
 // starting Server
 app.listen(args.port);
