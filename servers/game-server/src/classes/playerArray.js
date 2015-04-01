@@ -1,114 +1,36 @@
 function playerArray() {
-    this.playersByID = [];
-    this.playersByUsername = [];
+    this.players = [];
 }
 
 playerArray.prototype.search = function(target, id, array) {
-    console.log(array);
-    var minIndex = 0;
-    var maxIndex = array.length;
-    var currentIndex;
-    var currentElement;
-
-    while (minIndex <= maxIndex) {
-        currentIndex = (minIndex + maxIndex) / 2 | 0;
-        currentElement = (id == "U" ? array[currentIndex].username : array[currentIndex]._id);
-
-        if (currentElement < target) {
-            minIndex = currentIndex + 1;
-        }
-        else if (currentElement > target) {
-            maxIndex = currentIndex - 1;
-        }
-        else {
-            return {
-				success : true,
-				index : currentIndex
-			};
+    for(var i=0; i<array.length; i++) {
+        if(id == "U") {
+            if ((id=="U"?players[i].username:players[i]._id) == target) {
+                return i;
+            }
         }
     }
 
-	return {
-		success : false,
-		index : currentIndex
-	};
+    return -1;
 };
 
 playerArray.prototype.push = function(player) {
-    console.log("Push Called");
-    if (this.playersByID.length === 0 && this.playersByUsername.length === 0) {
-        this.playersByID.push(player);
-        this.playersByUsername.push(player);
-        return;
-    }
-
-    var idArrayIndex = this.search(player._id, "I", this.playersByID);
-    var usernameArrayIndex = this.search(player.username, "U", this.playersByUsername);
-
-    if (idArrayIndex.index == this.playersByID.length) {
-        this.playersByID.push(player);
-    }
-    else {
-        this.playersByID.splice(idArrayIndex.index, 0, player);
-    }
-
-    if (usernameArrayIndex.index == this.playersByUsername.length) {
-        this.playersByUsername.push(player);
-    }
-    else {
-        this.playersByUsername.splice(usernameArrayIndex.index, 0, player);
-    }
+    this.players.push(player);
 };
 
 playerArray.prototype.remove = function(target, id) {
-    console.log("Remove Called");
-    var firstIDIndex = this.search(target, id, (id=="U"?this.playersByUsername:this.playersByID));
-    var secondIDIndex = this.search(target, (id=="U"?"I":"U"), (id=="U"?this.playersByID:this.playersByUsername));
-    var playerReference;
-
-    switch(id) {
-        case "U" :
-            playerReference = this.playersByUsername[firstIDIndex.index];
-            this.playersByUsername.splice(firstIDIndex.index, 1);
-            this.playersByID.splice(secondIDIndex.index, 1);
-            break;
-        default :
-            playerReference = this.playersByID[firstIDIndex.index];
-            this.playersByID.splice(firstIDIndex.index, 1);
-            this.playersByUsername.splice(secondIDIndex.index, 1);
-            break;
-    }
-
-    return playerReference;
+    var index = this.search(target, id, this.players);
+    var thePlayer = players[i];
+    this.players.splice(index, 1);
+    return thePlayer;
 };
 
 playerArray.prototype.getPlayer = function(target, id) {
-    console.log("getPlayer Called");
-    if (this.playersByUsername.length === 0) return -1;
-    var playersRelativeIndex = this.search(target, id, (id=="U"?this.playersByUsername:this.playersByID));
-    if (!playersRelativeIndex.success) return -1;
-
-    switch(id) {
-        case "U" :
-            return this.playersByUsername[playersRelativeIndex.index];
-        default :
-            return this.playersByID[playersRelativeIndex.index];
+    var index = this.search(target, id, this.players);
+    if (index == -1) {
+        return -1;
     }
-};
-
-playerArray.prototype.getPlayersWithout = function(target, id) {
-    var arayToUse = (id=="U"?this.playersByUsername:this.playersByID);
-    var playersRelativeIndex = this.search(target, id, arrayToUse);
-
-    var clonedArray = arrayToUse.slice();
-    clonedArray.splice(playersRelativeIndex.index, 1);
-    return clonedArray;
-};
-
-playerArray.prototype.broadcastMessage = function(messageID, message) {
-    for (var i=0; i<this.playersByID.length; i++) {
-        this.playersByID[i].socket.emit(messageID, message);
-    }
+    return this.players[index];
 };
 
 module.exports = playerArray;

@@ -4,7 +4,6 @@ a "start" message.
 */
 
 function start(data, session, socket) {
-
     // checking if data provided is valid.
     var badData = actions.inputAN.start(data);
 

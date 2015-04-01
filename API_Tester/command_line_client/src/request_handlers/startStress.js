@@ -17,22 +17,17 @@ function startStress(parameters, callback) {
 
     var numAccounts = parseInt(parameters[0]);
 
-    // checking if testAccounts available for amount of accounts specified in parameters
-    if (numAccounts > config.numTestAccountsAvailable - config.stressIdStart){
-        return callback(108);
-    }
-
     // setting stress test to active
     stress.active = true;
 
     // activating stress test accounts
-    for(var i=config.stressIdStart; i<(numAccounts+config.stressIdStart); i++)
+    for(var i=0; i<numAccounts; i++)
     {
         // creating socket
         var stressAccount = new classes.stressSock(i);
         // creating a function to pass to the setTimeout function
         // setting movement interval. begins in 5 seconds to give server time to respond with an accepted message
-        setTimeout(stressAccount.startMovingFunctionGenerator(stressAccount), 3000);
+        setTimeout(stressAccount.startMovingFunctionGenerator(stressAccount), 2000);
         // pushing to testAccount Array
         stress.sockets.push(stressAccount);
     }

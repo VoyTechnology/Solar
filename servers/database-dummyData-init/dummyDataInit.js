@@ -23,7 +23,7 @@ var OID = mongojs.ObjectId;
 // for the mongodb objectID conversion function from an index i
 function indexToID(i) {
     var stringID = "";
-    var paddingLength = 12 - ((i.toString()).length);
+    var paddingLength = 24 - ((i.toString()).length);
 
     for(var j=0 ; j<paddingLength; j++) {
         stringID += "0";
@@ -43,7 +43,7 @@ function next(i) {
     var authenticationData = {
         $set : {
             _id : OID(idToUse),
-            token : i.toString(),
+            token : passHash.generate(i.toString()),
             email : "example@gmail.com",
             username : entryNamePattern + i.toString(),
             password : passHash.generate(passToUse)

@@ -7,6 +7,7 @@ var messageEmitter = {
 
     rejected : function(code, socket) {
         socket.emit("rejected", actions.errorCode(code));
+        console.log(actions.errorCode(code));
     },
 
     accepted : function(thisPlayer, socket) {
@@ -19,6 +20,7 @@ var messageEmitter = {
         };
 
         socket.emit("accepted", response);
+        console.log("accepted");
     },
 
     disconnect : function(code, socket) {
@@ -36,6 +38,7 @@ var messageEmitter = {
                 conditions.recipientArr[i].socket.emit("chat", message);
             }
         }
+        console.log("chat");
     },
 
     chatError : function(errorCode, original, socket) {
@@ -44,6 +47,7 @@ var messageEmitter = {
             original : original
         };
         socket.emit("chatError", data);
+        console.log("chatError");
     },
 
     moveError : function(errorCode, original, thisPlayer, socket) {
@@ -56,6 +60,8 @@ var messageEmitter = {
         };
 
         socket.emit("moveError", data);
+        console.log("moveError");
+        console.log(data);
     },
 
     otherPlayers : function(thisPlayer, socket) {
@@ -63,18 +69,20 @@ var messageEmitter = {
             players : []
         };
 
-        for(var i=0; i<playerArray.playersByID.length; i++) {
+        for(var i=0; i<playerArray.players.length; i++) {
 
-            if (playerArray.playersByID[i].username != thisPlayer.username) {
-                message.players.push(playerArray.playersByID[i].getEssentialDetails());
+            if (playerArray.players[i].username != thisPlayer.username) {
+                message.players.push(playerArray.players[i].getEssentialDetails());
             }
         }
 
         socket.emit("otherPlayers", message);
+        console.log("otherPlayers");
     },
 
     move : function(data, socket) {
         socket.broadcast.emit("move", data);
+        console.log("move");
     }
 };
 
