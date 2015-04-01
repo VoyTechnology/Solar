@@ -77,7 +77,7 @@ function m(d){
  * @returns {Number} Converted distance
  */
 function km(d){
-  return d * 1000;
+  return m(d) * 1000;
 }
 
 /**
@@ -87,5 +87,5 @@ function km(d){
  * @returns {Number} Converted distance
  */
 function Mm(d){
-  return d * 1000 * 1000;
+  return m(d) * 1000 * 1000;
 }

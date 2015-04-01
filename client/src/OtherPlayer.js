@@ -22,5 +22,12 @@ var OtherPlayer = function( data ){
  * @method
  */
 OtherPlayer.prototype.update = function( data ){
-  if( this.ship.loaded ) this.ship.update({position: data.position, rotation: data.orientation });
+  if( this.ship.loaded ) this.ship.update({
+    position: {
+      x: (player.chunk.x * 1000) + data.position.x,
+      y: (player.chunk.y * 1000) + data.position.y,
+      z: (player.chunk.z * 1000) + data.position.z
+    },
+    rotation: data.orientation
+  });
 };

@@ -16,15 +16,47 @@ var Player = function(){
     +settings.get('max_render_distance')
   );
 
-  this.controls = new OldControls( this.camera );
+  this.position = {};
+  this.chunk = {};
+  this.tP = new THREE.Object3D();
+
+  this.controls = new OldControls( this.tP );
+
 };
 
 /**
- * Updates the player's location
+ * Updates the player's location. Sets the chunks and relative position for the chunk system
  * @method
+ * @param {Number} delta - The delta time
  */
 Player.prototype.update = function( delta ){
   this.controls.update( delta );
+
+
+  this.chunk = {
+    x: ~~(this.tP.position.x / 1000),
+    y: ~~(this.tP.position.y / 1000),
+    z: ~~(this.tP.position.z / 1000)
+  };
+
+  this.position = {
+    x: this.tP.position.x % 1000,
+    y: this.tP.position.y % 1000,
+    z: this.tP.position.z % 1000
+  };
+
+  this.camera.position.set(
+    this.position.x,
+    this.position.y,
+    this.position.z
+  );
+
+  this.camera.rotation.set(
+    this.tP.rotation.x,
+    this.tP.rotation.y,
+    this.tP.rotation.z
+  );
+
   if(this.ship.loaded) this.ship.update( {
     'position': this.camera.position,
     'rotation': this.camera.rotation
@@ -36,9 +68,13 @@ Player.prototype.update = function( delta ){
  * @method
  */
 Player.prototype.setCamera = function( data ){
-  this.camera.position.x = data.position.x;
-  this.camera.position.y = data.position.y;
-  this.camera.position.z = data.position.z;
+  this.tP.position.x = data.position.x;
+  this.tP.position.y = data.position.y;
+  this.tP.position.z = data.position.z;
+
+  this.camera.position.x = this.position.x;
+  this.camera.position.y = this.position.y;
+  this.camera.position.z = this.position.z;
 
   this.camera.rotation.x = data.rotation.x;
   this.camera.rotation.y = data.rotation.y;

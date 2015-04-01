@@ -11,6 +11,11 @@ function init(){
   gonsole   =   new Gonsole();
   player    =   new Player();
 
+  scene = new THREE.Scene();
+  clock = new THREE.Clock();
+  // Initialize the world
+  world = new World();
+
   document.addEventListener('server_connected', hide_loading_window());
 
   // Try to connect and then wait to see was connection successful
@@ -25,33 +30,25 @@ function init(){
     } else {
       connection.updateOthers();
     }
+
   // Wait until displaying the error message
   },config.connectionTimeout);
 
-
-  scene = new THREE.Scene();
-  clock = new THREE.Clock();
-
   renderer = new THREE.WebGLRenderer({
     logarithmicDepthBuffer: true,
-    antialiasing: !!settings.get('antialiasing')
+    antialiasing: Boolean(settings.get('antialiasing'))
   });
 
   renderer.setSize( window.innerWidth, window.innerHeight );
 
   document.body.appendChild( renderer.domElement );
 
-  //player.loadShip( 'Astratis' );
-
   // Temporary values
-  player.controls.movementSpeed = 1000;
+  player.controls.movementSpeed = m(1000);
   player.controls.domElement = renderer.domElement ;
   player.controls.rollSpeed = Math.PI / 15;
   player.controls.autoForward = false;
   player.controls.dragTolook = false;
-
-  // Initialize the world
-  world();
 
   // Start the rendering loop
   render();

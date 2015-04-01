@@ -17,6 +17,9 @@ var settings, log, gonsole;
 /** @global */
 var scene, camera, renderer;
 
+/** @global **/
+var world;
+
 /** @global */
 var clock, controls;
 
@@ -28,9 +31,6 @@ var player;
 
 /** @global */
 var players = [];
-
-/** @global */
-var planets = [];
 
 /** @global */
 var models = [];

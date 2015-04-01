@@ -1,6 +1,8 @@
 {
-  "success": true,
-  "servers":{
+  "server":{
+    "port": 3003
+  },
+  "addresses":{
     "authServer": "http://178.62.116.176:3001",
     "gameServer": "http://178.62.116.176:3000",
     "tradeServer": "http://178.62.116.176:3002"

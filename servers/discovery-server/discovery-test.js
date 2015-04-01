@@ -1,9 +1,14 @@
 var test = require('unit.js');
 var request = require('http');
+var args = require('commander');
 
-var addr = require('./test-config.json').address;
+args
+	.option('-a, --address [address]',
+		'address of the server to test. Default: localhost',
+		'http://localhost:3003/getServers')
+	.parse(process.argv);
 
-var oldlog = console.log;
+var addr = args.address;
 
 
 describe("Discovery Server", function(){

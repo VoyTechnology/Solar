@@ -10,30 +10,22 @@ var myPos, myDir;
 
 var frameCount = 0;
 
-
+var delta;
 
 function update(){
-  var delta = clock.getDelta();
+  delta = clock.getDelta();
   player.update( delta );
+  world.update( delta );
   frameCount++;
 
-  myPos = {
-    x: player.camera.position.x,
-    y: player.camera.position.y,
-    z: player.camera.position.z,
-  };
+  myPos = player.tP.position;
 
-
-  myDir = {
-    x: player.camera.rotation.x,
-    y: player.camera.rotation.y,
-    z: player.camera.rotation.z,
-  };
+  myDir = player.tP.rotation;
 
   // Do actions every 60 frames
-  if(frameCount % 60 === 0){
-
-  }
+  // if(frameCount % 60 === 0){
+  //
+  // }
 
   // Do actions every 3 frames (20 times a second)
   if(frameCount % 3 === 0){
@@ -42,13 +34,6 @@ function update(){
     }
   }
 
-  // Update each planet
-  for(var i = 0; i < planets.length; i++){
-     planets[i].update( delta );
-  }
-
-
-
-  myLastPos = myPos;
-  myLastDir = myDir;
+  myLastPos = player.tP.position;
+  myLastDir = player.tP.rotation;
 }

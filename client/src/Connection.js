@@ -34,7 +34,7 @@ Connection.prototype.connect = function(){
   var that = this;
 
   that._socket.emit('start', {
-    id: +settings.get('username'),
+    id: settings.get('id'),
     token: settings.get('token')
   });
 
@@ -48,9 +48,10 @@ Connection.prototype.connect = function(){
     new Event('server_connected');
 
     player.setCamera({position: data.position, rotation: data.orientation});
+    player.controls.update( clock.getDelta() );
 
     // Clear the token
-  //  settings.set('token', '');
+    settings.set('token', '');
   });
 
   that._socket.on('rejected', function( data ){
@@ -145,69 +146,26 @@ Connection.prototype.disconnect = function(msg){
   });
 };
 
-// Connection.prototype.sendMessage = function (recipients, msgData) {
-//      var that = this;
-//
-//      if (that.authorised) {
-//
-//          /*
-//             temporary fix for the no usernames problem
-//          */
-//
-//          var username = "";
-//
-//
-//
-//          /*
-//
-//          */
-//
-//          var messageData = {
-//              timestamp: msgData.timestamp,
-//              id: +settings.get('username'),
-//              originator: username,
-//              recipient: recipients,
-//              text: msgData.text
-//          };
-//
-//          that._socket.emit('chat', messageData);
-//
-//          log.debug(messageData);
-//
-//          var gonsoleLogMessage = "";
-//          if(recipients.length === 0) {
-//              gonsoleLogMessage += "(G)";
-//          }
-//          gonsoleLogMessage += "you : ";
-//          gonsoleLogMessage += msg;
-//
-//          gonsole.log(msg);
-//      }
-// };
-
+/**
+ * Sends a message to the server and clears the old message
+ * @method
+ * @param {object} sendData - The data to send to the server
+ */
 Connection.prototype.sendMessage = function( sendData ){
   var that = this;
 
   if(that.authorised){
-    var username = "";
-
-    switch(+settings.get('username')) {
-      case 0 : username = "james"; break;
-      case 1 : username = "woj"; break;
-      case 2 : username = "mladen"; break;
-      default : username = "testun" + settings.get('username'); break;
-    }
 
     that._socket.emit('chat', {
       timestamp: sendData.timestamp,
-      originator: username,
+      originator: settings.get('username'),
       recipient: sendData.reciepients,
       text: sendData.text
     });
 
     that.messages++;
 
-    if(that.messages > 6){
+    while(that.messages > 6){
       gonsole.clearFirst();
       that.messages--;
     }
@@ -215,6 +173,10 @@ Connection.prototype.sendMessage = function( sendData ){
   }
 };
 
+/**
+ * Listens for incoming messaged and appends them to the chat
+ * @method
+ */
 Connection.prototype.listenForChat = function () {
     var that = this;
 
@@ -235,6 +197,4 @@ Connection.prototype.listenForChat = function () {
     that._socket.on("chatError", function(data) {
       gonsole.revertMessage( data );
     });
-
-
 };
