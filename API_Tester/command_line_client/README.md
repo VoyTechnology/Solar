@@ -11,10 +11,13 @@
 
 ##Usage##
 ###General###
-The command line is based on establishing sockets with the server and emitting and receiving data through these sockets. Each socket created simulates another user on the server.
+The command line is based on establishing sockets with the server and emitting and receiving data through these sockets. Each socket created simulates another user on the server. Run this program with -h to get a list of configuration parameters you can use.
 
 ###Emitting Data###
 The data you wish to emit will need to be placed inside the "data.json" file in the command-line-client folder. The "example data" folder is there to help you tailor the data you wish to send to the server. **you do not need to close the command line client if you wish to change the data inside the data.json file.**
+
+###Authentication###
+The client only emits socket.io data. I't cannot authenticate with the authentication server with http. You can however authenticate through your browser and use the token and id given back to you in a start message.
 
 ###Command list###
 1. **newSock x**<br>
@@ -35,3 +38,5 @@ This command will show the latest 10 messages sent and received by the socket th
 This command will begin a stress test. The x parameter is the number of connections to the server you wish the stress test to make. Once a stress test is started the client will create x new sockets, log them into the server (by using test accounts) and make them move around randomly. You may if you wish have more control over how much movement the sockets are doing by editing some properties inside the config.json file.
 9. **stopStress**<br>
 This command will stop a stress test if there is one running. It will display some statistics when the stress test has successfully stopped.
+10. **exit**<br>
+I'll leave this one to the imagination...
