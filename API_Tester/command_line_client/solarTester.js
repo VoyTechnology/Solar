@@ -6,6 +6,7 @@ global.args = require("commander");
 
 // setting up command line arguments
 args.version(1.1);
+args.option("--local", "Use this if servers are running on the localhost", false);
 args.option("--gsIP [gsIP]", "Game server IP address, default 178.62.116.176", "178.62.116.176");
 args.option("--asIP [gsIP]", "Authentication server IP address, default 178.62.116.176", "178.62.116.176");
 args.option("--gsPort [gsPort]", "Game server port, default 3000", 3000);
@@ -13,6 +14,11 @@ args.option("--asPort [gsPort]", "Authentication server port, default 3001", 300
 args.option("--numLog [numLog]", "Number of logs to show on \"showlog\", default 5", 5);
 args.option("--ims [ims]", "Time in miliseconds between move messages by stress test, default 20", 20);
 args.parse(process.argv);
+
+if(args.local) {
+    args.gsIP = "localhost";
+    args.asIP = "localhost";
+}
 
 // setting up global variables
 global.config = require(__dirname + "/config.json");
