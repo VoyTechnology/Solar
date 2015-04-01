@@ -25,9 +25,9 @@ function stressSock(id) {
                 timestamp : new Date().getTime(),
                 id : selfReference.id,
                 position : {
-                    x : (Math.random()*10) + global.config.startingPosition.x,
-                    y : (Math.random()*10) + global.config.startingPosition.y,
-                    z : (Math.random()*10) + global.config.startingPosition.z
+                    x : (Math.random()*10) + startPos.x,
+                    y : (Math.random()*10) + startPos.y,
+                    z : (Math.random()*10) + startPos.z
                 },
                 orientation : {
                     x : Math.random()*2,
@@ -61,7 +61,7 @@ function stressSock(id) {
 
     this.startMovingFunctionGenerator = function(selfReference) {
         return function() {
-            selfReference.intervalID = setInterval(selfReference.randMoveFunctionGenerator(selfReference), global.config.intervalSpeedStressMovement);
+            selfReference.intervalID = setInterval(selfReference.randMoveFunctionGenerator(selfReference), args.ims);
         };
     };
 
@@ -71,7 +71,7 @@ function stressSock(id) {
     };
 
     // connecting socket to server
-    this.socket = global.io.connect("http://" + server.ip + ":" + server.port.toString(), {'force new connection': true});
+    this.socket = io.connect("http://" + args.gsIP + ":" + args.gsPort.toString(), {'force new connection': true});
 
     /*
     socket event handlers

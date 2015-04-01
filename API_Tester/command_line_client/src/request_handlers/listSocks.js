@@ -10,20 +10,17 @@ function listSocks(parameters, callback) {
         return callback(105);
     }
 
-    // referencing socket array for convenience
-    var socketsArray = servers.game_server.sockets;
-
-    var numSocks = socketsArray.length;
+    var numSocks = sockets.length;
 
     console.log("Amount of sockets : " + numSocks.toString().green + "\n\n");
 
-    for(var i=0; i<socketsArray.length; i++) {
-        process.stdout.write(socketsArray[i].name);
+    for(var i=0; i<sockets.length; i++) {
+        process.stdout.write(sockets[i].name);
 
         // printing spaces so that the open/closed identifiers align
-        for(var j=socketsArray[i].name.length; j<20; j++){process.stdout.write(" ");}
+        for(var j=sockets[i].name.length; j<20; j++){process.stdout.write(" ");}
 
-        if(socketsArray[i].socket.connected) {
+        if(sockets[i].socket.connected) {
             process.stdout.write("Open".green + "\n");
         }
         else {

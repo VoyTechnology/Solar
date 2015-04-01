@@ -11,15 +11,15 @@ function newSock(parameters, callback) {
     }
 
     //checking if socket with that name already exists
-    for(var i=0; i<servers.game_server.sockets.length; i++) {
-        if (parameters[0] == servers.game_server.sockets[i].name) {
+    for(var i=0; i<sockets.length; i++) {
+        if (parameters[0] == sockets[i].name) {
             return callback(106);
         }
     }
 
-    //creating socket and attacking to socket list
+    //creating socket and attaching to socket list
     var socket = new classes.sock(parameters[0], true);
-    servers.game_server.sockets.push(socket);
+    sockets.push(socket);
 
     console.log((parameters[0] + " Created\n").green);
     return callback();
