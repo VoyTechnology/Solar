@@ -83,7 +83,7 @@ Connection.prototype.updateLocation = function(pos, rot){
   if(that.authorised){
     that._socket.emit('move', {
       timestamp: (new Date()).getTime(),
-      id: +settings.get('username'),
+      id: settings.get('id'),
       position: pos,
       orientation: rot
     });
