@@ -1,28 +1,23 @@
-/*
-This file is used to initialise the database
-*/
-console.log("Please Wait");
+// loading external dependancies
+var passHash = require("password-hash");
+var mongojs = require('mongojs');
+var args = require("commander");
 
-// loading config file
-var config = require(__dirname + "/config.json");
+args.version(1.1);
+args.option("--num [num]", "Specify the number of accounts to create, default 100", 100);
+args.option("--spX [spX]", "Specify player starting position X axis", 0);
+args.option("--spY [spY]", "Specify player starting position Y axis", 2000);
+args.option("--spZ [spZ]", "Specify player starting position Z axis", 0);
+args.parse(process.argv);
+
+// Setting up needed variables
+var entryNamePattern = "testun";
+var entryPassPattern = "testpass";
+var startingPosition = { x : args.spX, y : args.spY, z : args.spZ };
 
 // establishing connection to database
-var mongojs = require('mongojs');
-var db = mongojs(config.dbName, config.collections);
+var db = mongojs("solar", ["authentication", "players"]);
 var OID = mongojs.ObjectId;
-
-// loading in password hash and salt module
-var passHash = require("password-hash");
-
-// determining how many test accounts to create by
-// checking if a command line argument was supplied
-var numTestAccounts;
-if (process.argv.length < 3) {
-    numTestAccounts = config.defaultNumTestAccounts;
-}
-else {
-    numTestAccounts = parseInt(process.argv[2]);
-}
 
 // this function is used to create a string of suitable length
 // for the mongodb objectID conversion function from an index i
@@ -50,7 +45,7 @@ function next(i) {
             _id : OID(idToUse),
             token : i.toString(),
             email : "example@gmail.com",
-            username : config.entryNamePattern + i.toString(),
+            username : entryNamePattern + i.toString(),
             password : passHash.generate(passToUse)
         }
     };
@@ -58,9 +53,9 @@ function next(i) {
     var playerData = {
         $set : {
             _id : OID(idToUse),
-            username : config.entryNamePattern + i.toString(),
+            username : entryNamePattern + i.toString(),
             ship : "astratis_v1",
-            position : config.startingPosition,
+            position : startingPosition,
             orientation : {x:0,y:0,z:0}
         }
     };
@@ -72,7 +67,7 @@ function next(i) {
             // itterating counter
             i++;
             // checking if enough accounts already created
-            if (i == numTestAccounts) {
+            if (i == args.num) {
                 // if so terminating the program
                 console.log("Done");
                 process.exit(code=0);
@@ -86,4 +81,5 @@ function next(i) {
 }
 
 // beginning recursive loop
+console.log("Please Wait");
 next(0);
