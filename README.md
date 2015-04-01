@@ -27,3 +27,10 @@ The `solar` bash script is designed to most of the tasks automatically.
 
 ## Playing ##
 In order to play, a user must be registered with the system.
+An email is send with a confirmation that the user
+When the user has confirmed his account he can authenticate.
+
+## Warnings ##
+* The `solar` script doesn't work on Windows. Mac compatibility not tested.
+* `remove` command might potentially result in unwanted changes as its using
+`rm -rf ./Solar`. Make sure there are no symbolic links pointing to important files.
