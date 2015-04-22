@@ -1,5 +1,5 @@
 <h1>Solar Servers</h1>
-<h2>Installation<h2>
+<h2>Installation</h2>
 1. Download.
 2. type "npm install" through the command line while inside the servers folder.
 
