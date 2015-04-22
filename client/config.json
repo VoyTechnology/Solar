@@ -19,7 +19,20 @@
     "language": "en",
     "token": "",
     "username": "",
-    "wireframe": true
+    "wireframe": false,
+
+    "button_forward": 87,
+    "button_backward": 83,
+    "button_yaw_left": 65,
+    "button_yaw_right": 68,
+    "button_up": 82,
+    "button_down": 70,
+    "button_pitch_up": 40,
+    "button_pitch_down": 38,
+    "button_roll_left": 37,
+    "button_roll_right": 39,
+    "button_left": 81,
+    "button_right": 69
   },
   "keys": {
     "27": "ESC",
@@ -45,13 +58,16 @@
     "37": "LEFT",
     "39": "RIGHT"
   },
+  "sun": {
+    "size": 10000
+  },
   "planets": [
     {
       "name": "Infernales",
       "radius": 3000,
       "type": "rock",
       "seed": 123456789,
-      "distance": 10000,
+      "distance": 30000,
       "atmosphere": {
         "composition": {
           "oxygen": "0"
@@ -62,31 +78,31 @@
       "radius": 2500,
       "type": "metal",
       "seed": 234567890,
-      "distance": 40000
+      "distance": 120000
     },{
       "name": "Promedea",
       "radius": 6371,
       "type": "green",
       "seed": 345678901,
-      "distance": 149598
+      "distance": 1495980
     },{
       "name": "Dimidium",
       "radius": 3100,
       "type": "water",
       "seed": 100000000,
-      "distance": 100000
+      "distance": 2000000
     },{
       "name": "CHANGE_ME_GAS",
       "radius": 20000,
       "type": "gas",
       "seed": 1000000000,
-      "distance": 150000
+      "distance": 5000000
     },{
       "name": "Tenebris",
       "radius": 1000,
       "type": "rock",
       "seed": 4567890123,
-      "distance": 250000
+      "distance": 10000000
     }
   ],
   "errors": {
