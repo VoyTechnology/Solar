@@ -75,7 +75,46 @@ var messageEmitter = {
 
     move : function(data, socket) {
         socket.broadcast.emit("move", data);
+    },
+
+    inventoryUpdate : function(player) {
+    console.log("here");
+    var message = {
+        money : player.money,
+        comodities : [],
+        quantities : []
+    };
+
+    for (var i=0; i<player.items.length; i++) {
+        var comodity = {
+            id : player.items[i].id,
+            name : player.items[i].name,
+            description : player.items[i].description,
+            units : player.items[i].units
+        };
+
+        var quantity = {
+            comodity : comodity.id,
+            quantity : player.items[i].quantity
+        };
+
+        message.comodities.push(comodity);
+        message.quantities.push(quantity);
     }
+
+    console.log(message);
+
+    player.socket.emit("inventoryUpdate", message);
+},
+
+tradeError : function(code, player, original) {
+    var message = {
+        error : actions.errorCode(code),
+        trade : original
+    };
+
+    player.socket.emit("tradeError", message);
+}
 };
 
 module.exports = messageEmitter;

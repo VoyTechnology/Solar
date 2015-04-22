@@ -93,7 +93,73 @@ var inputAnalyser = {
         }
 
         return message;
+    },
+
+    startTrade : function(data) {
+    var message = {
+        success : false,
+        error : 101
+    };
+
+    if (data === null) {
+        console.log(1);
     }
+    else if (typeof data.timestamp != "number") {
+        console.log(2);
+    }
+    else if (typeof data.seller != "string") {
+        console.log(3);
+    }
+    else if (typeof data.buyer != "string") {
+        console.log(4);
+    }
+    else if (typeof data.comodity != "string") {
+        console.log(5);
+    }
+    else if (typeof data.quantity != "number") {
+        console.log(6);
+    }
+    else if (typeof data.price != "number") {
+        console.log(7);
+    }
+    else {
+        message.success = true;
+        delete message.error;
+    }
+
+    return message;
+},
+
+tradeResponse : function(data) {
+    var message = {
+        success : false,
+        error : 101
+    };
+
+    if (data === null) {
+
+    }
+    else if (typeof data.accept != "boolean") {
+    }
+    else if (typeof data.trade.timestamp != "number") {
+    }
+    else if (typeof data.trade.seller != "string") {
+    }
+    else if (typeof data.trade.buyer != "string") {
+    }
+    else if (typeof data.trade.commodity != "string") {
+    }
+    else if (typeof data.trade.quantity != "number") {
+    }
+    else if (typeof data.trade.price != "number") {
+    }
+    else {
+        message.success = true;
+        delete message.error;
+    }
+
+    return message;
+}
 
 };
 
