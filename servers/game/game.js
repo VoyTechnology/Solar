@@ -1,4 +1,4 @@
-function game() {
+function _game() {
 
 	// socket.IO server initialisation
 	var app = express();
@@ -40,4 +40,4 @@ function game() {
 
 }
 
-module.exports = game;
+module.exports = _game;
