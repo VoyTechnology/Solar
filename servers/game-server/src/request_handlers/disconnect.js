@@ -6,19 +6,18 @@ a "disconnect" message
 
 function disconnect(playerID) {
 
-    // looking for the player
-    for(var i=0; i<loggedInPlayers.length; i++) {
+    // retreiving and removing the player from the global array
+    var playerToRemove = playerArray.remove(playerID, "I");
 
-        if(loggedInPlayers[i].id == playerID) {
-
-            // if found, update and remove it form loggedInPlayers array
-            var playerDetails = loggedInPlayers[i].getEssentialDetails();
-            db.players.update({id : playerID}, playerDetails);
-            loggedInPlayers.splice(i, 1);
-            return;
-        }
+    // basically if the player wasn't even logged in
+    if(playerToRemove == -1) {
+        return;
     }
 
+    // getting players details
+    var playerDetails = playerToRemove.getEssentialDetails();
+    // updating database
+    db.players.update({_id : objectID(playerID)}, playerDetails);
 
 }
 

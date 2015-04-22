@@ -1,29 +1,29 @@
 function stopStress(parameters, callback) {
 
     //validating parameters
-    if (!global.static.parameterChecker.stopStress(parameters)) {
+    if (!static.parameterChecker.stopStress(parameters)) {
         return callback(101);
     }
 
     //checking if within game server
-    if (global.nav.server != "Game_Server") {
+    if (nav.server != "Game_Server") {
         return callback(105);
     }
 
     // checking if stress test already in progress
-    if (!global.servers.game_server.stress.active) {
+    if (!stress.active) {
         return callback(110);
     }
-    global.servers.game_server.stress.active = false;
+    stress.active = false;
 
     // initiating statistics variables
     var numMessagesSent = 0;
     var numMessagesReceived = 0;
 
     // looping through stress test accounts
-    for(var i=0; i<global.servers.game_server.stress.sockets.length; i++) {
+    for(var i=0; i<stress.sockets.length; i++) {
         // referencing variable for convenience
-        var sock = global.servers.game_server.stress.sockets[i];
+        var sock = stress.sockets[i];
 
         // updating statistics
         numMessagesSent += sock.messagesSent;
@@ -35,7 +35,7 @@ function stopStress(parameters, callback) {
     }
 
     // clearing array
-    global.servers.game_server.stress.sockets.splice(0, global.servers.game_server.stress.sockets.length);
+    stress.sockets.splice(0, stress.sockets.length);
 
     // printing statistics
     console.log("Stress test completed".green);

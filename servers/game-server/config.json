@@ -1,7 +1,4 @@
 {
-    "serverIp" : "178.62.116.176",
-    "mainServerPort" : 3000,
-    "PlayerMoveDistanceAvailable" : 500,
     "database" : {
         "name" : "solar",
         "collections" : [
@@ -24,6 +21,7 @@
     ],
     "paths" : {
         "playerCS" : "/src/classes/player.js",
+        "playerArrayCS" : "/src/classes/playerArray.js",
         "startRH" : "/src/request_handlers/start.js",
         "disconnectRH" : "/src/request_handlers/disconnect.js",
         "moveRH" : "/src/request_handlers/move.js",

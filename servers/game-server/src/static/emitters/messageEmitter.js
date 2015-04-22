@@ -63,11 +63,10 @@ var messageEmitter = {
             players : []
         };
 
+        for(var i=0; i<playerArray.players.length; i++) {
 
-        for(var i=0; i<loggedInPlayers.length; i++) {
-
-            if (loggedInPlayers[i].username != thisPlayer.username) {
-                message.players.push(loggedInPlayers[i].getEssentialDetails());
+            if (playerArray.players[i].username != thisPlayer.username) {
+                message.players.push(playerArray.players[i].getEssentialDetails());
             }
         }
 

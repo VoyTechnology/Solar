@@ -1,29 +1,17 @@
 {
-    "serverIp" : "178.62.116.176",
-    "serverPort" : 3000,
-    "produceLogs" : true,
-    "logOutput" : 10,
-    "stressIdStart" : 50,
-    "numTestAccountsAvailable" : 1000,
-    "intervalSpeedStressMovement" : 20,
-    "startingPosition" : {
-        "x" : 0,
-        "y" : 1000,
-        "z" : 0
-    },
-    "errorCodes" : {
-        "e100" : "ERROR\nUnknown command.\n",
-        "e101" : "ERROR\nInvalid parameters.\n",
-        "e102" : "ERROR\nSocket does not exist\n",
-        "e103" : "ERROR\nServer does not exist\n",
-        "e104" : "ERROR\nSocket is closed\n",
-        "e105" : "ERROR\nNot in game server.\n",
-        "e106" : "ERROR\nSocket with that name already exists.\n",
-        "e107" : "ERROR\nLog is empty.\n",
-        "e108" : "ERROR\nNot enough test accounts.\n",
-        "e109" : "ERROR\nStress test already in progress.\n",
-        "e110" : "ERROR\nStress test not active\n"
-    },
+    "errorCodes" : [
+        "ERROR\nUnknown command.\n",
+        "ERROR\nInvalid parameters.\n",
+        "ERROR\nSocket does not exist\n",
+        "ERROR\nServer does not exist\n",
+        "ERROR\nSocket is closed\n",
+        "ERROR\nNot in game server.\n",
+        "ERROR\nSocket with that name already exists.\n",
+        "ERROR\nLog is empty.\n",
+        "ERROR\nNot enough test accounts.\n",
+        "ERROR\nStress test already in progress.\n",
+        "ERROR\nStress test not active\n"
+    ],
     "paths" : {
         "sockCS" : "/src/classes/sock.js",
         "navCS" : "/src/classes/nav.js",

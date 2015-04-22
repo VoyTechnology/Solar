@@ -2,12 +2,22 @@
 var express = require("express");
 var socketIO = require("socket.io");
 var mongojs = require("mongojs");
+var passwordHash = require("password-hash");
+global.args = require("commander");
+
+args.version(1.1);
+args.option("-p, --port [port]", "Server port, default 3000", 3000);
+args.option("--pmda [pmda]", "Max units per socond players can move, default 10000000000000)", 10000000000000);
+args.parse(process.argv);
+
 
 // Setting up global variables
 global.config = require("./config.json");
 global.package = require("./package.json");
 global._home = __dirname;
-global.loggedInPlayers = [];
+global.passTool = passwordHash;
+global.playerArray = new (require(__dirname + config.paths.playerArrayCS))();
+global.objectID = mongojs.ObjectId;
 global.db = mongojs(config.database.name, config.database.collections);
 global.actions = {
 	playerCS : require(__dirname + config.paths.playerCS),
@@ -27,12 +37,12 @@ global.actions = {
 };
 global.version = {
 	major : 1,
-	minor : 1
+	minor : 2
 };
 
 // socket.IO server initialisation
 var app = express();
-var server = app.listen(config.mainServerPort);
+var server = app.listen(args.port);
 var io = socketIO.listen(server);
 
 // Server event handlers
@@ -62,8 +72,8 @@ io.on("connection", function(socket) {
 	});
 
 	socket.on("disconnect", function() {
-		actions.disconnectRH(session.thisPlayer.id);
+		actions.disconnectRH(session.thisPlayer._id);
 	});
 });
 
-console.log("Listening on port : " + config.mainServerPort.toString());
+console.log("Listening on port : " + args.port.toString());

@@ -4,6 +4,29 @@ function completeNewPassword(req, res) {
         return actions.responseEmitter.error(103, res);
     }
 
+    var thisEntry = null;
+    // checking to see if this token is active
+    for(var i=0; i<pendingNewPasswords.length; i++) {
+        if(pendingNewPasswords[i].newPasswordToken == req.query.token) {
+            thisEntry = pendingNewPasswords[i];
+            pendingNewPasswords.splice(i, 1);
+            break;
+        }
+    }
+
+    if (thisEntry === null) {
+        return actions.responseEmitter.error(102, res);
+    }
+
+    // clearing the interval
+    clearTimeout(thisEntry.timeoutToken);
+
+    // updating the database
+    db.authentication.update({username:thisEntry.username}, {$set:{password: passTool.generate(req.query.password)}}, function() {
+        actions.responseEmitter.okay(res);
+    });
+
+
     /* JAMES
     this is where you will be writing the code for the newPassword call.
 

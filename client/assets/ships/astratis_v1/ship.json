@@ -20,6 +20,7 @@
   "max_rotation": 0.3,
   "weight": 13,
   "acceleration": {
-    "forward": 1
+    "forward": 1,
+    "backward": 0.7
   }
 }

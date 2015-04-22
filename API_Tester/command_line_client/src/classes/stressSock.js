@@ -5,6 +5,7 @@ this is a socket object speciffic to stress testing
 function stressSock(id) {
     // initialising socket properties
     this.id = id;
+    this.hardID = "";
     this.socket = null;
     this.messagesSent = 0;
     this.messagesReceived = 0;
@@ -23,11 +24,11 @@ function stressSock(id) {
         return function() {
             this.moveData = {
                 timestamp : new Date().getTime(),
-                id : selfReference.id,
+                id : selfReference.hardID,
                 position : {
-                    x : (Math.random()*10) + global.config.startingPosition.x,
-                    y : (Math.random()*10) + global.config.startingPosition.y,
-                    z : (Math.random()*10) + global.config.startingPosition.z
+                    x : (Math.random()*10) + startPos.x,
+                    y : (Math.random()*10) + startPos.y,
+                    z : (Math.random()*10) + startPos.z
                 },
                 orientation : {
                     x : Math.random()*2,
@@ -48,7 +49,7 @@ function stressSock(id) {
             // data to be sent in moveSync message
             var moveSyncData = {
                 timestamp : new Date().getTime(),
-                id : selfReference.id
+                id : selfReference.hardID
             };
 
             // sending the data
@@ -61,7 +62,7 @@ function stressSock(id) {
 
     this.startMovingFunctionGenerator = function(selfReference) {
         return function() {
-            selfReference.intervalID = setInterval(selfReference.randMoveFunctionGenerator(selfReference), global.config.intervalSpeedStressMovement);
+            selfReference.intervalID = setInterval(selfReference.randMoveFunctionGenerator(selfReference), args.ims);
         };
     };
 
@@ -71,7 +72,7 @@ function stressSock(id) {
     };
 
     // connecting socket to server
-    this.socket = global.io.connect("http://" + config.serverIp + ":" + config.serverPort.toString(), {'force new connection': true});
+    this.socket = io.connect("http://" + args.gsIP + ":" + args.gsPort.toString(), {'force new connection': true});
 
     /*
     socket event handlers
@@ -87,11 +88,22 @@ function stressSock(id) {
     this.socket.on("accepted", this.itterateMessagesReceived(this));
     this.socket.on("rejected", function(data){console.log(data.reasonText);});
 
+
+
+    // adding padding to the id
+    var paddingLength = 24 - ((this.id.toString()).length);
+    for(var j=0 ; j<paddingLength; j++) {
+        this.hardID += "0";
+    }
+    this.hardID += id.toString();
+
     // emitting start to the server
     var startData = {
-        id : this.id,
+        id : this.hardID,
         token : this.id.toString()
     };
+
+    // emitting start
     this.socket.emit("start", startData);
 }
 

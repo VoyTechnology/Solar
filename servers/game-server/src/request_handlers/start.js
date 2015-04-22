@@ -4,7 +4,6 @@ a "start" message.
 */
 
 function start(data, session, socket) {
-
     // checking if data provided is valid.
     var badData = actions.inputAN.start(data);
 
@@ -13,25 +12,21 @@ function start(data, session, socket) {
         return actions.messageEM.rejected(badData.error, socket);
     }
 
-    //Checking if this player is already logged in.
-    for (var i=0; i<loggedInPlayers.length; i++)
-    {
-        // if so, send rejected message with error 110
-        if (data.id == loggedInPlayers[i].id) {
-            return actions.messageEM.rejected(110, socket);
-        }
+    // checking if player is already logged in.
+    if (playerArray.getPlayer(data.id, "I") != -1) {
+        return actions.messageEM.rejected(110, socket);
     }
 
-    // fetching user from AUTHENTICATION collection
-    db.authentication.findOne({token : data.token, id : data.id}, function (err, authDoc) {
 
-        if (authDoc === null) {
+    // fetching user from AUTHENTICATION collection
+    db.authentication.findOne({_id : objectID(data.id)}, function (err, authDoc) {
+        if (authDoc === null || !passTool.verify(data.token, authDoc.token)) {
             // if not found return authentication error
             return actions.messageEM.rejected(106, socket);
         }
 
         // fetching user from PLAYERS collection
-        db.players.findOne({id : data.id}, function(err, playerDoc) {
+        db.players.findOne({_id : objectID(data.id)}, function(err, playerDoc) {
 
             if (playerDoc === null) {
                 // if not found return authentication error
@@ -40,9 +35,8 @@ function start(data, session, socket) {
             else {
                 // if found load player into memmory
                 session.thisPlayer = new actions.playerCS(playerDoc, socket);
-
                 // save player to logged in players array
-                loggedInPlayers.push(session.thisPlayer);
+                playerArray.push(session.thisPlayer);
 
                 // send accepted message
                 actions.messageEM.accepted(session.thisPlayer, socket);

@@ -1,44 +1,41 @@
 function showLog(parameters, callback) {
 
-    if (!global.static.parameterChecker.showLog(parameters)) {
+    if (!static.parameterChecker.showLog(parameters)) {
         return callback(101);
     }
 
     //checking if within game server
-    if (global.nav.server != "Game_Server") {
+    if (nav.server != "Game_Server") {
         return callback(105);
     }
 
     // checking if already in a socket
     if (parameters.length === 0) {
-        if (global.nav.socket === null) {
+        if (nav.socket === null) {
             return callback(102);
         }
         else {
-            parameters.push(global.nav.socket);
+            parameters.push(nav.socket);
         }
     }
 
-    // referencing sockets array for convenience
-    var socketsArray = global.servers.game_server.sockets;
-
-    for (var i=0; i<socketsArray.length; i++)
+    for (var i=0; i<sockets.length; i++)
     {
         // if socket found
-        if (socketsArray[i].name == parameters[0]) {
+        if (sockets[i].name == parameters[0]) {
 
             // Identifying how many logs to print
             var numLogsToCollect;
-            var thisSock = socketsArray[i];
+            var thisSock = sockets[i];
 
             if(thisSock.log.length === 0) {
                 return callback(107);
             }
-            else if(thisSock.log.length < global.config.logOutput) {
+            else if(thisSock.log.length < args.numLog) {
                 numLogsToCollect = thisSock.log.length;
             }
             else {
-                numLogsToCollect = global.config.logOutput;
+                numLogsToCollect = args.numLog;
             }
 
             // printing logs starting from last one going backwards

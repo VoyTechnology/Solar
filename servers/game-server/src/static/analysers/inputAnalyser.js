@@ -16,20 +16,16 @@ var inputAnalyser = {
         };
 
         if (data === null) {
-            console.log("1");
         }
         else if (typeof data.timestamp != "number" || typeof data.originator != "string") {
-            console.log("2");
         }
         else if (typeof data.recipient != "object" || typeof data.text != "string") {
-            console.log("3");
         }
         else {
             message.sucess = true;
             delete message.error;
         }
 
-        console.log(message);
         return message;
     },
 
@@ -43,17 +39,13 @@ var inputAnalyser = {
         if (data === null) {
 
         }
-        else if (typeof data.timestamp != "number" || typeof data.id != "number") {
-
+        else if (typeof data.timestamp != "number" || typeof data.id != "string") {
         }
         else if (typeof data.position != "object" || typeof data.orientation != "object") {
-
         }
         else if (typeof data.position.x != "number" || typeof data.position.y != "number" || typeof data.position.z != "number") {
-
         }
         else if (typeof data.orientation.x != "number" || typeof data.orientation.y != "number" || typeof data.orientation.z != "number") {
-
         }
         else {
             message.sucess = true;
@@ -72,7 +64,7 @@ var inputAnalyser = {
 
         if(data === null) {
         }
-        else if (typeof data.token != "string" || typeof data.id != "number") {
+        else if (typeof data.token != "string" || typeof data.id != "string") {
         }
         else {
             message.success = true;
@@ -92,7 +84,7 @@ var inputAnalyser = {
         if (data === null) {
 
         }
-        else if (typeof data.timestamp != "number" || typeof data.id != "number") {
+        else if (typeof data.timestamp != "number" || typeof data.id != "string") {
 
         }
         else {

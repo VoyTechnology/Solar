@@ -1,14 +1,31 @@
-/*
-this is the file that controlls the input and calls other
-files based on which command is called
-*/
-
+// requiring 3rd party modules
 require("colors");
+var ioClient = require("socket.io-client");
+var readLine = require("readline");
+global.args = require("commander");
+
+// setting up command line arguments
+args.version(1.1);
+args.option("--local", "Use this if servers are running on the localhost", false);
+args.option("--gsIP [gsIP]", "Game server IP address, default 178.62.116.176", "178.62.116.176");
+args.option("--asIP [gsIP]", "Authentication server IP address, default 178.62.116.176", "178.62.116.176");
+args.option("--gsPort [gsPort]", "Game server port, default 3000", 3000);
+args.option("--asPort [gsPort]", "Authentication server port, default 3001", 3001);
+args.option("--numLog [numLog]", "Number of logs to show on \"showlog\", default 5", 5);
+args.option("--ims [ims]", "Time in miliseconds between move messages by stress test, default 20", 20);
+args.parse(process.argv);
+
+if(args.local) {
+    args.gsIP = "localhost";
+    args.asIP = "localhost";
+}
+
+// setting up global variables
 global.config = require(__dirname + "/config.json");
 global.nav = new (require(__dirname + global.config.paths.navCS))();
 global.__home = __dirname;
-global.fs = require("fs");
-global.io = require('socket.io-client');
+global.io = ioClient;
+global.sockets = [];
 global.classes = {
     sock : require(__dirname + global.config.paths.sockCS),
     stressSock : require(__dirname + global.config.paths.stressSockCS)
@@ -27,62 +44,27 @@ global.requestHandlers = {
 global.static = {
     parameterChecker : require(__dirname + global.config.paths.parameterCheckerST)
 };
-global.servers = {
-    game_server : {
-        sockets : [],
-        stress : {
-            active : false,
-            sockets :[]
-        }
-    }
+global.stress = {
+    active : false,
+    sockets :[]
+};
+global.startPos = {
+    x : 0,
+    y : 2000,
+    z : 0
 };
 
-var rl = require("readline").createInterface ({
+// initiating line reader
+var rl = readLine.createInterface ({
     input: process.stdin,
     output: process.stdout
 }); rl.setPrompt("");
 
-// prompting
+// this function prompts for input and outputs errors if any
 function prompt(err) {
-    if (err !== null) {
-        //referencing errorCodes for convenience
-        var ec = global.config.errorCodes;
-
-        switch (err) {
-            case 100 :
-                console.log(ec.e100.red);
-                break;
-            case 101 :
-                console.log(ec.e101.red);
-                break;
-            case 102 :
-                console.log(ec.e102.red);
-                break;
-            case 103 :
-                console.log(ec.e103.red);
-                break;
-            case 104 :
-                console.log(ec.e104.red);
-                break;
-            case 105 :
-                console.log(ec.e105.red);
-                break;
-            case 106 :
-                console.log(ec.e106.red);
-                break;
-            case 107 :
-                console.log(ec.e107.red);
-                break;
-            case 108 :
-                console.log(ec.e108.red);
-                break;
-            case 109 :
-                console.log(ec.e109.red);
-                break;
-            case 110 :
-                console.log(ec.e110.red);
-                break;
-        }
+    if (typeof err == "number") {
+        var index = err - 100;
+        console.log(config.errorCodes[index].red);
     }
     process.stdout.write(global.nav.getPrompt());
     rl.resume();
@@ -101,53 +83,52 @@ rl.on("line", function(command) {
     switch (commandWords[0].toLowerCase()) {
         case "newsock" :
             commandWords.splice(0,1);
-            global.requestHandlers.newSock(commandWords, prompt);
+            requestHandlers.newSock(commandWords, prompt);
             break;
 
         case "delsock" :
             commandWords.splice(0,1);
-            global.requestHandlers.delSock(commandWords, prompt);
+            requestHandlers.delSock(commandWords, prompt);
             break;
 
         case "emit" :
             commandWords.splice(0,1);
-            global.requestHandlers.emit(commandWords, prompt);
+            requestHandlers.emit(commandWords, prompt);
             break;
 
         case "listsocks" :
             commandWords.splice(0,1);
-            global.requestHandlers.listSocks(commandWords, prompt);
+            requestHandlers.listSocks(commandWords, prompt);
             break;
 
         case "startstress" :
             commandWords.splice(0,1);
-            global.requestHandlers.startStress(commandWords, prompt);
+            requestHandlers.startStress(commandWords, prompt);
             break;
 
         case "stopstress" :
             commandWords.splice(0,1);
-            global.requestHandlers.stopStress(commandWords, prompt);
+            requestHandlers.stopStress(commandWords, prompt);
             break;
 
         case "usesock" :
             commandWords.splice(0,1);
-            global.requestHandlers.useSock(commandWords, prompt);
+            requestHandlers.useSock(commandWords, prompt);
             break;
 
         case "showlog" :
             commandWords.splice(0,1);
-            global.requestHandlers.showLog(commandWords, prompt);
+            requestHandlers.showLog(commandWords, prompt);
             break;
 
         case "leavesock" :
             commandWords.splice(0,1);
-            global.requestHandlers.leaveSock(commandWords, prompt);
+            requestHandlers.leaveSock(commandWords, prompt);
             break;
 
-        case "test" :
-            global.servers.game_server.sockets[0].clearLog();
-            console.log(global.servers.game_server.sockets);
-            prompt();
+        case "exit" :
+            console.log("\n\nHave a nice day!\n\n".bold.green);
+            process.exit(code=0);
             break;
 
         case "" :

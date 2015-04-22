@@ -26,19 +26,16 @@ function register(req, res) {
             }
 
             // creating a register token
-            var registerToken = Math.floor(new Date().getTime() + (Math.random() * 10000) * (Math.random() * 10000));
+            var registerToken = Math.floor(new Date().getTime() + (Math.random() * 100000000) * (Math.random() * 10000000000));
 
             // creating a pending register entry
             var pendingRegisterEntry = {
                 username : req.query.username,
                 token : null,
-                password : req.query.password,
+                password : passTool.generate(req.query.password), // generating password hash from regular password
                 email : req.query.email,
-                registerToken : registerToken
+                registerToken : registerToken,
             };
-
-            // appending pending registrations array
-            pendingRegisters.push(pendingRegisterEntry);
 
             // setting function to delete register entry
             setTimeout(function() {
@@ -48,7 +45,10 @@ function register(req, res) {
                         return;
                     }
                 }
-            }, config.registrationTokenLifeHours * 3600000);
+            }, args.rth * 3600000);
+
+            // appending pending registrations array
+            pendingRegisters.push(pendingRegisterEntry);
 
             // sending an email with a link to complete registration
             actions.mailer.sendMail(
@@ -56,8 +56,8 @@ function register(req, res) {
 
                 "Complete Registration",
 
-                "Please visit this link to complete registration  " +
-                "http://" + config.ip + ":" + config.port.toString() +
+                "Please visit this link to complete registration : " +
+                "http://" + (args.local?"localhost":myIP) + ":" + args.port.toString() +
                 "/completeRegister?token=" + registerToken.toString()
             );
 

@@ -1,57 +1,73 @@
-/*
-This file is used to initialise the database
-*/
-console.log("Please Wait");
+// loading external dependancies
+var passHash = require("password-hash");
+var mongojs = require('mongojs');
+var args = require("commander");
 
-// loading config file
-var config = require(__dirname + "/config.json");
+args.version(1.1);
+args.option("--num [num]", "Number of accounts to create, default 100", 100);
+args.option("--spX [spX]", "Player starting position X axis, default 0", 0);
+args.option("--spY [spY]", "Player starting position Y axis, default 2000", 2000);
+args.option("--spZ [spZ]", "Player starting position Z axis, default 0", 0);
+args.parse(process.argv);
+
+// Setting up needed variables
+var entryNamePattern = "testun";
+var entryPassPattern = "testpass";
+var startingPosition = { x : args.spX, y : args.spY, z : args.spZ };
 
 // establishing connection to database
-var mongojs = require('mongojs');
-var db = mongojs(config.dbName, config.collections);
+var db = mongojs("solar", ["authentication", "players"]);
+var OID = mongojs.ObjectId;
 
-// determining how many test accounts to create by
-// checking if a command line argument was supplied
-var numTestAccounts;
-if (process.argv.length < 3) {
-    numTestAccounts = config.defaultNumTestAccounts;
-}
-else {
-    numTestAccounts = parseInt(process.argv[2]);
+// this function is used to create a string of suitable length
+// for the mongodb objectID conversion function from an index i
+function indexToID(i) {
+    var stringID = "";
+    var paddingLength = 24 - ((i.toString()).length);
+
+    for(var j=0 ; j<paddingLength; j++) {
+        stringID += "0";
+    }
+
+    stringID += i.toString();
+    return stringID;
 }
 
 // this function creates and inserts next test account entry.
 function next(i) {
 
+    var idToUse = indexToID(i);
+    var passToUse = "testpass" + i.toString();
+
     // creating document for AUTHENTICATION collection
     var authenticationData = {
         $set : {
-            id : i,
-            token : i.toString(),
+            _id : OID(idToUse),
+            token : passHash.generate(i.toString()),
             email : "example@gmail.com",
-            username : config.entryNamePattern + i.toString(),
-            password : "CoolPass"
+            username : entryNamePattern + i.toString(),
+            password : passHash.generate(passToUse)
         }
     };
     // creating document for PLAYERS collection
     var playerData = {
         $set : {
-            id : i,
-            username : config.entryNamePattern + i.toString(),
+            _id : OID(idToUse),
+            username : entryNamePattern + i.toString(),
             ship : "astratis_v1",
-            position : config.startingPosition,
+            position : startingPosition,
             orientation : {x:0,y:0,z:0}
         }
     };
 
     // uploading document to AUTHENTICATION collection
-    db.authentication.update({id : i}, authenticationData, {upsert:true}, function() {
+    db.authentication.update({_id : OID(idToUse)}, authenticationData, {upsert:true}, function() {
         // uploading document to PLAYERS collection after finished uploading to AUTHENTICATION collection
-        db.players.update({id : i}, playerData, {upsert:true}, function() {
+        db.players.update({_id : OID(idToUse)}, playerData, {upsert:true}, function() {
             // itterating counter
             i++;
             // checking if enough accounts already created
-            if (i == numTestAccounts) {
+            if (i == args.num) {
                 // if so terminating the program
                 console.log("Done");
                 process.exit(code=0);
@@ -65,4 +81,5 @@ function next(i) {
 }
 
 // beginning recursive loop
+console.log("Please Wait");
 next(0);

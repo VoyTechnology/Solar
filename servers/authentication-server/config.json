@@ -1,8 +1,4 @@
 {
-    "ip" : "localhost",
-    "port" : 3001,
-    "registrationTokenLifeHours" : 1,
-    "loginTokenLifeMinutes" : 5,
     "database" : {
         "name" : "solar",
         "ip" : "localhost",
@@ -12,6 +8,7 @@
         ]
     },
     "paths" : {
+        "ipFinder" : "/src/static/ipFinder.js",
         "authenticate" : "/src/request_handlers/authenticate.js",
         "register" : "/src/request_handlers/register.js",
         "completeRegister" : "/src/request_handlers/completeRegister.js",
@@ -28,8 +25,9 @@
         "Parameters invalid.",
         "Email already used.",
         "Have not registerd.",
-        "Already registerd",
-        "Invalid username or password"
+        "Already registerd.",
+        "Invalid username or password.",
+        "Already pending."
     ],
     "defaultPlayer" : {
         "_id" : "default",
