@@ -89,3 +89,65 @@ function km(d){
 function Mm(d){
   return m(d) * 1000 * 1000;
 }
+
+/**
+ * Convert to speed of light
+ * @function
+ * @param {Number} d - Distance to convert
+ * @returns {Number} Converted distance
+ */
+function c(d){
+  return km(d) * 300000;
+}
+
+/**
+ * Returns the values as fraction of the speed of light.
+ * @function
+ * @param {Number} d - Distance to convert
+ * @returns {Number} Fraction of the speed of light
+ */
+function as_c(){
+  return d / (300000 * km(1));
+}
+
+
+/**
+ * Updates the display with the throttle
+ * @function
+ * @param {Number} speed - current throttle level
+ */
+function updateThrottle( speed ){
+  var p = $("#speed_positive");
+  var n = $("#speed_negative");
+
+  if(speed >= 0){
+    p.css({
+      "top": 75-(speed*10)+"vh",
+      "height": (speed*10)+"vh"
+    });
+  } else if( speed === 0 ){
+    n.css("height", 0);
+  } else {
+    n.css({
+      "top": "75vh",
+      "height": (-speed*10)+"vh"
+    });
+  }
+}
+
+/**
+ * Displays the location of the player
+ * @function
+ * @param {Number} speed - current throttle level
+ */
+function displayLocation( speed ){
+  var location = player.tP.position;
+
+  var target = $("#top_helmet");
+
+  target.html(
+    "x: "+ (location.x >> 1 << 1) +
+    ", y: " + (location.y >> 1 << 1) +
+    ", z: " + (location.z >> 1 << 1)
+  );
+}

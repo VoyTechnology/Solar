@@ -41,13 +41,22 @@ Connection.prototype.connect = function(){
   that._socket.on('accepted', function( data ){
     that.established = true;
     that.authorised = true;
-    player.loadShip( 'astratis_v1' );
+    try {
+      player.loadShip( 'astratis_v1' );
+    } catch(e){
+
+    }
+
 
     log.info("Connected to server");
 
-    new Event('server_connected');
+    hide_loading_window();
 
-    player.setCamera({position: data.position, rotation: data.orientation}, settings.get('id'));
+    player.setCamera({
+      position: data.position,
+      rotation: data.orientation
+    },settings.get('id'));
+
     player.controls.update( clock.getDelta() );
 
     // Clear the token
@@ -70,6 +79,7 @@ Connection.prototype.connect = function(){
   });
 
 };
+
 
 /**
  * Sends the 'move' message to the server
@@ -94,6 +104,7 @@ Connection.prototype.updateLocation = function(pos, rot){
   }
 };
 
+
 /**
  * Gets other players
  * @method
@@ -103,14 +114,23 @@ Connection.prototype.otherPlayers = function(){
 
   if(that.authorised){
       that._socket.on('otherPlayers', function(data){
-        for(var i = data.players.length - 1; i >= 0; i--){
+        for(var i = data.players.added.length - 1; i >= 0; i--){
           players.push( new OtherPlayer( data ) );
+        }
+        for(var d = data.players.removed.length -1; i >= 0; i--){
+          for(var p = players.length - 1; p >= 0; p--){
+            if(data.players.removed[d].id == players[p].id){
+              delete players[p];
+              break;
+            }
+          }
         }
       });
   }
 
   this.updateOthers();
 };
+
 
 /**
  * Listens for  the 'move' message from the server
@@ -167,12 +187,7 @@ Connection.prototype.sendMessage = function( sendData ){
       text: sendData.text
     });
 
-    that.messages++;
-
-    while(that.messages > 6){
-      gonsole.clearFirst();
-      that.messages--;
-    }
+    gonsole.clearFirst();
 
   }
 };
@@ -186,10 +201,7 @@ Connection.prototype.listenForChat = function () {
 
     that._socket.on('chat', function(data){
 
-      if(that.messages > 6){
-        gonsole.clearFirst();
-        that.messages--;
-      }
+      gonsole.clearFirst();
 
       if(data.recipient.length === 0){
         gonsole.log("&lt;<gre>"+data.originator+"</gre>&gt; " + data.text);

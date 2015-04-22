@@ -16,8 +16,6 @@ function init(){
   // Initialize the world
   world = new World();
 
-  document.addEventListener('server_connected', hide_loading_window());
-
   // Try to connect and then wait to see was connection successful
   connection.connect();
   connection.otherPlayers();

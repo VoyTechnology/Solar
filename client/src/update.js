@@ -23,9 +23,9 @@ function update(){
   myDir = player.tP.rotation;
 
   // Do actions every 60 frames
-  // if(frameCount % 60 === 0){
-  //
-  // }
+  if(frameCount % 60 === 0){
+    displayLocation();
+  }
 
   // Do actions every 3 frames (20 times a second)
   if(frameCount % 3 === 0){

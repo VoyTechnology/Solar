@@ -31,19 +31,20 @@ World.prototype.create = function(){
   scene.add(ambientLight);
 
   // Add stars
+  var star;
   var starGeom = new THREE.Geometry();
   for( var i = 0; i < 10000; i++){
-    var vertex = new THREE.Vector3();
-    vertex.x = THREE.Math.randFloatSpread( Math.pow(2, 53)-1 );
-    vertex.y = THREE.Math.randFloatSpread( Math.pow(2, 53)-1 );
-    vertex.z = THREE.Math.randFloatSpread( Math.pow(2, 53)-1 );
-    starGeom.vertices.push( vertex );
+    star = new THREE.Vector3();
+    star.x = THREE.Math.randFloatSpread( Math.pow(2, 53)-1 );
+    star.y = THREE.Math.randFloatSpread( Math.pow(2, 53)-1 );
+    star.z = THREE.Math.randFloatSpread( Math.pow(2, 53)-1 );
+    starGeom.vertices.push( star );
   }
   var stars = new THREE.PointCloud( starGeom, new THREE.PointCloudMaterial( { color: 0xffffff } ) );
   scene.add(stars);
 
   // Add the sun
-  this.sun = new Sun(m(695), 0xffffdd, 0xfffffe, 0.8, Infinity);
+  this.sun = new Sun(m(config.sun.size), 0xffffdd, 0xfffffe, 0.8, Infinity);
 
 
 

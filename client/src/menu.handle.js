@@ -12,25 +12,29 @@ var open = {
 $(document).keydown( function( e ){
   switch(config.keys[e.keyCode]){
     case 'ESC':
-      if(open.gonsole){
-        open.gonsole ^= 1;
+      if(player.controls.menu.gonsole){
+        player.controls.menu.gonsole ^= 1;
+        $('#ginput_wrap').toggle();
       } else {
-        open.menu ^= 1;
+        player.controls.menu.menu ^= 1;
         $('#menu').toggle();
       }
       break;
 
     case 'T':
-      if(!open.menu && !open.gonsole){
+      if(!player.controls.menu.menu && !player.controls.menu.gonsole){
+        player.controls.enabled ^= 1;
         $('#ginput_wrap').toggle();
         $('#ginput').focus();
-        open.gonsole ^= 1;
+        gonsole.clrin();
+        player.controls.menu.gonsole ^= 1;
       }
       break;
 
     case 'ENTER':
-      if(open.gonsole){
-        open.gonsole ^= 1;
+      if(player.controls.menu.gonsole){
+        player.controls.enabled ^= 1;
+        player.controls.menu.gonsole ^= 1;
         $('#ginput_wrap').toggle();
         gonsole.checkInput();
       }
@@ -39,7 +43,7 @@ $(document).keydown( function( e ){
 });
 
 $('#menu_resume').click( function(){
-  open.menu ^= 1;
+  player.control.menu.menu ^= 1;
   $('#menu').toggle();
 });
 

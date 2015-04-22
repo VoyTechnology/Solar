@@ -2,13 +2,24 @@
  * @author James Baicoianu / http://www.baicoianu.com/
  */
 
- var gamepads = [];
- var gamepad;
-
 var OldControls = function ( object, domElement ) {
   log.debug("Controls Initialized");
 
+  this.enabled = true;
 
+  this.gamepad = false;
+
+  this.menu = {
+    "menu": false,
+    "gonsole": false
+  };
+
+  var that = this;
+
+  window.addEventListener("gamepadconnected", function(gp){
+    log.info("Gamepad Connected");
+    that.gamepad = gp.gamepad;
+  });
 
 
   this.object = object;
@@ -79,9 +90,11 @@ var OldControls = function ( object, domElement ) {
       case 69: /*E*/ this.moveState.right = 1; break;
 
     }
+    if(this.enabled){
+      this.updateMovementVector();
+      this.updateRotationVector();
+    }
 
-    this.updateMovementVector();
-    this.updateRotationVector();
 
   };
 
@@ -111,8 +124,11 @@ var OldControls = function ( object, domElement ) {
 
     }
 
-    this.updateMovementVector();
-    this.updateRotationVector();
+    if(this.enabled){
+      this.updateMovementVector();
+      this.updateRotationVector();
+    }
+
 
   };
 
@@ -193,8 +209,27 @@ var OldControls = function ( object, domElement ) {
 
   this.update = function( delta ) {
 
+    if(this.gamepad){
+      this.gamepad = navigator.getGamepads()[0];
+
+      this.moveVector.z = this.gamepad.axes[3]; // throttle
+
+      this.rotationVector.x = this.gamepad.axes[1]; //pitch
+      this.rotationVector.y = -this.gamepad.axes[2]; // yaw
+      this.rotationVector.z = -this.gamepad.axes[0]; // roll
+    }
+
     var moveMult = delta * this.movementSpeed;
     var rotMult = delta * this.rollSpeed;
+
+    updateThrottle(-this.moveVector.z);
+
+    var spd = this.moveVector.z;
+
+    // var rotMult = Math.abs(delta * (
+    //     ( (spd-1)*(spd-1)*(spd-1)*(spd-1) ) -
+    //     ( (spd-1)*(spd-1)*(spd-1) ) /
+    //    10 ) * this.rollSpeed);// * 9.4;
 
     this.object.translateX( this.moveVector.x * moveMult );
     this.object.translateY( this.moveVector.y * moveMult );
@@ -209,27 +244,28 @@ var OldControls = function ( object, domElement ) {
 
   };
 
-  var forward = 0;
+  this.forward = 0;
 
   this.updateMovementVector = function() {
 
     //forward = ( this.moveState.forward || ( this.autoForward && !this.moveState.back ) ) ? forward+=0.1 : forward-0.1;
     if(this.moveState.forward){
-      forward += 0.1;
+      this.forward += 0.1;
     }
 
     if(this.moveState.back){
-      forward -= 0.1;
+      this.forward -= 0.1;
     }
+    //forward = this.moveState.forward - this.moveState.back;
     //forward = () ? +0.1 : -0.1;
 
-    forward = Math.round(forward * 100) / 100;
+    this.forward = Math.max(-1, Math.min(1, this.forward));
 
     //console.log(forward);
     this.moveVector.x = ( -this.moveState.left    + this.moveState.right ) * 0.1;
     this.moveVector.y = ( -this.moveState.down    + this.moveState.up ) * 0.1;
     //this.moveVector.z = ( -forward + this.moveState.back );
-    this.moveVector.z = ( -forward );
+    this.moveVector.z = ( -this.forward );
 
     //console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
 
