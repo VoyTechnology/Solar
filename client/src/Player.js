@@ -22,6 +22,7 @@ var Player = function(){
   this.tP = new THREE.Object3D();
 
   this.controls = new OldControls( this.tP );
+  //this.controls.enable();
 
 };
 
@@ -90,4 +91,6 @@ Player.prototype.setCamera = function( data, id ){
  */
 Player.prototype.loadShip = function( shipName ){
   this.ship = new Ship( shipName, true );
+
+  //this.controls.setControlData( this.ship.getFlightControls() );
 };
