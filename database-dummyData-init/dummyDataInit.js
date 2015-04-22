@@ -3,17 +3,16 @@ var passHash = require("password-hash");
 var mongojs = require('mongojs');
 var args = require("commander");
 
-args.version(1.1);
+args.version(2.0);
 args.option("--num [num]", "Number of accounts to create, default 100", 100);
-args.option("--spX [spX]", "Player starting position X axis, default 0", 0);
-args.option("--spY [spY]", "Player starting position Y axis, default 2000", 2000);
-args.option("--spZ [spZ]", "Player starting position Z axis, default 0", 0);
+args.option("--deleteAll", "Erase whole database first");
+args.option("--deleteTest", "Erase all test accounts first");
 args.parse(process.argv);
 
 // Setting up needed variables
 var entryNamePattern = "testun";
 var entryPassPattern = "testpass";
-var startingPosition = { x : args.spX, y : args.spY, z : args.spZ };
+var startingPosition = { x : 0, y : 2000, z : 0 };
 
 // establishing connection to database
 var db = mongojs("solar", ["authentication", "players"]);
@@ -56,7 +55,8 @@ function next(i) {
             username : entryNamePattern + i.toString(),
             ship : "astratis_v1",
             position : startingPosition,
-            orientation : {x:0,y:0,z:0}
+            orientation : {x:0,y:0,z:0},
+            test : true
         }
     };
 
@@ -80,6 +80,30 @@ function next(i) {
     });
 }
 
+function deletAllThenStart() {
+    db.players.remove({}, function() {
+        db.authentication.remove({}, function() {
+            next(0);
+        });
+    });
+}
+
+function deleteTestsThenStart() {
+    db.players.remove({test:true}, function() {
+        db.authentication.remove({email:"example@gmail.com"}, function() {
+            next(0);
+        });
+    });
+}
+
 // beginning recursive loop
 console.log("Please Wait");
-next(0);
+if (args.deleteAll) {
+    deletAllThenStart();
+}
+else if (args.deleteTest) {
+    deleteTestsThenStart();
+}
+else {
+    next(0);
+}
