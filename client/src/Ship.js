@@ -11,7 +11,7 @@ var Ship = function( shipName, isPlayerControling ){
   this.loaded = false;
   this.model = {};
 
-  var shipConfig = require('../assets/ships/'+shipName+'/ship.json');
+  this._shipConfig = require('../assets/ships/'+shipName+'/ship.json');
 
   var loader = new THREE.ColladaLoader();
 
@@ -24,9 +24,9 @@ var Ship = function( shipName, isPlayerControling ){
     scene.add( this.interiorLight );
   }
 
-  loader.load('../assets/ships/'+ shipName + '/' + shipConfig.model + '.dae', function( collada ){
+  loader.load('../assets/ships/'+ shipName + '/' + that._shipConfig.model + '.dae', function( collada ){
     dae = collada.scene;
-    dae.scale.x = dae.scale.y = dae.scale.z = m(shipConfig.size);
+    dae.scale.x = dae.scale.y = dae.scale.z = m(that._shipConfig.size);
     dae.updateMatrix();
 
     that.model = dae;
@@ -53,4 +53,8 @@ Ship.prototype.update = function( data ){
   this.model.rotation.x = data.rotation.x;
   this.model.rotation.y = data.rotation.y + Math.PI;
   this.model.rotation.z = -data.rotation.z;
+};
+
+Ship.prototype.getFlightControls = function(){
+   return this._shipConfig;
 };
