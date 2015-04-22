@@ -60,11 +60,11 @@ Gonsole.prototype.runCmd = function( input ){
     }
 };
 
+
 /**
  * Check the input that the user entered
  * @method
  */
-
 Gonsole.prototype.sendPrivate = function( input ){
   input.shift();
 
@@ -84,6 +84,11 @@ Gonsole.prototype.sendPrivate = function( input ){
 
 };
 
+/**
+ * Sends a public message to everybody
+ * @method
+ * @param {object} input - full input of the chat
+ */
 Gonsole.prototype.sendPublic = function( input ){
   var message = {
     timestamp: (new Date()).getTime(),
@@ -96,6 +101,11 @@ Gonsole.prototype.sendPublic = function( input ){
   this.log("&lt;<gre timestamp='"+message.timestamp+"'>"+settings.get('username')+"</gre>&gt; "+input.join(" "));
 };
 
+
+/**
+ * Checks is there something inputed in the chat console
+ * @method
+ */
 Gonsole.prototype.checkInput = function(){
   var raw = $('#ginput').val();
 
@@ -112,12 +122,38 @@ Gonsole.prototype.checkInput = function(){
   this.clrin();
 };
 
+
+/**
+ * Appends an error to the message to inform the user about the problem
+ * @method
+ * @param {object} data - Error data to be inserted
+ */
 Gonsole.prototype.revertMessage = function( data ){
   $("gre[timestamp='"+data.original.timestamp+"']")
     .css("color", "red")
     .append(" Error: "+ data.error.reasonText);
 };
 
+/**
+ * Removes the first element from the gonsole
+ * @method
+ */
 Gonsole.prototype.clearFirst = function(){
-  $(".gonsole .content").find('ge').first().remove();
+  var total_height = 0;
+  $(".gonsole .content").find('ge').each(function(){
+    total_height += $(this).height();
+  });
+
+  console.log(total_height);
+
+  var wrapper_height = $(".gonsole").height();
+  console.log(wrapper_height);
+
+  while(total_height > wrapper_height-20){
+    console.log("lol");
+    var el = $(".gonsole .content").find('ge').first();
+    total_height -= el.height();
+    el.remove();
+  }
+
 };
