@@ -19,14 +19,14 @@ function start(data, session, socket) {
 
 
     // fetching user from AUTHENTICATION collection
-    db.authentication.findOne({_id : mongojs.objectid(data.id)}, function (err, authDoc) {
+    db.authentication.findOne({_id : mongojs.ObjectId(data.id)}, function (err, authDoc) {
         if (authDoc === null || !passwordHash.verify(data.token, authDoc.token)) {
             // if not found return authentication error
             return game.actions.messageEM.rejected(106, socket);
         }
 
         // fetching user from PLAYERS collection
-        db.players.findOne({_id : mongojs.objectid(data.id)}, function(err, playerDoc) {
+        db.players.findOne({_id : mongojs.ObjectId(data.id)}, function(err, playerDoc) {
 
             if (playerDoc === null) {
                 // if not found return authentication error
