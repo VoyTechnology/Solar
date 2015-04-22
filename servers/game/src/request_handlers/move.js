@@ -12,10 +12,10 @@ function move(data, session, socket) {
     }
 
     // checking if data received is valid
-    var badData = actions.inputAN.move(data);
+    var badData = game.actions.inputAN.move(data);
     if (!badData.sucess) {
         // if not valid return moveError
-        return actions.messageEM.moveError(
+        return game.actions.messageEM.moveError(
             badData.error,
             data,
             session.thisPlayer,
@@ -26,7 +26,7 @@ function move(data, session, socket) {
     // checking if id from data matches the id of the logged in player
     if(data.id != session.thisPlayer._id) {
         // if not return moveError message
-        return actions.messageEM.moveError(
+        return game.actions.messageEM.moveError(
             107,
             data,
             session.thisPlayer,
@@ -47,7 +47,7 @@ function move(data, session, socket) {
         session.thisPlayer.subtractAvailableDistance(canMoveResponse.distanceMoved);
 
         // emitting move message to other players
-        actions.messageEM.move(data, socket);
+        game.actions.messageEM.move(data, socket);
 
         // setting so that in one second the distance he just moved his added back on to the distance he can move.
         // this is in place to control how much a player can move in one second
@@ -60,7 +60,7 @@ function move(data, session, socket) {
         session.movementSynced = false;
 
         // send moveError message
-        actions.messageEM.moveError(
+        game.actions.messageEM.moveError(
             109,
             data,
             session.thisPlayer,

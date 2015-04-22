@@ -2,21 +2,21 @@ function newPassword(req, res) {
     // if parameters invalid
     req.query.username = req.query.username.toLowerCase();
 
-    if (!actions.parameterAnalyser.newPassword(req)) {
-        return actions.responseEmitter.error(103, res);
+    if (!auth.actions.parameterAnalyser.newPassword(req)) {
+        return auth.actions.responseEmitter.error(103, res);
     }
 
     // checking if password token for this username exists
     for(var i=0; i<pendingNewPasswords.length; i++) {
         if ( pendingNewPasswords[i].username == req.query.username) {
-            return actions.responseEmitter.error(108,res);
+            return auth.actions.responseEmitter.error(108,res);
         }
     }
 
     db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if user is not registered
         if(doc === null) {
-            return actions.responseEmitter.error(105, res);
+            return auth.actions.responseEmitter.error(105, res);
         }
 
         var newPasswordToken = Math.floor(new Date().getTime() + (Math.random() * 100000000) * (Math.random() * 10000000000));
@@ -38,20 +38,20 @@ function newPassword(req, res) {
 
         // pushing to pendingNewPasswords
         pendingNewPasswords.push(pendingNewPasswordEntry);
-        
+
         // sending email
-        actions.mailer.sendMail(
+        auth.actions.mailer.sendMail(
             doc.email,
 
             "New Password",
 
             "Please visit this link to Complete New Password put your new password at the end of the URL : " +
-            "http://" + (args.local?"localhost":myIP) + ":" + args.port.toString() +
+            "http://" + (args.local?"localhost":myIP) + ":3001" +
             "/completeNewPassword?token=" + newPasswordToken.toString() +"&password="
         );
 
         //responding okay
-        actions.responseEmitter.okay(res);
+        auth.actions.responseEmitter.okay(res);
     });
 
     /* JAMES
@@ -60,13 +60,13 @@ function newPassword(req, res) {
     to acess url varialbes e.g. :http://0.0.0.0/newPassword?username=someusername
     so to get the username varable you need to use this "req.query.username".
 
-    to send a response for the request use "actions.responseEmitter.okay(res)" OR
-    "actions.responseEmitter.error(103, res)"
+    to send a response for the request use "auth.actions.responseEmitter.okay(res)" OR
+    "auth.actions.responseEmitter.error(103, res)"
 
-    to send emails you use this : "actions.mailer.sendMail(to, subject, text)";
+    to send emails you use this : "auth.actions.mailer.sendMail(to, subject, text)";
     an example email send would be :
 
-    actions.mailer.sendMail("mladen.kajic2@mail.dcu.ie" ,"Test Subject", "Hey this is a test email");
+    auth.actions.mailer.sendMail("mladen.kajic2@mail.dcu.ie" ,"Test Subject", "Hey this is a test email");
 
     leave all the code that is already in here.
     do not edit anything anywhere other than this file and completeNewPassword file.

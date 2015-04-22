@@ -1,13 +1,13 @@
 function register(req, res) {
     // if parameters invalid
-    if (!actions.parameterAnalyser.register(req)) {
-        return actions.responseEmitter.error(103, res);
+    if (!auth.actions.parameterAnalyser.register(req)) {
+        return auth.actions.responseEmitter.error(103, res);
     }
 
     // checking if register token for this username exists
     for(var i=0; i<pendingRegisters.length; i++) {
         if ( pendingRegisters[i].username == req.query.username || pendingRegisters[i].email == req.query.email) {
-            return actions.responseEmitter.error(106,res);
+            return auth.actions.responseEmitter.error(106,res);
         }
     }
 
@@ -15,14 +15,14 @@ function register(req, res) {
     db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if username found return an error
         if (doc !== null) {
-            return actions.responseEmitter.error(100,res);
+            return auth.actions.responseEmitter.error(100,res);
         }
 
         // checking if email exists
         db.authentication.findOne({email : req.query.email}, function(err, doc) {
             // if email found return an error
             if (doc !== null) {
-                return actions.responseEmitter.error(104,res);
+                return auth.actions.responseEmitter.error(104,res);
             }
 
             // creating a register token
@@ -32,7 +32,7 @@ function register(req, res) {
             var pendingRegisterEntry = {
                 username : req.query.username,
                 token : null,
-                password : passTool.generate(req.query.password), // generating password hash from regular password
+                password : passwordHash.generate(req.query.password), // generating password hash from regular password
                 email : req.query.email,
                 registerToken : registerToken,
             };
@@ -51,18 +51,18 @@ function register(req, res) {
             pendingRegisters.push(pendingRegisterEntry);
 
             // sending an email with a link to complete registration
-            actions.mailer.sendMail(
+            auth.actions.mailer.sendMail(
                 req.query.email,
 
                 "Complete Registration",
 
                 "Please visit this link to complete registration : " +
-                "http://" + (args.local?"localhost":myIP) + ":" + args.port.toString() +
+                "http://" + (args.local?"localhost":myIP) + ":3001" +
                 "/completeRegister?token=" + registerToken.toString()
             );
 
             // responding OK
-            actions.responseEmitter.okay(res);
+            auth.actions.responseEmitter.okay(res);
         });
     });
 }

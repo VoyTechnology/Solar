@@ -5,7 +5,7 @@ var responseEmitter = {
             success : false,
             error : {
                 code : code,
-                reasonText : config.errorCodes[code-100]
+                reasonText : auth.config.errorCodes[code-100]
             }
         };
         res.json(message);

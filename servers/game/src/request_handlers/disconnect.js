@@ -17,7 +17,7 @@ function disconnect(playerID) {
     // getting players details
     var playerDetails = playerToRemove.getEssentialDetails();
     // updating database
-    db.players.update({_id : objectID(playerID)}, playerDetails);
+    db.players.update({_id : mongojs.objectid(playerID)}, playerDetails);
 
 }
 

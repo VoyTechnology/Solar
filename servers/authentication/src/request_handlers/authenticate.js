@@ -1,14 +1,14 @@
 function authenticate(req, res) {
     // if parameters invalid
-    if (!actions.parameterAnalyser.authenticate(req)) {
-        return actions.responseEmitter.error(103, res);
+    if (!auth.actions.parameterAnalyser.authenticate(req)) {
+        return auth.actions.responseEmitter.error(103, res);
     }
 
     // looking for players entry in authentication collection
     db.authentication.findOne({username : req.query.username}, function(err, doc) {
         // if not found return an error
-        if (doc === null || !passTool.verify(req.query.password, doc.password)) {
-            return actions.responseEmitter.error(107, res);
+        if (doc === null || !passwordHash.verify(req.query.password, doc.password)) {
+            return auth.actions.responseEmitter.error(107, res);
         }
 
         // checking if person already authenticated within the last x amount of minutes
@@ -23,7 +23,7 @@ function authenticate(req, res) {
 
         // creating a loginToken
         var loginToken = Math.floor(new Date().getTime() + (Math.random() * 100000) * (Math.random() * 100000)).toString();
-        var hashedToken = passTool.generate(loginToken);
+        var hashedToken = passwordHash.generate(loginToken);
 
         // updating document in authentication database to contain login token
         db.authentication.update({username : req.query.username}, {$set :{token : hashedToken}}, function(err) {

@@ -12,16 +12,16 @@ function chat(data, session, socket) {
     }
 
     // checking if data received is valid
-    var badData = actions.inputAN.chat(data);
+    var badData = game.actions.inputAN.chat(data);
     if ( !badData.sucess ) {
         // if so return a chatError
-        return actions.messageEM.chatError(badData.error, data, socket);
+        return game.actions.messageEM.chatError(badData.error, data, socket);
     }
 
     // checking if originator is equal to the username of the logged in player
     if (data.originator != session.thisPlayer.username) {
         // if not return a chatError
-        return actions.messageEM.chatError(107, data, socket);
+        return game.actions.messageEM.chatError(107, data, socket);
     }
 
     // array referencing the player objects that the message is to be sent to
@@ -33,7 +33,7 @@ function chat(data, session, socket) {
         var playerFound = playerArray.getPlayer(data.recipient[i], "U");
 
         if (playerFound == -1) {
-            return actions.messageEM.chatError(108, data, socket);
+            return game.actions.messageEM.chatError(108, data, socket);
         }
 
         recipientArr.push(playerFound);
@@ -46,7 +46,7 @@ function chat(data, session, socket) {
     };
 
     // emitting the chat message
-    actions.messageEM.chat(conditions, socket);
+    game.actions.messageEM.chat(conditions, socket);
 }
 
 module.exports = chat;

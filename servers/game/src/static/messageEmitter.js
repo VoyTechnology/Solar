@@ -6,7 +6,7 @@ from the server to specific clients
 var messageEmitter = {
 
     rejected : function(code, socket) {
-        socket.emit("rejected", actions.errorCode(code));
+        socket.emit("rejected", game.actions.errorCode(code));
     },
 
     accepted : function(thisPlayer, socket) {
@@ -22,7 +22,7 @@ var messageEmitter = {
     },
 
     disconnect : function(code, socket) {
-        socket.emit("disconnect", actions.errorCode(code));
+        socket.emit("disconnect", game.actions.errorCode(code));
     },
 
     chat : function(conditions, socket) {
@@ -40,7 +40,7 @@ var messageEmitter = {
 
     chatError : function(errorCode, original, socket) {
         var data = {
-            error : actions.errorCode(errorCode),
+            error : game.actions.errorCode(errorCode),
             original : original
         };
         socket.emit("chatError", data);
@@ -49,7 +49,7 @@ var messageEmitter = {
     moveError : function(errorCode, original, thisPlayer, socket) {
 
         var data = {
-            error : actions.errorCode(errorCode),
+            error : game.actions.errorCode(errorCode),
             original : original,
             position : thisPlayer.position,
             orientation : thisPlayer.orientation

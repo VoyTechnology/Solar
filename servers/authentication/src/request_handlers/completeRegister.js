@@ -1,7 +1,7 @@
 function completeRegister(req, res) {
     // if parameters invalid
-    if (!actions.parameterAnalyser.completeRegister(req)) {
-        return actions.responseEmitter.error(103, res);
+    if (!auth.actions.parameterAnalyser.completeRegister(req)) {
+        return auth.actions.responseEmitter.error(103, res);
     }
 
     // creating registrationEntry variable
@@ -25,13 +25,13 @@ function completeRegister(req, res) {
         // of the entry in authentication collection
         db.authentication.findOne({username : registrationEntry.username}, function(err, doc) {
             // updating players collection to contain newly registerd player
-            var playersEntry = config.defaultPlayer;
+            var playersEntry = auth.config.defaultPlayer;
             playersEntry._id = doc._id;
             playersEntry.username = doc.username;
             db.players.insert(playersEntry);
 
             // responding with ok
-            actions.responseEmitter.okay(res);
+            auth.actions.responseEmitter.okay(res);
         });
     });
 }
