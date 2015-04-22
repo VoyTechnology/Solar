@@ -140,3 +140,45 @@ ge>be {
   width: 10em;
   cursor: pointer;
 }
+
+
+#gui_overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 90;
+}
+
+#gui_overlay #top_helmet{
+  background-color: black;
+  display: block;
+  height: 30px;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 100px;
+  top: -50px;
+  position: relative;
+  text-align: center;
+  padding-top: 60px;
+}
+
+#gui_overlay #speed_positive {
+  background-color: green;
+  height: 0vh;
+  width: 6vh;
+  position: absolute;
+  top: 75vh;
+  left: 60vw;
+}
+
+#gui_overlay #speed_negative {
+  background-color: red;
+  height: 0vh;
+  width: 6vh;
+  position: absolute;
+  top: 76vh;
+  left: 60vw;
+}
