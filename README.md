@@ -1,4 +1,4 @@
-# Solar #
+# Solar # 
 CA110 Space Game
 
 ## Installation ##
